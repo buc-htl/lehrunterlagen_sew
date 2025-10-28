@@ -400,10 +400,26 @@ while (true) {
 
 <section>
 <h3>Zusammenfassung</h3>
-<ul>
-	<li>Schleifen ermöglichen Anweisungen <strong>wiederholt auszuführen</strong>.</li>
+<ul class="medium">
+	<li>Schleifen ermöglichen Anweisungen im Block <code class="inline">{ ... }</code> <strong>wiederholt auszuführen</strong>.</li>
 	<li>Es gibt die <strong>while-Schleife</strong> (kopfgesteuert), die <strong>do-while-Schleife</strong> (fußgesteuert) und die <strong>for-Schleife</strong> (Zählschleife)</li>
 	<li>Mit einer <strong><code>break</code></strong>-Anweisung kann ein Schleife vorzeitig beendet werden.</li>
+	<li><pre><code data-trim class="language-java">
+	while ( Bedingung ) {
+		// ... Nur solange Bedingung true. 
+	}
+	</code></pre>
+	<li><pre><code data-trim class="language-java">
+	do {
+		// ... 1x immer. Dann solange Bedingung true.
+	} while ( Bedingung )
+	</code></pre>
+	<li><pre><code data-trim class="language-java">
+	for ( int x = 0; x < 10; x++ ) {  // ACHTE auf den ";" als Teiler!
+		// ... solange, bis Bedingung: "x < 10" zutrifft 
+	}
+	</code></pre>
+</li>
 </ul>
 </section>
 

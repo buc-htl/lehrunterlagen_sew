@@ -268,6 +268,23 @@
 				</section>
 
 			<section>
+				<h3>Zusammenfassung</h3>
+				<div class="medium">
+					<ul>
+						<li>Eine Bedingung kann aus mehreren <b>Teil-Bedingungen</b> bestehen</li>
+						<li>Verbinden von mehreren <b>Bedingungen</b> mittels: <br>
+							<b>UND</b>: <code class="inline"> && </code> ... beide müssen true sein: <code class="inline">if (bed1 && bed2)</code><br> 
+							<b>ODER</b>: <code class="inline"> || </code> <small>([AltGr] + [&gt;&lt; Taste])</small> ... nur 1 muss true sein: <code class="inline">if (bed1 || bed2)</code><br> 
+							<b>Negation</b>: <code class="inline"> ! </code> ... macht das Gegenteil daraus: <code class="inline">if ( ! bed1 )</code>
+						</li>
+						<li><code class="inline"> && </code> kommt vor <code class="inline"> || </code>. Aber verwende am besten Klammern</li>
+						<li>Tipp: Sprich dir die Bedingung im Gedanken vor. <q>Ist Bedingung1 ODER Bedingung2 true?</q> bzw. <q>Ist Bedingung1 UND Bedingung2 true?</q></li>
+						<li>Bei vielen Sub-Bedingungen, löse sie von <b>innen</b> nach außen auf: <code class="inline">( true && ( true || false ) )</code> wird zu: <code class="inline">( true && true )</code></li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
 				<p class="center">
 					Fragen? <br>
 					Wünsche? <br>

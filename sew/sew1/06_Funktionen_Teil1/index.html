@@ -543,6 +543,23 @@ void setup(){
 
 			</section>
 
+						<section>
+				<h3>Zusammenfassung</h3>
+				<div class="medium">
+					<ul>
+						<li>Prinzip <b>DRY</b> ... <em>"Don't Repeat Yourself"</em> (keinen Code duplizieren)</li>
+						<li>Funktionen werden <b>nur 1. geschrieben/definiert</b> aber können beliebig <b>oft verwendet/aufgerufen</b> werden</li>
+						<li><b>Schreiben</b> einer Funktion: <br>z.B. <code class="inline">void zeichneHaus(int breite, int farbe) { ... }</code><br>
+							(Rückgabe-Typ: <em>void</em>, Funktionsname: <em>zeichneHaus</em>, Parameter: <em>int breite & int farbe</em>, Funktionsrumpf: <em>{ ... }</em> enthält das was passieren soll).</li>
+						<li><b>Aufruf/verwenden</b> einer Funktion: <br>z.B.: <code class="inline">zeichneHaus(250, farbCodeVariable)</code> oder <code class="inline">funktionOhneParameter()</code></li>
+						<li>Die <b>Variablennamen der Parameter</b> existieren nur <b>innerhalb der Funktion</b>.
+						</li>
+						<li>Funktion <span class="strike-through">innerhalb</span> einer anderen Funktion ist <b>nicht</b> möglich.
+						</li>
+					</ul>
+				</div>
+			</section>
+
 			<section>
 				<p class="center">
 					Fragen? <br>
