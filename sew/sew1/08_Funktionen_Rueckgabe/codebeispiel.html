@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Codebeispiel Funktionen</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<!-- <link rel="stylesheet" href="../../../../../plugin/highlight/zenburn.css"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+
+			<section>
+				<h1>Funktionen - Codebeispiel</h1>
+				<h2> Softwareentwicklung 1</h2>
+			</section>
+
+            <section>
+				<h3>Die Aufgabe</h3>
+                <div class="small">
+                    <ul>
+                        <li>Wir wollen den <b>Umfang</b> (Formel: 2 * (Länge + Breite)) und die <b>Fläche</b> (Formel: Länge * Breite) von Rechtecken berechnen. Als <b>Input</b> verwenden wir Länge und Breite mit Kommazahlen als Werte.</li>
+                        <li>Die Ergebnisse sollen folgendermaßen mit <code class="inline">println()</code> angezeigt werden: 
+                            <pre><code>Rechteck mit Länge = 100.0 und Breite = 50.0:
+Der Umfang beträgt: 300.0
+Die Fläche beträgt: 5000.0</code></pre>
+                        </li>
+                        <li>Weiters sollen die Rechtecke in einer <b>zufälligen Farbe</b> untereinander gezeichnet werden. Der Abstand zwischen den Rechtecken soll 15 Punkte sein.</li>
+                        <li>Erstelle für jede Berechnung je eine eigene Funktion (<code class="inline">berechneUmfang(...)</code> & <code class="inline">berechneFlaeche(...)</code>), die den berechneten Wert zurückgibt.</li>
+                        <li>Erstelle weiters eine Funktion: <code class="inline">berechneRechteck(...)</code>, die die oberen 2 Funktionen verwendet, die Ergebnisse anzeigt und das Rechteck zeichnet.</li>
+                        <li>In <code class="inline">setup()</code> soll die Funktion <code class="inline">berechneRechteck()</code> <b>3 x</b> mit verschiedenen Werten aufgerufen werden.</li>
+                    </ul>
+                </div>
+			</section>
+
+			<section>
+				<h3>Die Lösung</h3>
+				<pre><code data-trim data-line-numbers>
+/*
+  Codebeispiel für Berechnung von Umfang & Fläche von Rechtecken
+ */
+
+// --- Setup und Hauptlogik (wird einmal zu Beginn ausgeführt) ---
+void setup() {
+  size(400, 400); // Zeichenfläche groß genug für unsere 3 Rechtecke
+  background(240); // Helle Hintergrundfarbe
+
+  // Berechnung und Anzeige von 3 Rechtecken mit der Haupt-Funktion.
+  // Die "Breite" ist beim Zeichnen die Höhe.
+  berechneRechteck(100.0, 50.0, 0);  // Argumente für breite, laenge, yPos
+  // Der Wert für yPos soll unter dem vorigen Rechteck + 15px Abstand sein
+  berechneRechteck(200.0, 150.5, (50 + 15));
+  berechneRechteck(30.753, 73.53, (50 + 15 + 151 + 15));
+}
+
+/*
+ Funktion zur Berechnung des Umfangs eines Rechtecks.
+ Die Funktion hat 2 float Parameter.
+ Das Ergebnis wird als Kommazahl (float) zurückgegeben.
+ */
+float berechneUmfang(float laenge, float breite) {
+  // Die Formel: Umfang = 2 * (Länge + Breite)
+  float umfang = 2 * (laenge + breite); // Ergebnis zwischenspeichern
+  return umfang; // Rückgabe des Ergebnisses
+}
+
+/*
+ Funktion zur Berechnung der Fläche eines Rechtecks.
+ Die Funktion hat 2 float Parameter.
+ Das Ergebnis wird als Kommazahl (float) zurückgegeben.
+ */
+float berechneFlaeche(float laenge, float breite) {
+  // Die Formel: Fläche = Länge * Breite
+  float flaeche = laenge * breite; // Ergebnis zwischenspeichern
+  return flaeche; // Rückgabe des Ergebnisses
+}
+
+// Haupt-Funktion für das Berechnen, Anzeigen und Zeichnen der Rechtecke
+// Diese Funktion hat keine Rückgabe, somit void.
+void berechneRechteck(float laenge, float breite, int yPos) {
+  // 1. Wir definieren die Abmessungen unseres Rechtecks (mit Dezimalstellen)
+
+  // 2. Wir rufen die Funktionn mit den Abmessungen auf
+  float meinUmfang = berechneUmfang(laenge, breite);
+  float meineFlaeche = berechneFlaeche(laenge, breite);
+
+  // 3. Wir geben die Ergebnisse in der Konsole aus
+  println();  // Wir möchten eine Leerzeile :)!
+  println("Rechteck mit Länge = " + laenge + " und Breite = " + breite + ":");
+  println("Der Umfang beträgt: " + meinUmfang);
+  println("Die Fläche beträgt: " + meineFlaeche);
+
+  // 4. Wir zeigen die Ergebnisse auf dem Processing-Canvas an
+  int randColor = color(
+    randomZahl(100, 255),
+    randomZahl(100, 255),
+    randomZahl(100, 255)
+    );
+  fill(randColor);
+  rect(10, 10 + yPos, laenge, breite);
+}
+
+/*
+ Eine Hilfs-Funktion,
+ die das Erzeugen von Random-Zahlen mit min & max erleichtert.
+ */
+int randomZahl(int min, int max) {
+  // Formal kopiert von den Folien!
+  int rand = min + (int)(Math.random() * ((max - min) + 1));
+  return rand;
+}	</code></pre>
+			</section>
+
+		</div>
+	</div>
+
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+	<script src="../../reveal-config.js"></script>
+</body>
+
+</html>
