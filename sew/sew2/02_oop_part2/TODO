@@ -8,5 +8,7 @@ catch(ArithmeticException | ArrayIndexOutOfBoundsException | StringIndexOutOfBou
 
 Exceptions - reveal.js Präsentation mit AI erstellt - überarbeiten
 
-
+offene Themen:
 instanceOf unbedingt thematisieren!
+Object als Superklasse
+Integer, Double, Number
