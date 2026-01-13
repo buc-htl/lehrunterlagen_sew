@@ -1,3 +1,9 @@
+JavaFx Übungen überarbeiten
+- ein paar Layouts zeigen, aber in einem konkreten Setting (Anwendung)
+- Trennung von Logik und GUI zeigen
+- kleine Anwendung selber bauen lassen (statt x Layouts auszuprobieren) -> größeres Projekt für Abschlussprojekt aufheben
+- mehrere Stages/Scenes zeigen
+
 String format woanders besser aufgehoben (vielleicht schon in der ersten?)
 Würde sich für eine SMÜ anbieten
 gibt auch noch keine Übung dazu
