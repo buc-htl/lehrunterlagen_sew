@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!--
+==============================================================================
+           "GitHub HTML5 Pandoc Template" v2.2 — by Tristano Ajmone
+==============================================================================
+Copyright © Tristano Ajmone, 2017-2020, MIT License (MIT). Project's home:
+
+- https://github.com/tajmone/pandoc-goodies
+
+The CSS in this template reuses source code taken from the following projects:
+
+- GitHub Markdown CSS: Copyright © Sindre Sorhus, MIT License (MIT):
+  https://github.com/sindresorhus/github-markdown-css
+
+- Primer CSS: Copyright © 2016-2017 GitHub Inc., MIT License (MIT):
+  http://primercss.io/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The MIT License
+
+Copyright (c) Tristano Ajmone, 2017-2020 (github.com/tajmone/pandoc-goodies)
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Copyright (c) 2017 GitHub Inc.
+
+"GitHub Pandoc HTML5 Template" is Copyright (c) Tristano Ajmone, 2017-2020,
+released under the MIT License (MIT); it contains readaptations of substantial
+portions of the following third party softwares:
+
+(1) "GitHub Markdown CSS", Copyright (c) Sindre Sorhus, MIT License (MIT).
+(2) "Primer CSS", Copyright (c) 2016 GitHub Inc., MIT License (MIT).
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+==============================================================================-->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Git Basics - Teil 1</title>
+  <style type="text/css">
+@charset "UTF-8";.markdown-body{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;color:#24292e;font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";font-size:16px;line-height:1.5;word-wrap:break-word;box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}.markdown-body a{color:#0366d6;background-color:transparent;text-decoration:none;-webkit-text-decoration-skip:objects}.markdown-body a:active,.markdown-body a:hover{outline-width:0}.markdown-body a:hover{text-decoration:underline}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body strong{font-weight:600}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1{font-size:2em;margin:.67em 0;padding-bottom:.3em;border-bottom:1px solid #eaecef}.markdown-body h2{padding-bottom:.3em;font-size:1.5em;border-bottom:1px solid #eaecef}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#6a737d}.markdown-body img{border-style:none}.markdown-body svg:not(:root){overflow:hidden}.markdown-body hr{box-sizing:content-box;height:.25em;margin:24px 0;padding:0;overflow:hidden;background-color:#e1e4e8;border:0}.markdown-body hr::before{display:table;content:""}.markdown-body hr::after{display:table;clear:both;content:""}.markdown-body input{margin:0;overflow:visible;font:inherit;font-family:inherit;font-size:inherit;line-height:inherit}.markdown-body [type=checkbox]{box-sizing:border-box;padding:0}.markdown-body *{box-sizing:border-box}.markdown-body blockquote{margin:0}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol ol,.markdown-body ul ol{list-style-type:lower-roman}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body ol ol ol,.markdown-body ol ul ol,.markdown-body ul ol ol,.markdown-body ul ul ol{list-style-type:lower-alpha}.markdown-body li>p{margin-top:16px}.markdown-body li+li{margin-top:.25em}.markdown-body dd{margin-left:0}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:600}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body code{font-family:SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace}.markdown-body pre{font:12px SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace;word-wrap:normal}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body blockquote{padding:0 1em;color:#6a737d;border-left:.25em solid #dfe2e5}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body table{display:block;width:100%;overflow:auto;border-spacing:0;border-collapse:collapse}.markdown-body table th{font-weight:600}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #dfe2e5}.markdown-body table tr{background-color:#fff;border-top:1px solid #c6cbd1}.markdown-body table tr:nth-child(2n){background-color:#f6f8fa}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body code{padding:.2em 0;margin:0;font-size:85%;background-color:rgba(27,31,35,.05);border-radius:3px}.markdown-body code::after,.markdown-body code::before{letter-spacing:-.2em;content:" "}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:0 0;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f6f8fa;border-radius:3px}.markdown-body pre code{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code::after,.markdown-body pre code::before{content:normal}.markdown-body .full-commit .btn-outline:not(:disabled):hover{color:#005cc5;border-color:#005cc5}.markdown-body kbd{box-shadow:inset 0 -1px 0 #959da5;display:inline-block;padding:3px 5px;font:11px/10px SFMono-Regular,Consolas,"Liberation Mono",Menlo,Courier,monospace;color:#444d56;vertical-align:middle;background-color:#fcfcfc;border:1px solid #c6cbd1;border-bottom-color:#959da5;border-radius:3px;box-shadow:inset 0 -1px 0 #959da5}.markdown-body :checked+.radio-label{position:relative;z-index:1;border-color:#0366d6}.markdown-body .task-list-item{list-style-type:none}.markdown-body .task-list-item+.task-list-item{margin-top:3px}.markdown-body .task-list-item input{margin:0 .2em .25em -1.6em;vertical-align:middle}.markdown-body::before{display:table;content:""}.markdown-body::after{display:table;clear:both;content:""}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.Alert,.Error,.Note,.Success,.Warning{padding:11px;margin-bottom:24px;border-style:solid;border-width:1px;border-radius:4px}.Alert p,.Error p,.Note p,.Success p,.Warning p{margin-top:0}.Alert p:last-child,.Error p:last-child,.Note p:last-child,.Success p:last-child,.Warning p:last-child{margin-bottom:0}.Alert{color:#246;background-color:#e2eef9;border-color:#bac6d3}.Warning{color:#4c4a42;background-color:#fff9ea;border-color:#dfd8c2}.Error{color:#911;background-color:#fcdede;border-color:#d2b2b2}.Success{color:#22662c;background-color:#e2f9e5;border-color:#bad3be}.Note{color:#2f363d;background-color:#f6f8fa;border-color:#d5d8da}.Alert h1,.Alert h2,.Alert h3,.Alert h4,.Alert h5,.Alert h6{color:#246;margin-bottom:0}.Warning h1,.Warning h2,.Warning h3,.Warning h4,.Warning h5,.Warning h6{color:#4c4a42;margin-bottom:0}.Error h1,.Error h2,.Error h3,.Error h4,.Error h5,.Error h6{color:#911;margin-bottom:0}.Success h1,.Success h2,.Success h3,.Success h4,.Success h5,.Success h6{color:#22662c;margin-bottom:0}.Note h1,.Note h2,.Note h3,.Note h4,.Note h5,.Note h6{color:#2f363d;margin-bottom:0}.Alert h1:first-child,.Alert h2:first-child,.Alert h3:first-child,.Alert h4:first-child,.Alert h5:first-child,.Alert h6:first-child,.Error h1:first-child,.Error h2:first-child,.Error h3:first-child,.Error h4:first-child,.Error h5:first-child,.Error h6:first-child,.Note h1:first-child,.Note h2:first-child,.Note h3:first-child,.Note h4:first-child,.Note h5:first-child,.Note h6:first-child,.Success h1:first-child,.Success h2:first-child,.Success h3:first-child,.Success h4:first-child,.Success h5:first-child,.Success h6:first-child,.Warning h1:first-child,.Warning h2:first-child,.Warning h3:first-child,.Warning h4:first-child,.Warning h5:first-child,.Warning h6:first-child{margin-top:0}h1.title,p.subtitle{text-align:center}h1.title.followed-by-subtitle{margin-bottom:0}p.subtitle{font-size:1.5em;font-weight:600;line-height:1.25;margin-top:0;margin-bottom:16px;padding-bottom:.3em}div.line-block{white-space:pre-line}
+  </style>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<article class="markdown-body">
+<header>
+<h1 class="title">Git Basics - Teil 1</h1>
+</header>
+<hr>
+<nav id="TOC">
+<h1 class="toc-title">Contents</h1>
+<ul>
+<li><a href="#git-repositorys-anlegen"
+id="toc-git-repositorys-anlegen">git Repositorys anlegen</a>
+<ul>
+<li><a
+href="#ein-repository-in-einem-bestehenden-verzeichnis-einrichten"
+id="toc-ein-repository-in-einem-bestehenden-verzeichnis-einrichten">Ein
+Repository in einem bestehenden Verzeichnis einrichten</a></li>
+<li><a href="#ein-existierendes-repository-klonen"
+id="toc-ein-existierendes-repository-klonen">Ein existierendes
+Repository klonen</a></li>
+</ul></li>
+<li><a href="#die-drei-zustände" id="toc-die-drei-zustände">Die drei
+Zustände</a></li>
+<li><a href="#zustand-von-dateien-prüfen"
+id="toc-zustand-von-dateien-prüfen">Zustand von Dateien prüfen</a></li>
+<li><a href="#neue-und-geänderte-dateien-zur-staging-area-hinzufügen"
+id="toc-neue-und-geänderte-dateien-zur-staging-area-hinzufügen">Neue und
+geänderte Dateien zur Staging-Area hinzufügen</a>
+<ul>
+<li><a href="#neue-dateien-zur-versionsverwaltung-hinzufügen"
+id="toc-neue-dateien-zur-versionsverwaltung-hinzufügen">Neue Dateien zur
+Versionsverwaltung hinzufügen</a></li>
+<li><a href="#geänderte-dateien-zur-staging-area-hinzufügen"
+id="toc-geänderte-dateien-zur-staging-area-hinzufügen">Geänderte Dateien
+zur Staging-Area hinzufügen</a></li>
+</ul></li>
+<li><a href="#die-änderungen-committen"
+id="toc-die-änderungen-committen">Die Änderungen committen</a>
+<ul>
+<li><a href="#die-staging-area-überspringen"
+id="toc-die-staging-area-überspringen">Die Staging-Area
+überspringen</a></li>
+</ul></li>
+<li><a href="#anzeigen-der-commit-historie"
+id="toc-anzeigen-der-commit-historie">Anzeigen der
+Commit-Historie</a></li>
+</ul>
+</nav>
+<hr>
+<p>Dieses Dokument behandelt die grundlegenden Git-Befehle, die du
+benötigst, um mit Git zu arbeiten. Es ist eine Einführung in die
+wichtigsten Konzepte und Befehle von Git, damit du schnell loslegen
+kannst. Folgende Befehle werden behandelt: init, clone, status, add,
+commit und log.</p>
+<p>Anmerkung: Dieser Text übernimmt Ausschnitte aus dem Buch “Pro Git”
+von Scott Chacon und Ben Straub, das unter der <a
+href="https://creativecommons.org/licenses/by-nc-sa/3.0/">Creative
+Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>
+veröffentlicht wurde. Das ganze Buch ist <a
+href="https://git-scm.com/book/de/v2">online verfügbar</a>.</p>
+<h1 id="git-repositorys-anlegen">git Repositorys anlegen</h1>
+<p>Du hast zwei Möglichkeiten, ein Git-Repository auf Deinem Rechner
+anzulegen.</p>
+<ul>
+<li><p>Du kannst ein lokales Verzeichnis, das sich derzeit nicht unter
+Versionskontrolle befindet, in ein Git-Repository verwandeln,
+oder</p></li>
+<li><p>Du kannst ein bestehendes Git-Repository von einem anderen Ort
+aus klonen.</p></li>
+</ul>
+<p>In beiden Fällen erhältst Du ein einsatzbereites Git-Repository auf
+Deinem lokalen Rechner.</p>
+<h2 id="ein-repository-in-einem-bestehenden-verzeichnis-einrichten">Ein
+Repository in einem bestehenden Verzeichnis einrichten</h2>
+<p>Wenn Du ein Projektverzeichnis hast, das sich derzeit nicht unter
+Versionskontrolle befindet, und Du mit dessen Versionierung über Git
+beginnen möchten, musst Du zunächst in das Verzeichnis dieses Projekts
+wechseln. Das sieht je nachdem, welches System verwendet wird,
+unterschiedlich aus:</p>
+<p>für Linux:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /home/user/my_project</span></code></pre></div>
+<p>für macOS:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /Users/user/my_project</span></code></pre></div>
+<p>für Windows:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd C:/Users/user/my_project</span></code></pre></div>
+<p>Führe dort folgenden Befehl aus:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git init</span></code></pre></div>
+<p>Der Befehl <code>git init</code> erzeugt ein Unterverzeichnis .git,
+in dem alle relevanten Git-Repository-Daten enthalten sind, also so
+etwas wie ein Git-Repository Grundgerüst. Zu diesem Zeitpunkt werden
+noch keine Dateien in Git versioniert.</p>
+<p>Wenn Du bereits existierende Dateien versionieren möchtest (und es
+sich nicht nur um ein leeres Verzeichnis handelt), dann solltest Du den
+aktuellen Stand mit einem initialen Commit tracken. Mit dem Befehl
+<code>git add</code> legst Du fest, welche Dateien versioniert werden
+sollen und mit dem Befehl <code>git commit</code> erzeugst Du einen
+neuen Commit: Du kannst dies mit ein paar git add-Befehlen erreichen.
+Damit markierst du die zu trackende Dateien. Anschließend gibst du ein
+git commit ein:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git add <span class="pp">*</span>.c</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git add LICENSE</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">&#39;Initial project version&#39;</span></span></code></pre></div>
+<p>Wir werden gleich noch einmal genauer auf diese Befehle eingehen. Im
+Moment ist nur wichtig zu verstehen, dass du jetzt ein Git-Repository
+erzeugt und einen ersten Commit angelegt hast.</p>
+<h2 id="ein-existierendes-repository-klonen">Ein existierendes
+Repository klonen</h2>
+<p>Wenn du eine Kopie eines existierenden Git-Repositorys anlegen
+möchtest – um beispielsweise an einem Projekt mitzuarbeiten – kannst du
+den Befehl <code>git clone</code> verwenden. Anstatt nur eine einfache
+Arbeitskopie vom Projekt zu erzeugen, lädt Git nahezu alle Daten, die
+der Server bereithält, auf den lokalen Rechner. Jede Version von jeder
+Datei der Projekt-Historie wird automatisch heruntergeladen, wenn du
+<code>git clone</code> ausführst. Wenn deine Serverfestplatte beschädigt
+wird, kannst du nahezu jeden der Klone auf irgendeinem Client verwenden,
+um den Server wieder in den Zustand zurückzusetzen, in dem er sich zum
+Zeitpunkt des Klonens befand.</p>
+<p>Du klonst ein Repository mit dem Befehl <code>git clone [url]</code>.
+Um beispielsweise das Repository der verlinkbaren Git-Bibliothek libgit2
+zu klonen, führst du folgenden Befehl aus:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://github.com/libgit2/libgit2</span></code></pre></div>
+<p>Git legt dann ein Verzeichnis libgit2 an, initialisiert in diesem ein
+.git Verzeichnis, lädt alle Daten des Repositorys herunter und checkt
+eine Kopie der aktuellsten Version aus. Wenn du in das neue libgit2
+Verzeichnis wechselst, findest du dort die Projektdateien und kannst
+gleich damit arbeiten.</p>
+<p>Wenn du das Repository in ein Verzeichnis mit einem anderen Namen als
+libgit2 klonen möchtest, kannst du das wie folgt durchführen:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone https://github.com/libgit2/libgit2 mylibgit</span></code></pre></div>
+<p>Dieser Befehl tut das Gleiche wie der vorhergehende, aber das
+Zielverzeichnis lautet diesmal mylibgit.</p>
+<p>Git unterstützt eine Reihe unterschiedlicher Übertragungsprotokolle.
+Das vorhergehende Beispiel verwendet das https:// Protokoll, aber dir
+könnten auch die Angaben git:// oder user@server:path/to/repo.git
+begegnen, welches das SSH-Transfer-Protokoll verwendet. Kapitel 4, Git
+auf dem Server, stellt alle verfügbaren Optionen vor, die der Server für
+den Zugriff auf dein Git-Repository hat und die Vor- und Nachteile der
+möglichen Optionen.</p>
+<h1 id="die-drei-zustände">Die drei Zustände</h1>
+<p>Jetzt heißt es aufgepasst! Es folgt die wichtigste Information, die
+man sich merken muss, wenn man Git erlernen und dabei Fallstricke
+vermeiden will. Git definiert drei Hauptzustände, in denen sich eine
+Datei befinden kann: geändert (engl. modified), für Commit vorgemerkt
+(engl. staged) und committet (engl. committed).</p>
+<ul>
+<li><p><strong>Modified</strong> bedeutet, dass eine Datei geändert,
+aber noch nicht in die lokale Datenbank eingecheckt wurde.</p></li>
+<li><p><strong>Staged</strong> bedeutet, dass eine geänderte Datei in
+ihrem gegenwärtigen Zustand für den nächsten Commit vorgemerkt
+ist.</p></li>
+<li><p><strong>Committed</strong> bedeutet, dass die Daten sicher in der
+lokalen Datenbank gespeichert sind.</p></li>
+</ul>
+<p>Das führt uns zu den drei Hauptbereichen eines Git-Projekts: dem
+Verzeichnisbaum (engl. Working Tree), der sogenannten Staging-Area und
+dem Git-Verzeichnis.</p>
+<figure>
+<img src="img/git_states.png"
+alt="Quelle: https://medium.com/@lucasmaurer/git-gud-the-working-tree-staging-area-and-local-repo-a1f0f4822018" />
+<figcaption aria-hidden="true">Quelle: https://medium.com/<span
+class="citation"
+data-cites="lucasmaurer/git-gud-the-working-tree-staging-area-and-local-repo-a1f0f4822018">@lucasmaurer/git-gud-the-working-tree-staging-area-and-local-repo-a1f0f4822018</span></figcaption>
+</figure>
+<p>Der Verzeichnisbaum ist ist die aktuelle “Arbeitskopie”, die du
+verwendest und Dateien änderst, hinzufügst oder löscht.</p>
+<p>Die Staging-Area ist in der Regel eine Datei, die sich in deinem
+Git-Verzeichnis befindet und Informationen darüber speichert, was in
+deinem nächsten Commit einfließen soll.</p>
+<p>Im Git-Verzeichnis werden die Metadaten und die Objektdatenbank für
+dein Projekt gespeichert. Das ist der wichtigste Teil von Git, dieser
+Teil wird kopiert, wenn man ein Repository von einem anderen Rechner
+klont.</p>
+<p>Der grundlegende Git-Arbeitsablauf sieht in etwa so aus:</p>
+<ul>
+<li><p>Du änderst Dateien in deinem Verzeichnisbaum.</p></li>
+<li><p>Du stellst selektiv Änderungen bereit, die du bei deinem nächsten
+Commit berücksichtigen möchtest, wodurch nur diese Änderungen in den
+Staging-Bereich aufgenommen werden.</p></li>
+<li><p>Du führst einen Commit aus, der die Dateien so übernimmt, wie sie
+sich in der Staging-Area befinden und diesen Snapshot dauerhaft in
+deinem Git-Verzeichnis speichert.</p></li>
+</ul>
+<p>Wenn sich eine bestimmte Version einer Datei im Git-Verzeichnis
+befindet, wird sie als committed betrachtet. Wenn sie geändert und in
+die Staging-Area hinzugefügt wurde, gilt sie als für den Commit
+vorgemerkt (engl. staged). Und wenn sie geändert, aber noch nicht zur
+Staging-Area hinzugefügt wurde, gilt sie als geändert (engl.
+modified).</p>
+<h1 id="zustand-von-dateien-prüfen">Zustand von Dateien prüfen</h1>
+<p>Das wichtigste Hilfsmittel, um den Zustand zu überprüfen, in dem sich
+deine Dateien gerade befinden, ist der Befehl <code>git status</code>.
+Wenn du diesen Befehl unmittelbar nach dem Klonen eines Repositorys
+ausführen, sollte er in etwa folgende Ausgabe liefern:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> to commit, working tree clean</span></code></pre></div>
+<p>Dieser Zustand wird auch als sauberes Arbeitsverzeichnis (engl. clean
+working directory) bezeichnet. Mit anderen Worten, es gibt keine
+Dateien, die unter Versionsverwaltung stehen und seit dem letzten Commit
+geändert wurden – andernfalls würden sie hier aufgelistet werden.</p>
+<p>Nehmen wir einmal an, du fügst eine neue Datei mit dem Namen
+<code>README</code> zu deinem Projekt hinzu. Wenn die Datei zuvor nicht
+existiert hat und du jetzt <code>git status</code> ausführst, zeigt Git
+die bisher nicht versionierte Datei wie folgt an:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> echo <span class="st">&#39;My Project&#39;</span> <span class="op">&gt;</span> README</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Untracked</span> files:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git add &lt;file&gt;...&quot;</span> to include in what will be committed<span class="kw">)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">README</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> added to commit but untracked files present <span class="er">(</span><span class="ex">use</span> <span class="st">&quot;git add&quot;</span> to track<span class="kw">)</span></span></code></pre></div>
+<p>Alle Dateien, die im Abschnitt „Untracked files“ aufgelistet werden,
+sind Dateien, die bisher noch nicht versioniert sind. Dort wird jetzt
+auch die Datei <code>README</code> angezeigt. Mit anderen Worten, die
+Datei <code>README</code> wird in diesem Bereich gelistet, weil sie im
+letzten Schnappschuss nicht enthalten war und noch nicht gestaged wurde.
+Git nimmt eine solche Datei nicht automatisch in die Versionsverwaltung
+auf. Du musst Git dazu ausdrücklich auffordern. Ansonsten würden
+generierte Binärdateien oder andere Dateien, die du nicht in deinem
+Repository haben möchtest, automatisch hinzugefügt werden. Das möchte
+man in den meisten Fällen vermeiden. Jetzt wollen wir aber Änderungen an
+der Datei README verfolgen und fügen sie deshalb zur Versionsverwaltung
+hinzu.</p>
+<h1 id="neue-und-geänderte-dateien-zur-staging-area-hinzufügen">Neue und
+geänderte Dateien zur Staging-Area hinzufügen</h1>
+<h2 id="neue-dateien-zur-versionsverwaltung-hinzufügen">Neue Dateien zur
+Versionsverwaltung hinzufügen</h2>
+<p>Um eine neue Datei zu versionieren, kannst du den Befehl
+<code>git add</code> verwenden. Für eine neue <code>README</code> Datei,
+kannst du folgendes ausführen:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git add README</span></code></pre></div>
+<p>Wenn du erneut den Befehl <code>git status</code> ausführst, wirst du
+sehen, dass sich deine <code>README</code> Datei jetzt unter
+Versionsverwaltung befindet und für den nächsten Commit vorgemerkt
+ist:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git restore --staged &lt;file&gt;...&quot;</span> to unstage<span class="kw">)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">new</span> file:   README</span></code></pre></div>
+<p>Du kannst erkennen, dass die Datei für den nächsten Commit vorgemerkt
+ist, weil sie unter der Rubrik „Changes to be committed“ aufgelistet
+ist. Wenn du jetzt einen Commit anlegst, wird der Schnappschuss den
+Zustand der Datei festhalten, den sie zum <strong>Zeitpunkt des
+Befehls</strong> <code>git add</code> hat. Du erinnerst dich vielleicht
+daran, wie du vorhin <code>git init</code> und anschließend
+<code>git add &lt;files&gt;</code> ausgeführt hast. Mit diesen Befehlen
+hast du die Dateien in deinem Verzeichnis zur Versionsverwaltung
+hinzugefügt. Der Befehl <code>git add</code> akzeptiert einen Pfadnamen
+einer Datei oder eines Verzeichnisses. Wenn du ein Verzeichnis angibst,
+fügt <code>git add</code> alle Dateien in diesem Verzeichnis und allen
+Unterverzeichnissen rekursiv hinzu.</p>
+<h2 id="geänderte-dateien-zur-staging-area-hinzufügen">Geänderte Dateien
+zur Staging-Area hinzufügen</h2>
+<p>Lass uns jetzt eine bereits versionierte Datei ändern. Wenn du zum
+Beispiel eine bereits unter Versionsverwaltung stehende Datei mit dem
+Dateinamen <code>CONTRIBUTING.md</code> änderst und danach den Befehl
+<code>git status</code> erneut ausführst, erhältst du in etwa folgende
+Ausgabe:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> vim CONTRIBUTING.md</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="kw">)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">new</span> file:   README</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> not staged for commit:</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed<span class="kw">)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes in working directory<span class="kw">)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">modified:</span>   CONTRIBUTING.md</span></code></pre></div>
+<p>Die Datei <code>CONTRIBUTING.md</code> erscheint im Abschnitt
+„Changes not staged for commit“. Das bedeutet, dass eine versionierte
+Datei im Arbeitsverzeichnis verändert worden ist, aber noch nicht für
+den Commit vorgemerkt wurde. Um sie vorzumerken, führst du den Befehl
+<code>git add</code> aus. Der Befehl <code>git add</code> wird zu vielen
+verschiedenen Zwecken eingesetzt. Man verwendet ihn, um neue Dateien zur
+Versionsverwaltung hinzuzufügen, Dateien für einen Commit vorzumerken
+und verschiedene andere Dinge – beispielsweise einen Konflikt aus einem
+Merge als aufgelöst zu kennzeichnen. Leider wird der Befehl
+<code>git add</code> oft missverstanden. Viele assoziieren damit, dass
+damit Dateien zum Projekt hinzugefügt werden. Wie du aber gerade gelernt
+hast, wird der Befehl auch noch für viele andere Dinge eingesetzt. Wenn
+du den Befehl <code>git add</code> einsetzt, solltest du das eher so
+sehen, dass du damit einen bestimmten Inhalt für <strong>den nächsten
+Commit vormerkst</strong>. Lass uns nun mit <code>git add</code> die
+Datei <code>CONTRIBUTING.md</code> zur Staging-Area hinzufügen und
+danach das Ergebnis mit git status kontrollieren:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git add CONTRIBUTING.md</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="kw">)</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">new</span> file:   README</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">modified:</span>   CONTRIBUTING.md</span></code></pre></div>
+<p>Beide Dateien sind nun für den nächsten Commit vorgemerkt. Nehmen wir
+an, du willst jetzt aber noch eine weitere Änderung an der Datei
+<code>CONTRIBUTING.md</code> vornehmen, bevor du den Commit tatsächlich
+startest. Du öffnest die Datei erneut, änderst sie entsprechend ab und
+eigentlich wärst du jetzt bereit den Commit durchzuführen. Lass uns
+vorher noch einmal den Befehl git status ausführen:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="kw">)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">new</span> file:   README</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">modified:</span>   CONTRIBUTING.md</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> not staged for commit:</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed<span class="kw">)</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes in working directory<span class="kw">)</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">modified:</span>   CONTRIBUTING.md</span></code></pre></div>
+<p>Was zum Kuckuck …​? Jetzt wird die Datei <code>CONTRIBUTING.md</code>
+sowohl in der Staging-Area als auch als geändert aufgelistet. Wie ist
+das möglich? Die Erklärung dafür ist, dass Git eine Datei in exakt dem
+Zustand für den Commit vormerkt, in dem sie sich befindet, wenn du den
+Befehl <code>git add</code> ausführst. Wenn du den Commit jetzt anlegst,
+wird die Version der Datei <code>CONTRIBUTING.md</code> denjenigen
+Inhalt haben, den sie hatte, als du <code>git add</code> zuletzt
+ausgeführt hast und nicht denjenigen, den sie in dem Moment hat, wenn du
+den Befehl <code>git commit</code> ausführst. Wenn du stattdessen die
+gegenwärtige Version im Commit haben möchten, müsst du erneut
+<code>git add</code> ausführen, um die Datei der Staging-Area
+hinzuzufügen:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git add CONTRIBUTING.md</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> to be committed:</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="kw">)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">new</span> file:   README</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">modified:</span>   CONTRIBUTING.md</span></code></pre></div>
+<h1 id="die-änderungen-committen">Die Änderungen committen</h1>
+<p>Nachdem deine Staging-Area nun so eingerichtet ist, wie du es
+wünschst, kannst du deine Änderungen committen. Denke daran, dass alles,
+was noch nicht zum Commit vorgemerkt ist – alle Dateien, die du erstellt
+oder geändert hast und für die du seit deiner Bearbeitung nicht mehr git
+add ausgeführt hast – nicht in diesen Commit einfließen werden. Sie
+bleiben aber als geänderte Dateien auf deiner Festplatte erhalten. In
+diesem Beispiel nehmen wir an, dass du beim letzten Mal, als du
+<code>git status</code> ausgeführt hast, gesehen hast, dass alles zum
+Commit vorgemerkt wurde und du bereit bist, alle deine Änderungen zu
+committen. Am einfachsten committen man, wenn <code>git commit</code>
+eingegeben wird:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git commit</span></code></pre></div>
+<p>Dadurch wird der Editor deiner Wahl gestartet.</p>
+<p>Anmerkung: Der Editor wird durch die Umgebungsvariable EDITOR deiner
+Shell festgelegt. Du kannst den Editor aber auch mit dem Befehl
+<code>git config --global core.editor</code> beliebig konfigurieren.</p>
+<p>Der Editor zeigt den folgenden Text an (dieses Beispiel ist eine
+Vim-Ansicht):</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Please enter the commit message for your changes. Lines starting</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># with &#39;#&#39; will be ignored, and an empty message aborts the commit.</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># On branch master</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Your branch is up-to-date with &#39;origin/master&#39;.</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Changes to be committed:</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   new file:   README</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   modified:   CONTRIBUTING.md</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="ex">~</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="ex">~</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="ex">~</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;.git/COMMIT_EDITMSG&quot;</span> 9L, 283C</span></code></pre></div>
+<p>Du kannst erkennen, dass die Standard-Commit-Meldung die neueste
+Ausgabe des Befehls <code>git status</code> auskommentiert und eine
+leere Zeile darüber enthält. Du kannst über den Kommentartext eine
+Commit-Nachricht eingeben, die beschreibt, was du geändert hast.</p>
+<p>Alternativ kannst du deine Commit-Nachricht auch inline mit dem
+Befehl <code>commit -m</code> eingeben. Das Flag <code>-m</code>
+ermöglicht die direkte Eingabe eines Kommentartextes:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">&quot;Story 182: fix benchmarks for speed&quot;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[master</span> 463dc4f] Story 182: fix benchmarks for speed</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">2</span> files changed, 2 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">create</span> mode 100644 README</span></code></pre></div>
+<p>Jetzt hast du deinen ersten Commit erstellt! Du kannst sehen, dass
+der Commit eine Nachricht über sich selbst ausgegeben hat: in welchen
+Branch du committet hast (master), welche SHA-1-Prüfsumme der Commit hat
+(463dc4f), wie viele Dateien geändert wurden und Statistiken über
+hinzugefügte und entfernte Zeilen im Commit.</p>
+<p>Denke daran, dass der Commit den Snapshot aufzeichnet, den du in
+deiner Staging-Area eingerichtet hast. Alles, was von dir nicht zum
+Commit vorgemerkt wurde, ist weiterhin verfügbar. Du kannst einen
+weiteren Commit durchführen, um es zu deiner Historie hinzuzufügen.
+Jedes Mal, wenn du einen Commit ausführst, zeichnest du einen
+Schnappschuss deines Projekts auf, auf den du zurückgreifen oder mit dem
+du später vergleichen kannst.</p>
+<h2 id="die-staging-area-überspringen">Die Staging-Area
+überspringen</h2>
+<p>Obwohl es außerordentlich nützlich sein kann, Commits so zu
+erstellen, wie du es wünschst, ist die Staging-Area manchmal etwas
+komplexer, als du es für deinen Workflow benötigst. Wenn du die
+Staging-Area überspringen möchten, bietet Git eine einfache Kurzform.
+Durch das Hinzufügen der Option <code>-a</code> zum Befehl
+<code>git commit</code> wird jede Datei, die bereits vor dem Commit
+versioniert war, automatisch von Git zum Commit staged, so dass du den
+Teil <code>git add</code> überspringen kannst:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git status</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> branch is up-to-date with <span class="st">&#39;origin/master&#39;</span>.</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Changes</span> not staged for commit:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git add &lt;file&gt;...&quot;</span> to update what will be committed<span class="kw">)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes in working directory<span class="kw">)</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">modified:</span>   CONTRIBUTING.md</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="ex">no</span> changes added to commit <span class="er">(</span><span class="ex">use</span> <span class="st">&quot;git add&quot;</span> and/or <span class="st">&quot;git commit -a&quot;</span><span class="kw">)</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-a</span> <span class="at">-m</span> <span class="st">&#39;Add new benchmarks&#39;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ex">[master</span> 83e38c7] Add new benchmarks</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 5 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span><span class="ex">,</span> 0 deletions<span class="er">(</span><span class="ex">-</span><span class="kw">)</span></span></code></pre></div>
+<p>Beachte, dass du in diesem Fall <code>git add</code> nicht für die
+Datei <code>CONTRIBUTING.md</code> ausführen musst, bevor du committest.
+Das liegt daran, dass das <code>-a</code>-Flag alle geänderten Dateien
+einschließt. Das ist bequem. Aber sei vorsichtig, manchmal führt dieses
+Flag dazu, dass du ungewollte Änderungen vornimmst.</p>
+<h1 id="anzeigen-der-commit-historie">Anzeigen der Commit-Historie</h1>
+<p>Nachdem du mehrere Commits erstellt hast, oder wenn du ein Repository
+mit einer bestehenden Commit-Historie geklont hast, wirst du
+wahrscheinlich zurückschauen wollen, um zu erfahren, was geschehen ist.
+Das wichtigste und mächtigste Werkzeug dafür ist der Befehl
+<code>git log</code>.</p>
+<p>Diese Beispiele verwenden ein sehr einfaches Projekt namens
+„simplegit“. Um das Projekt zu erstellen, führe diesen Befehl aus:</p>
+<p><code>$ git clone https://github.com/schacon/simplegit-progit</code></p>
+<p>Wenn du <code>git log</code> in diesem Projekt aufrufst, solltest du
+eine Ausgabe erhalten, die ungefähr so aussieht:</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git log</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> ca82a6dff817ec66f44342007202690a93763949</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Mon Mar 17 21:52:11 2008 <span class="at">-0700</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Change</span> version number</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sat Mar 15 16:40:33 2008 <span class="at">-0700</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Remove</span> unnecessary test</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> a11bef06a3f659402fe7563abf99ad00de2209e6</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sat Mar 15 10:31:28 2008 <span class="at">-0700</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Initial</span> commit</span></code></pre></div>
+<p>Standardmäßig, d.h. ohne Argumente, listet <code>git log</code> die
+in diesem Repository vorgenommenen Commits in umgekehrter
+chronologischer Reihenfolge auf, d.h. die <strong>neuesten Commits
+werden als Erstes</strong> angezeigt. Wie du sehen kannst, listet dieser
+Befehl jeden Commit mit seiner SHA-1-Prüfsumme, dem Namen und der
+E-Mail-Adresse des Autors, dem Erstellungs-Datum und der
+Commit-Beschreibung auf.</p>
+<p>Eine Vielzahl von Optionen stehen für den Befehl <code>git log</code>
+zur Verfügung, um dir exakt das anzuzeigen, wonach du suchst. Hier
+zeigen wir dir einige der gängigsten.</p>
+<p>Eine der hilfreichsten Optionen ist <code>-p</code> oder
+<code>--patch</code>. Sie zeigt die Änderungen (die patch-Ausgabe) an,
+die bei jedem Commit durchgeführt wurden. Du kannst auch die Anzahl der
+anzuzeigenden Protokolleinträge begrenzen, z.B. mit <code>-2</code>
+werden nur die letzten beiden Einträge dargestellt.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git log <span class="at">-p</span> <span class="at">-2</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> ca82a6dff817ec66f44342007202690a93763949</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Mon Mar 17 21:52:11 2008 <span class="at">-0700</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Change</span> version number</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span> <span class="at">--git</span> a/Rakefile b/Rakefile</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="ex">index</span> a874b73..8f94139 100644</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span> a/Rakefile</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="ex">+++</span> b/Rakefile</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="ex">@@</span> <span class="at">-5,7</span> +5,7 @@ require <span class="st">&#39;rake/gempackagetask&#39;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a> <span class="ex">spec</span> = Gem::Specification.new do <span class="kw">|</span><span class="ex">s</span><span class="kw">|</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>     <span class="ex">s.platform</span>  =   Gem::Platform::RUBY</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>     <span class="ex">s.name</span>      =   <span class="st">&quot;simplegit&quot;</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>    s.version   =   <span class="st">&quot;0.1.0&quot;</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span>    s.version   =   <span class="st">&quot;0.1.1&quot;</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>     <span class="ex">s.author</span>    =   <span class="st">&quot;Scott Chacon&quot;</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>     <span class="ex">s.email</span>     =   <span class="st">&quot;schacon@gee-mail.com&quot;</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>     <span class="ex">s.summary</span>   =   <span class="st">&quot;A simple gem for using Git in Ruby code.&quot;</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sat Mar 15 16:40:33 2008 <span class="at">-0700</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Remove</span> unnecessary test</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span> <span class="at">--git</span> a/lib/simplegit.rb b/lib/simplegit.rb</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="ex">index</span> a0a60ae..47c6340 100644</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="ex">---</span> a/lib/simplegit.rb</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="ex">+++</span> b/lib/simplegit.rb</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="ex">@@</span> <span class="at">-18,8</span> +18,3 @@ class SimpleGit</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>     <span class="ex">end</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a> <span class="ex">end</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="ex">-if</span> <span class="va">$0</span> == __FILE__</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>  git = SimpleGit.new</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>  puts git.show</span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="ex">-end</span></span></code></pre></div>
+<p>Diese Option zeigt die gleichen Informationen an, jedoch mit der diff
+Ausgabe direkt nach jedem Eintrag. Dies ist sehr hilfreich für die
+Codeüberprüfung oder um schnell zu durchsuchen, was während einer Reihe
+von Commits passiert ist, die ein Teammitglied hinzugefügt hat. Du
+kannst auch mehrere Optionen zur Verdichtung der Ausgabe von git log
+verwenden. Wenn du beispielsweise einige gekürzte Statistiken für jeden
+Commit sehen möchtest, kannst du die Option <code>--stat</code>
+verwenden:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git log <span class="at">--stat</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> ca82a6dff817ec66f44342007202690a93763949</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Mon Mar 17 21:52:11 2008 <span class="at">-0700</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Change</span> version number</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">Rakefile</span> <span class="kw">|</span> <span class="ex">2</span> +-</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 1 insertion<span class="er">(</span><span class="ex">+</span><span class="kw">)</span><span class="ex">,</span> 1 deletion<span class="er">(</span><span class="ex">-</span><span class="kw">)</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sat Mar 15 16:40:33 2008 <span class="at">-0700</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Remove</span> unnecessary test</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a> <span class="ex">lib/simplegit.rb</span> <span class="kw">|</span> <span class="ex">5</span> <span class="at">-----</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a> <span class="ex">1</span> file changed, 5 deletions<span class="er">(</span><span class="ex">-</span><span class="kw">)</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="ex">commit</span> a11bef06a3f659402fe7563abf99ad00de2209e6</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="ex">Author:</span> Scott Chacon <span class="op">&lt;</span>schacon@gee-mail.com<span class="op">&gt;</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="ex">Date:</span>   Sat Mar 15 10:31:28 2008 <span class="at">-0700</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Initial</span> commit</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a> <span class="ex">README</span>           <span class="kw">|</span>  <span class="ex">6</span> ++++++</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a> <span class="ex">Rakefile</span>         <span class="kw">|</span> <span class="ex">23</span> +++++++++++++++++++++++</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a> <span class="ex">lib/simplegit.rb</span> <span class="kw">|</span> <span class="ex">25</span> +++++++++++++++++++++++++</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a> <span class="ex">3</span> files changed, 54 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span></span></code></pre></div>
+<p>Wie du sehen kannst, gibt die Option <code>--stat</code> unter jedem
+Commit-Eintrag eine Liste der geänderten Dateien aus, wie viele Dateien
+geändert wurden und wie viele Zeilen in diesen Dateien hinzugefügt (+)
+und entfernt wurden (-). Sie enthält auch eine Zusammenfassung am Ende
+des Berichts.</p>
+<p>Eine weitere wirklich nützliche Option ist <code>--pretty</code>.
+Diese Option ändert das Format der Log-Ausgabe in ein anderes als das
+Standard-Format. Dir stehen einige vorgefertigte Optionswerte zur
+Verfügung. Der Wert oneline für diese Option gibt jeden Commit in einer
+einzigen Zeile aus, was besonders nützlich ist, wenn du dir viele
+Commits ansiehst. Darüber hinaus zeigen die Werte short, full und fuller
+die Ausgabe im etwa gleichen Format, allerdings mit mehr oder weniger
+Informationen an:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git log <span class="at">--pretty</span><span class="op">=</span>oneline</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ca82a6dff817ec66f44342007202690a93763949</span> Change version number</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7</span> Remove unnecessary test</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">a11bef06a3f659402fe7563abf99ad00de2209e6</span> Initial commit</span></code></pre></div>
+</article>
+</body>
+</html>
