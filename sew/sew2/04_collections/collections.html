@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Java Collections)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <section>
+        <h1>Java Collections</h1>
+        <p class="center">DI Reinhold Buchinger</p>
+        <p class="center small">Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
+      </section>
+
+
+      <section>
+        <h2>Ziele</h2>
+        <p class="center">Java List, Set und Map anwenden können.</p>
+      </section>
+
+
+      <section>
+        <h2>Datenstrukturen</h2>
+        <p>Welche Datenstruktur kennen wir bis jetzt, um mehrere Objekte gemeinsam zu speichern?</p>
+        <p class="fragment center big"><strong>Array</strong></p>
+      </section>
+
+
+      <section>
+        <h2>Nachteile Array</h2>
+        <ul>
+          <li>hat eine fixe Länge (in Java)</li>
+          <li>stellt selbst keine Methoden für häufige Anwendungsfälle zu Verfügung
+            <ul>
+              <li>z.B. Sortierung, Suche,...</li>
+            </ul>
+          </li>
+          <li>...</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Java Collection</h2>
+        <ul>
+          <li>Als "Collection" bezeichnet man eine Gruppe von zusammengehörigen Objekten.</li>
+          <li>Es gibt (neben Arrays) verschiede Datenstrukturen, die mehrere Objekte speichern:
+            <ul>
+              
+              <li><strong>List</strong>: definierte Reihenfolge, Duplikate erlaubt</li>
+              <li><strong>Set</strong>: keine Duplikate erlaubt</li>
+              <li><strong>Map</strong>: Schlüssel-Wert-Paare</li>
+            </ul>
+          </li>
+          <li>Java stellt verschiedene Interfaces und konkrete Implementierungen (Klassen) für die unterschiedlichen Datenstrukturen bereit.</li>
+        </ul>
+        <p></p>
+  
+      </section>
+
+
+      <section>
+        <h2>List</h2>
+        <p>Eine <strong>Liste</strong> ist eine Datenstruktur ...</p>
+        <ul class="left">
+          <li>deren Elemente immer eine Ordnung haben (z.B. Reihenfolge des Einfügens).</li>
+          <li>bei der Duplikate erlaubt sind.</li>
+          <li>bei der über einen Index auf Elemente zugegriffen werden kann.</li>
+        </ul>
+        <p>Die Java API kennt folgende Implementierungen einer Liste:</p>
+        <ul>
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a> (bessere Performance Speicherung/Zugriff)</li>
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html">LinkedList</a> (bessere Performance bei Manipulationen)</li>
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Vector.html">Vector</a> (synchronized - nur ein Thread gleichzeitig)</li>
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Stack.html">Stack</a> (LIFO – last-in-first-out)</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Set</h2>
+        <p>Ein <strong>Set</strong> ist eine Datenstruktur....</p>
+        <ul class="left">
+          <li>die keine Duplikate erlaubt.</li>
+          <li>nicht unbedingt eine Ordnung haben muss.</li>
+        </ul>
+        <p>Die Java API kennt drei konkrete Implementierungen eines Sets:</p>
+        <ul>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashSet.html">HashSet</a></strong> (keine Ordnung)</li>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeSet.html">TreeSet</a></strong> (Elemente sind immer geordnet)</li>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedHashSet.html">LinkedHashSet</a></strong> (Reihenfolge des Einfügens bleibt erhalten)</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Map</h2>
+        <p>Eine <strong>Map</strong> ist eine Datenstruktur...</p>
+        <ul class="left">
+          <li>die Schlüssel (keys) zu Werten (values) zuordnet<br>
+            z.B. Name (key) zu Telefonnummer (value)</li>
+          <li>bei der alle Schlüssel eindeutig sein müssen</li>
+        </ul>
+        <p>Die Java API kennt drei konkrete Implementierungen einer Map (vgl. Sets!):</p>
+        <ul>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html">HashMap</a></strong> (keine Ordnung)</li>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeMap.html">TreeMap</a></strong> (Elemente sind immer geordnet)</li>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedHashMap.html">LinkedHashMap</a></strong> (Reihenfolge des Einfügens bleibt erhalten)</li>
+        </ul>
+      </section>
+
+      <!-- Slide 4 -->
+      <section>
+        <h2>Generics</h2>
+        <ul>
+          <li>Eine Collection (z.B. ArrayList) ist so implementiert, dass ein beliebiger Datentyp darin gespeichert werden kann.</li>
+          <li>Im Code wird aber angegeben, welchen Datentyp man in der Collection speichern will.</li>
+          <li>Erlaubt eine Überprüfung  bereits vom Compiler / IDE, ob nur Objekte vom gewünschten Datentyp eingefügt werden.</li>
+          <li>So werden diese Fehler nicht erst bei der Programmausführung erkannt.</li>
+          <li>&lt;&gt; kennzeichnen in Java Generics.</li>
+        </ul>
+
+      </section>
+
+      <section>
+        <h2>Generics - Beispiel</h2>
+        <ul>
+          <li>Die Variable <code>list</code> hat den Datentyp ArrayList.</li>
+          <li>&lt;String&gt; kennzeichnen den Datentyp mit dem die Klasse arbeiten soll. In dieser Arraylist können also nur Strings gespeichert werden.</li>
+        </ul>
+        <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</code></pre>
+      </section>
+
+      <section>
+        <h2>Codebeispiele</h2>
+      </section>
+
+
+      <section>
+        <h2>Interfaces</h2>
+      </section>
+
+
+      <section>
+        <h2>Interface</h2>
+        <p><strong>Wiederholung: Was ist ein Interface?</strong></p>
+        <ul>
+          <li>Ein Interface besitzt keine Implementierungen, sondern nur Methodenköpfe und Konstanten.</li>
+          <li>Trennt die Definition der Schnittstelle von der Implementierung.</li>
+        </ul>
+        <pre><code class="language-java">public interface RidableAnimal {
+    public void rideAnimal();
+}
+
+public class Horse implements RidableAnimal {
+    @Override
+    public void rideAnimal() {
+        System.out.println("Riding is fun");
+    }
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>Interfaces &amp; Klassen</h2>
+        <ul>
+          <li><strong>Collection</strong> ist ein Interface
+            <ul>
+              <li>D.h. definiert etliche Methoden, implementiert sie aber nicht.</li>
+              <li>Es kann kein Objekt davon erzeugt werden.</li>
+            </ul>
+          </li>
+          <li><strong>List</strong> und <strong>Set</strong> sind Interfaces und erben von Collection
+            <ul>
+              <li>Besitzen alle Methoden von Collection und evt. noch zusätzliche</li>
+              <li>Es kann kein Objekt davon erzeugt werden.</li>
+            </ul>
+          </li>
+          <li><strong>ArrayList</strong> (als Beispiel) implementiert das Interface List
+            <ul>
+              <li>Implementiert alle Methoden des Interfaces (und könnte noch zusätzliche implementieren)</li>
+              <li>Es kann ein Objekt davon erzeugt werden.</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+  
+      <section>
+        <h2>UML Diagram</h2>
+      </section>
+
+
+      <section>
+        <h2>Interfaces &amp; Klassen - Beispiel</h2>
+        <pre><code class="language-java">? list = new ArrayList&lt;&gt;();</code></pre>
+        <p>Welchen Datentyp <strong>kann</strong> die Variable <code>list</code> haben?</p>
+        <p>Welcher Datentyp <strong>soll</strong> verwendet werden und warum?</p>
+      </section>
+
+
+      <section>
+        <h2>Interfaces &amp; Klassen – Beispiel 2</h2>
+        <pre><code class="language-java">Collection&lt;String&gt; c = new ArrayList&lt;&gt;();
+c.add("Saturn");     // the method add is defined in the interface "Collection"
+c.get(0);            // Error: no method "get"
+
+List&lt;String&gt; l = (List) c;   // cast to list
+String s = l.get(0);          // the interface "List" has a method "get"
+
+l.ensureCapacity(20);         // Error: no method "ensureCapacity"
+ArrayList&lt;String&gt; al = (ArrayList) l;    // cast
+al.ensureCapacity(20);        // the class "ArrayList" has the method "ensureCapacity"</code></pre>
+      </section>
+
+ 
+      <section>
+        <h2>Conversion Konstruktor</h2>
+        <ul>
+          <li>Jede Collection Implementierung besitzt einen Konstruktor mit einem Parameter vom Typ Collection.</li>
+          <li>Dieser Konstruktor initialisiert die neue Collection mit allen Elementen der übergegebenen Collection.</li>
+          <li>Welche Objekte kann ich einem solchen Konstruktor übergeben?</li>
+        </ul>
+        <p><strong>Beispiel:</strong></p>
+        <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("Semmel");
+list.add("Semmel");
+HashSet&lt;String&gt; set = new HashSet&lt;&gt;(list);</code></pre>
+      </section>
+
+ 
+      <section>
+        <h2>Array &lt;-&gt; Collection</h2>
+        <p><strong>Umwandlung Collection in Array</strong></p>
+        <ul>
+          <li><code>toArray()</code> Methode des Collection Interface</li>
+        </ul>
+        <p><strong>Umwandlung Array in Collection</strong></p>
+        <ul>
+          <li><code>Arrays.asList()</code> + evt. Conversion Konstruktor</li>
+        </ul>
+        <pre><code class="language-java">String[] names = new String[]{"Paul", "Hannah", "Anna"};
+List&lt;String&gt; list = Arrays.asList(names);
+Set&lt;String&gt; set = new HashSet&lt;&gt;(Arrays.asList(names));
+String[] namesArray = (String[]) set.toArray();</code></pre>
+      </section>
+
+      <!-- Slide 14 -->
+      <section>
+        <h2>Collection durchlaufen</h2>
+      </section>
+
+      <!-- Slide 15 -->
+      <section>
+        <h2>for-each Schleife</h2>
+        <pre><code class="language-java">Collection&lt;String&gt; collection = new HashSet&lt;&gt;(Arrays.asList("Paul", "Hannah", "Anna"));
+for (String s: collection) {
+    System.out.println(s);
+}</code></pre>
+      </section>
+
+      <!-- Slide 16 -->
+      <section>
+        <h2>Iterator</h2>
+        <p>Ein <strong>Iterator</strong> muss verwendet werden wenn man Elemente während des Durchlaufs entfernen möchte.</p>
+        <pre><code class="language-java">Collection&lt;String&gt; collection = new HashSet&lt;&gt;(Arrays.asList("Paul", "Hannah", "Anna"));
+Iterator&lt;String&gt; it = collection.iterator();
+while (it.hasNext()) {
+    System.out.println(it.next());
+}</code></pre>
+      </section>
+
+      <!-- Slide 17 -->
+      <section>
+        <h2>Streams</h2>
+        <p>Behandeln wir später.</p>
+      </section>
+
+      <!-- Slide 18 -->
+      <section>
+        <h2>Wrapper Klassen</h2>
+      </section>
+
+      <!-- Slide 19 -->
+      <section>
+        <h2>Primitive Datentypen vs. Objekte</h2>
+        <ul>
+          <li>In einer Collection können nur Objekte gespeichert werden.</li>
+          <li>Trotzdem läuft der Code wenn primitive Typen (int, float, boolean,...) in Collection gespeichert werden.</li>
+          <li><strong>Warum?</strong></li>
+          <li>"Auto(un)boxing": Java nimmt eine automatische Umwandlung primitiver Typ &lt;-&gt; Objekt vor.</li>
+          <li>Jeder primitive Datentyp besitzt in Java ein dazugehörige Klasse.</li>
+          <li>"Wrapper-Klassen": Sie "verpacken" (engl. "wrap") einen primitiven Datentyp</li>
+        </ul>
+      </section>
+
+      <!-- Slide 20 -->
+      <section>
+        <h2>Wrapper Klassen</h2>
+      </section>
+
+      <!-- Slide 21 -->
+      <section>
+        <h2>Fragen? Anregungen? Bemerkungen?</h2>
+      </section>
+
+
+
+
+      
+
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+	<script src="../../reveal-config.js"></script>
+</body>
+</html>
