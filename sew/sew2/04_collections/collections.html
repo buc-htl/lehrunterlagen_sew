@@ -77,12 +77,12 @@
           <li>bei der Duplikate erlaubt sind.</li>
           <li>bei der über einen Index auf Elemente zugegriffen werden kann.</li>
         </ul>
-        <p>Die Java API kennt folgende Implementierungen einer Liste:</p>
+        <p>Die Java API kennt u.a folgende Implementierungen einer Liste:</p>
         <ul>
-          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a> (bessere Performance Speicherung/Zugriff)</li>
-          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html">LinkedList</a> (bessere Performance bei Manipulationen)</li>
-          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Vector.html">Vector</a> (synchronized - nur ein Thread gleichzeitig)</li>
-          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Stack.html">Stack</a> (LIFO – last-in-first-out)</li>
+          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a> (bessere Performance Speicherung/Zugriff)</li>
+          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html">LinkedList</a> (bessere Performance bei Manipulationen)</li>
+          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Vector.html">Vector</a> (synchronized - nur ein Thread gleichzeitig)</li>
+          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Stack.html">Stack</a> (LIFO – last-in-first-out)</li>
         </ul>
       </section>
 
@@ -119,7 +119,6 @@
         </ul>
       </section>
 
-      <!-- Slide 4 -->
       <section>
         <h2>Generics</h2>
         <ul>
@@ -137,12 +136,22 @@
         <ul>
           <li>Die Variable <code>list</code> hat den Datentyp ArrayList.</li>
           <li>&lt;String&gt; kennzeichnen den Datentyp mit dem die Klasse arbeiten soll. In dieser Arraylist können also nur Strings gespeichert werden.</li>
+          <li>Auf der rechten Seiten reichen leere &lt;&gt; aus, da der Compiler den Datentyp aus dem linken Teil ableiten kann.</li>
         </ul>
         <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</code></pre>
       </section>
 
       <section>
-        <h2>Codebeispiele</h2>
+        <h2>Generics - Java API</h2>
+        <ul>
+          <li>In der Java API Dokumentation steht ein Buchstabe als Platzhalter für den generischen Datentyp.</li>
+          <li>Für eine Arraylist von Strings wäre E also String.</li>
+        </ul>
+        <div>
+            <img src="images/javaAPI-ArrayList.png" alt="Java API - ArrayList Header ">
+            <img src="images/javaAPI-ArrayList-add.png" alt="Java API - ArrayList add Method">
+        </div>
+    
       </section>
 
 
@@ -153,50 +162,57 @@
 
       <section>
         <h2>Interface</h2>
-        <p><strong>Wiederholung: Was ist ein Interface?</strong></p>
+        <p><strong>Wiederholung: Was ist ein <a href="../02_oop_part2/interfaces.html">Interface</a>?</strong></p>
         <ul>
-          <li>Ein Interface besitzt keine Implementierungen, sondern nur Methodenköpfe und Konstanten.</li>
-          <li>Trennt die Definition der Schnittstelle von der Implementierung.</li>
+          <li>Ein <a href="../02_oop_part2/interfaces.html">Interface</a> besitzt grundsätzlich keine Implementierungen, sondern nur Methodenköpfe und Konstanten.</li>
+          <li>Trennt die Definition der <strong>Schnittstelle</strong> von der Implementierung.</li>
         </ul>
-        <pre><code class="language-java">public interface RidableAnimal {
-    public void rideAnimal();
+        <pre><code class="language-java">
+public interface RidableAnimal { //Interface definiert die Schnittstelle ("Was")
+    public void rideAnimal();   
 }
 
 public class Horse implements RidableAnimal {
     @Override
-    public void rideAnimal() {
+    public void rideAnimal() {  //die Klasse implementiert die Schnittstelle ("Wie")
         System.out.println("Riding is fun");
     }
 }</code></pre>
       </section>
 
       <section>
-        <h2>Interfaces &amp; Klassen</h2>
+        <h2>relevante Interfaces in der Java API</h2>
         <ul>
-          <li><strong>Collection</strong> ist ein Interface
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html">Collection</a></strong> ist ein Interface der Java API
             <ul>
-              <li>D.h. definiert etliche Methoden, implementiert sie aber nicht.</li>
-              <li>Es kann kein Objekt davon erzeugt werden.</li>
+              <li>definiert die grundlegenden Methoden für Collection-Typen</li>
             </ul>
           </li>
-          <li><strong>List</strong> und <strong>Set</strong> sind Interfaces und erben von Collection
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html">List</a></strong> und <strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Set.html">Set</a></strong> sind ebenfalls Interfaces und <strong>erben</strong> von Collection
             <ul>
-              <li>Besitzen alle Methoden von Collection und evt. noch zusätzliche</li>
-              <li>Es kann kein Objekt davon erzeugt werden.</li>
+              <li>Besitzen alle Methoden von Collection und definieren zusätzliche Methoden.</li>
             </ul>
           </li>
-          <li><strong>ArrayList</strong> (als Beispiel) implementiert das Interface List
-            <ul>
-              <li>Implementiert alle Methoden des Interfaces (und könnte noch zusätzliche implementieren)</li>
-              <li>Es kann ein Objekt davon erzeugt werden.</li>
-            </ul>
-          </li>
+          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html">Map</a></strong> ist ebenfalls ein Interface der Java API (erbt aber nicht vom Interface Collection).</li>
         </ul>
       </section>
 
-  
+      <section>
+        <h2>Interfaces &amp; Klassen - Beispiel</h2>
+        
+            <ul>
+              <li>Die Klasse <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a></strong> (als Beispiel)  ist eine konkrete Implementierung des Interfaces List.</li>
+              <li>Implementiert alle Methoden des Interfaces (und noch ein paar zusätzliche).</li>
+              <li>Es kann ein Objekt von der Klasse ArrayList erstellt werden (von einem Interface kann kein Objekt erstellt werden).</li>
+              <li>LinkedList, Stack,...sind weitere Implementierungen des Interfaces List.</li>    
+            </ul>
+          </li>
+      </section>
+
+
       <section>
         <h2>UML Diagram</h2>
+        <img src="images/collections.png" alt="UML Diagramm Interfaces &amp; Klassen">
       </section>
 
 
@@ -205,6 +221,9 @@ public class Horse implements RidableAnimal {
         <pre><code class="language-java">? list = new ArrayList&lt;&gt;();</code></pre>
         <p>Welchen Datentyp <strong>kann</strong> die Variable <code>list</code> haben?</p>
         <p>Welcher Datentyp <strong>soll</strong> verwendet werden und warum?</p>
+        
+        <p class="fragment"><code>Collection</code>, <code>List</code>, <code>ArrayList</code> sind mögliche Datentypen für die Variable <code>list</code>. 
+        <p class="fragment">Es wird empfohlen, den Datentyp <code>List</code> zu verwenden, da dies die Flexibilität erhöht und die Implementierung von <code>ArrayList</code> abstrahiert.</p></p>
       </section>
 
 
@@ -222,7 +241,64 @@ ArrayList&lt;String&gt; al = (ArrayList) l;    // cast
 al.ensureCapacity(20);        // the class "ArrayList" has the method "ensureCapacity"</code></pre>
       </section>
 
- 
+
+      <section>
+        <h2>Primitive Datentypen vs. Objekte</h2>
+        <ul>
+          <li>In einer Collection können <strong>nur Objekte</strong> gespeichert werden.</li>
+          <li>Trotzdem läuft der Code wenn primitive Typen (int, float, boolean,...) in Collection gespeichert werden. Warum?</li>
+          <li>"Auto(un)boxing": Java nimmt eine automatische Umwandlung primitiver Typ &lt;-&gt; Objekt vor.</li>
+          <li>Jeder primitive Datentyp besitzt in Java ein dazugehörige "Wrapper"-Klasse. Sie "verpacken" (engl. "wrap") einen primitiven Datentyp.</li>
+        </ul>
+      </section>
+
+<section>
+  <h2>Wrapper Klassen</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Primitiver Datentyp</th>
+        <th>Wrapper-Klasse</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>byte</td>
+        <td>Byte</td>
+      </tr>
+      <tr>
+        <td>short</td>
+        <td>Short</td>
+      </tr>
+      <tr>
+        <td>int</td>
+        <td>Integer</td>
+      </tr>
+      <tr>
+        <td>long</td>
+        <td>Long</td>
+      </tr>
+      <tr>
+        <td>float</td>
+        <td>Float</td>
+      </tr>
+      <tr>
+        <td>double</td>
+        <td>Double</td>
+      </tr>
+      <tr>
+        <td>char</td>
+        <td>Character</td>
+      </tr>
+      <tr>
+        <td>boolean</td>
+        <td>Boolean</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
       <section>
         <h2>Conversion Konstruktor</h2>
         <ul>
@@ -241,74 +317,116 @@ HashSet&lt;String&gt; set = new HashSet&lt;&gt;(list);</code></pre>
       <section>
         <h2>Array &lt;-&gt; Collection</h2>
         <p><strong>Umwandlung Collection in Array</strong></p>
-        <ul>
-          <li><code>toArray()</code> Methode des Collection Interface</li>
+        <ul class="left">
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs//api/java.base/java/util/Collection.html#toArray(T%5B%5D)"><code>toArray()</code></a> Methode des Collection Interface</li>
         </ul>
         <p><strong>Umwandlung Array in Collection</strong></p>
-        <ul>
-          <li><code>Arrays.asList()</code> + evt. Conversion Konstruktor</li>
+        <ul class="left">
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#asList(T...)" target="_blank"><code>Arrays.asList()</code></a> + evt. Conversion Konstruktor</li>
         </ul>
-        <pre><code class="language-java">String[] names = new String[]{"Paul", "Hannah", "Anna"};
+        <pre><code class="language-java">
+String[] names = new String[]{"Paul", "Hannah", "Anna"};
 List&lt;String&gt; list = Arrays.asList(names);
-Set&lt;String&gt; set = new HashSet&lt;&gt;(Arrays.asList(names));
-String[] namesArray = (String[]) set.toArray();</code></pre>
+Set&lt;Integer&gt; set = new HashSet&lt;&gt;(Arrays.asList(1, 2, 3));
+String[] namesArray = (String[]) set.toArray();
+</code></pre>
       </section>
 
-      <!-- Slide 14 -->
+
+
+        <section>
+          <h2>List.of &amp; Set.of</h2>
+          <ul class="medium">
+            <li><code>List.of()</code> und <code>Set.of()</code> sind Factory-Methoden, um schnell unveränderliche Listen und Sets zu erstellen.</li>
+            <li>Die erzeugten Collections sind <strong>immutable</strong> (unveränderlich): Nachträgliches Hinzufügen, Entfernen oder Ändern ist nicht möglich.</li>
+          </ul>
+          <pre><code class="language-java">
+List&lt;String&gt; namen = List.of("Paul", "Hannah", "Anna");
+Set&lt;Integer&gt; zahlen = Set.of(1, 2, 3);
+namen.set(0,"Max"); //UnsupportedOperationException
+zahlen.add(4); //UnsupportedOperationException</code></pre>
+          <ul class="medium left">
+            <li>Es lässt sich jedoch leicht eine veränderliche Kopie erstellen.</li>
+            <li>Auch gut geeignet, um Collections mit festen Werten zu initialisieren.</li>
+          </ul>
+          <pre><code class="language-java">
+List&lt;String&gt; namen = new ArrayList&lt;&gt;(List.of("Paul", "Hannah", "Anna"));
+namen.add("Max"); </code></pre>
+
+        </section>
+
+
+
+ 
       <section>
         <h2>Collection durchlaufen</h2>
       </section>
 
-      <!-- Slide 15 -->
+
+      <section>
+        <h2>for-Schleife</h2>
+        <p>Sinnvoll bei Listen und wenn der Index benötigt wird.</p>
+      <pre><code>
+List&lt;String&gt; myList = new ArrayList&lt;&gt;(List.of("Paul", "Hannah", "Anna"));
+for (int i = 0; i &lt; myList.size(); i++) {
+    System.out.println(myList.get(i)); 
+}</code></pre>
+      </section>
+     
+
       <section>
         <h2>for-each Schleife</h2>
-        <pre><code class="language-java">Collection&lt;String&gt; collection = new HashSet&lt;&gt;(Arrays.asList("Paul", "Hannah", "Anna"));
+        <pre><code class="language-java">Collection&lt;String&gt; collection = new HashSet&lt;&gt;(List.of("Paul", "Hannah", "Anna"));
 for (String s: collection) {
     System.out.println(s);
 }</code></pre>
       </section>
 
-      <!-- Slide 16 -->
+
       <section>
         <h2>Iterator</h2>
         <p>Ein <strong>Iterator</strong> muss verwendet werden wenn man Elemente während des Durchlaufs entfernen möchte.</p>
         <pre><code class="language-java">Collection&lt;String&gt; collection = new HashSet&lt;&gt;(Arrays.asList("Paul", "Hannah", "Anna"));
 Iterator&lt;String&gt; it = collection.iterator();
 while (it.hasNext()) {
-    System.out.println(it.next());
-}</code></pre>
+    String nextElement = it.next();
+    if (nextElement.equals("Hannah")) {
+        it.remove(); //über Iterator entfernen
+    }
+}
+System.out.println(collection); //[Paul, Anna]</code></pre>
       </section>
 
-      <!-- Slide 17 -->
       <section>
         <h2>Streams</h2>
         <p>Behandeln wir später.</p>
       </section>
 
-      <!-- Slide 18 -->
-      <section>
-        <h2>Wrapper Klassen</h2>
-      </section>
 
-      <!-- Slide 19 -->
-      <section>
-        <h2>Primitive Datentypen vs. Objekte</h2>
+<section>
+        <h2>Maps</h2>
+</section>
+
+
+<section>
+  TODO
+</section>
+
+<section>
+  <p>Vergiss nicht, dir die Codebeispiele anzusehen!</p>
+</section>
+
+    <section>
+        <h2>Zusammenfassung</h2>
         <ul>
-          <li>In einer Collection können nur Objekte gespeichert werden.</li>
-          <li>Trotzdem läuft der Code wenn primitive Typen (int, float, boolean,...) in Collection gespeichert werden.</li>
-          <li><strong>Warum?</strong></li>
-          <li>"Auto(un)boxing": Java nimmt eine automatische Umwandlung primitiver Typ &lt;-&gt; Objekt vor.</li>
-          <li>Jeder primitive Datentyp besitzt in Java ein dazugehörige Klasse.</li>
-          <li>"Wrapper-Klassen": Sie "verpacken" (engl. "wrap") einen primitiven Datentyp</li>
+          <li>Java Collections sind Datenstrukturen, die mehrere Objekte speichern können.</li>
+          <li>Die Java API stellt verschiedene Interfaces und konkrete Implementierungen für Collections bereit.</li>
+          <li>Wir haben List, Set und Map und deren Eigenschaften kennengelernt.</li>
+          <li>Generics ermöglichen die Angabe des Datentyps, der in einer Collection gespeichert werden soll.</li>
         </ul>
       </section>
 
-      <!-- Slide 20 -->
-      <section>
-        <h2>Wrapper Klassen</h2>
-      </section>
 
-      <!-- Slide 21 -->
       <section>
         <h2>Fragen? Anregungen? Bemerkungen?</h2>
       </section>
