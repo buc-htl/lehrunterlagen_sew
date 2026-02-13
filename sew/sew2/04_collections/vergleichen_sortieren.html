@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Java Collections)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Objekte vergleichen</h1>
+        <h2>Objekte sortieren</h2>
+        <p class="center">DI Reinhold Buchinger</p>
+        <p class="center small">Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
+      </section>
+
+      <section>
+        <h2>Ziele</h2>
+        <ul class="left">
+          <li>Java Objekte vergleichen und sortieren können</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Wann sind zwei Objekte gleich?</h2>
+      </section>
+
+      <section>
+        <h2>Vergleichen von Objekten</h2>
+        <ul class="left">
+          <li>Beispiel: Klasse, die eine Person mit Vornamen, Nachnamen und Sozialversicherungsnummer abbildet.</li>
+          <li>Wenn ich mehrere Objekte vergleiche, wann handelt es sich um die gleiche Person?
+            <ul>
+              <li>Gleicher Nachname?</li>
+              <li>Gleicher Vorname und Nachname?</li>
+              <li>Gleiche Sozialversicherungsnummer?</li>
+            </ul>
+          </li>
+          <li class="fragment">Das Programm kann das nicht automatisch wissen. Wir als Programmier*innen müssen es festlegen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>hashCode() und equals()</h2>
+        <ul class="left">
+          <li>Die beiden Methoden <code>hashCode()</code> und <code>equals()</code> sind in der Klasse <code>Object</code> definiert, von der jede Klasse in Java automatisch erbt.</li>
+          <li>Beide Methoden besitzen eine Default-Implementierung, die in einer Klasse überschrieben werden kann und auch sollte.</li>
+          <li>IntelliJ unterstützt bei der automatischen Erstellung von passenden Implementierungen (Rechts-Klick -&gt; Generate)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Einschub Hashfunktion</h2>
+        <ul class="left">
+          <li>Eine Hashfunktion bildet eine große Eingabemenge auf eine kleinere Zielmenge (= die Hashwerte) ab.</li>
+          <li>Hashwerte haben meist eine fixe Länge.</li>
+          <li>Hashwerte bestehen meist aus natürlichen Zahlen.</li>
+          <li><strong>Kollision</strong> = unterschiedliche Eingabedaten erhalten denselben Hashwert</li>
+          <li>Gute Hashfunktion &rArr; möglichst wenig Kollisionen für die erwarteten Eingaben</li>
+        </ul>
+        <p class="fragment small">Hashwerte werden angewendet für Prüfsummen, in der Kryptologie (Nachrichten signieren, Passwörter speichern), Daten effizient in großen Datenmengen zu suchen (mittels Hashtabellen)</p>
+      </section>
+
+
+      <section>
+        <h2>Beispiel Hashtabelle</h2>
+        </h2>
+        <img src="images/hash_table.png" alt="Diagram einer Hashtabelle" class="center" height="550">
+        <p class="small">Quelle: https://de.wikipedia.org/wiki/Hashfunktion#/media/Datei:Hash_table_4_1_1_0_0_1_0_LL.svg</p>
+      </section>
+
+
+      <section>
+        <h2>hashCode()</h2>
+        <ul class="left">
+          <li>Methode der Klasse <code>Object</code></li>
+          <li>besitzt daher jede Klasse in Java automatisch</li>
+          <li>kann (und soll) überschrieben werden</li>
+          <li>liefert für das Objekt eine möglichst eindeutige Integerzahl (= den Hashwert), die sowohl positiv als auch negativ sein kann.</li>
+          <li>Nötig für Datenstrukturen mit Hashing-Algorithmen (z.B. HashMap, HashSet)</li>
+          <li>Eine Zahl zu vergleichen ist einfacher als ganze Objekte</li>
+          <li class="fragment">Default-Implementierung: interne Speicheradresse des Objekts</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>equals()</h2>
+        <ul class="left">
+          <li>Ebenfalls Methode der Klasse <code>Object</code></li>
+          <li>Definiert die inhaltliche Gleichheit von Objekten</li>
+          <li>kennen den Unterschied bereits von Strings
+            <ul>
+              <li><code>s1 == s2</code> &rArr; testet Identität (dasselbe Objekt)</li>
+              <li><code>s1.equals(s2)</code> &rArr; testet inhaltliche Gleichheit</li>
+            </ul>
+          </li>
+          <li>Standardimplementierung testet, ob es sich um die selben Objekte handelt.</li>
+          <li>Ohne Überschreiben liefert <code>==</code> und <code>.equals()</code> das selbe Ergebnis</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>hashCode() und equals()</h2>
+   
+          <p>Wenn <code>equals()</code> überschrieben wird muss auch <code>hashCode()</code> überschrieben werden!</p>
+          <p>Wenn <code>equals()</code> true liefert, müssen auch die Hashwerte der beiden Objekte gleich sein!</p>
+      </section>
+
+      <section>
+        <h2>Beispiel equals() und hashCode()</h2>
+        <div class="columns">
+          <div class="col">
+            <pre><code>
+public class Student {
+    
+    private String firstName;
+    private String lastName;
+    private int gradeLevel; 
+    private int id;
+
+    @Override
+    public boolean equals(Object o) {
+      if (o == null || getClass() != o.getClass()) {
+        return false; }
+        
+      Student student = (Student) o;
+      return id == student.id;
+    } 
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(id);
+    }
+}
+</code></pre>
+          </div>
+          <div class="col">
+            <p>Mit Überschreiben von <code>equals()</code>:</p>
+            <pre><code>
+Student s1 = new Student("Max", "Mustermann", 3, 123);
+Student s2 = new Student("Max", "Mustermann", 3, 123);
+Student s3 = new Student("Max", "Mustermann", 3, 456);
+System.out.println(s1.equals(s2)); //true
+System.out.println(s1.equals(s3)); //false
+</code></pre>  
+  
+            <p>Ohne Überschreiben von <code>equals()</code>:</p>
+            <pre><code>
+Student s1 = new Student("Max", "Mustermann", 3, 123);
+Student s2 = new Student("Max", "Mustermann", 3, 123);
+Student s3 = new Student("Max", "Mustermann", 3, 456);
+System.out.println(s1 == s2); //false
+System.out.println(s1 == s3); //false</code></pre>
+        </div>
+      </section>
+
+
+      <section>
+        <h2>Anwendungsfall HashSet und LinkedHashSet</h2>
+        <ul>
+          <li>HashSet und LinkedHashSet verwenden <code>hashCode()</code> und <code>equals()</code>, um Duplikate zu erkennen.</li>
+          <li>Zuerst wird <code>hashCode()</code> aufgerufen. Sind die Hashwerte gleich (mögliche Kollision), wird <code>equals()</code> aufgerufen.</li>
+          <li>Wenn <code>hashCode()</code> und <code>equals()</code> true liefern, handelt es sich um ein Duplikat und das Objekt wird nicht hinzugefügt.</li>
+          <li>Schaue dir die Codebeispiele dazu an!</li>
+        </ul>
+      </section>
+
+
+
+      <section>
+        <h2>Sortierung</h2>
+      </section>
+
+      <section>
+        <h2>Sortierung</h2>
+        <ul class="left">
+          <li>Genauso wie Java nicht wissen kann, wann zwei Objekte inhaltlich gleich sind, kann es nicht wissen, wie Objekte sortiert werden sollen.</li>
+          <li>Eine Reihenfolge wird durch das Implementieren eines der folgenden Interfaces festgelegt:
+            <ul>
+              <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html"><code>Comparator</code></a> (vergleicht zwei Objekte)</li>
+              <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html"><code>Comparable</code></a> (vergleicht anderes Objekt mit sich selbst)</li>
+            </ul>
+          </li>
+          <li>Viele Klassen der Java API implementieren <code>Comparable</code> (z.B. String, Integer,...) <br>&rArr; Objekte dieser Klassen können schon sortiert werden.</li>
+      </section>
+
+      <section>
+        <h2>Comparable vs Comparator</h2>
+        <table>
+          <thead>
+            <tr>
+              <th><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html">Comparable&lt;T&gt;</a></th>
+              <th><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html">Comparator&lt;T&gt;</a></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>int compareTo(T el);</code></td>
+              <td><code>int compare(T el1, T el2);</code></td>
+            </tr>
+            <tr>
+              <td>Vergleicht <code>this</code> mit dem Parameter <code>el</code></td>
+              <td>Vergleicht <code>el1</code> mit <code>el2</code></td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <p>Rückgabewert:</p>
+        <ul>
+            <li>&lt;0 : this ist kleiner als el (bzw. el1 &lt; el2 bei Comparator)</li>
+            <li>==0   :  this ist gleich el (bzw. el1 == el2 bei Comparator)</li>
+            <li>&gt;0 : this ist größer als el (bzw. el1 &gt; el2 bei Comparator)</li>
+        </ul>
+      </section>
+
+      
+      <section>
+        <h2>Comparable Interface in String und Wrapper Klassen</h2>
+        <p>Viele Klassen (Integer, String,...) implementieren das <code>Comparable</code> Interface. Du kannst das bei der Implementierung für deine eigenen Klassen nutzen!</p>
+        <pre><code>
+String s1 = "Hallo";
+String s2 = "Welt";
+//negativer Wert, da "Hallo" lexikographisch kleiner als "Welt" ist
+int compareValue = s1.compareTo(s2); 
+
+Integer i1 = 15;
+Integer i2 = 10;
+//positiver Wert, da 15 größer als 10 ist
+compareValue = i1.compareTo(i2); 
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Natürliche Ordnung</h2>
+        <p>Implementiert eine Klasse das <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html"><code>Comparable</code></a> Interface, so definiert sie eine <strong>natürliche</strong> Ordnung für ihre Objekte (i.e. eine "Standard Sortierung").</p>
+        <pre><code>
+public class Student implements Comparable&lt;Student&gt; {
+    //Attribute, Konstruktor, Getter, Setter usw.
+    
+    @Override
+    public int compareTo(Student other) {
+        //Vergleichslogik, z.B. nach Nachnamen, dann Vornamen
+        int lastNameComparison = this.lastName.compareTo(other.lastName);
+        if (lastNameComparison != 0) {
+            return lastNameComparison; //Nachnamen sind unterschiedlich
+        }
+        //Nachnamen sind gleich, also nach Vornamen vergleichen
+        return this.firstName.compareTo(other.firstName); 
+    }
+  }
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Comparator Interface</h2>
+        <ul>
+          <li>Mit dem <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html"><code>Comparator</code></a> Interface kann eine externe Sortierlogik definiert werden (außerhalb der Klasse, die sortiert werden soll).</li>
+          <li>Sinnvoll wenn mehrere Sortierlogiken (neben der natürlichen Sortierung) gebraucht werden.</li>
+        </ul>
+        <pre><code>
+public class StudentGradeComparator implements Comparator&lt;Student&gt; {
+    @Override
+    public int compare(Student s1, Student s2) {
+        return Integer.compare(s1.getGradeLevel(), s2.getGradeLevel());
+    }
+}
+        </code></pre>
+      </section>
+
+
+      <section>
+        <h2>Anwendung - Sortieren von Listen</h2>
+        <p>Mit <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#sort(java.util.Comparator)"><code>sort()</code></a> kann eine Liste sortiert werden.</p>
+        <pre><code>
+List&lt;Student&gt; students = new ArrayList&lt;&gt;(List.of(s1, s2, s3));
+
+//Sortiert die Liste nach der natürlichen Ordnung (compareTo() Methode)  
+students.sort(null); 
+
+//Sortiert die Liste nach der Logik des StudentGradeComparator
+students.sort(new StudentGradeComparator()); 
+        </code></pre>
+      </section>
+
+
+      <section>
+        <h2>Anwendung - Treeset</h2>
+     
+            <ul>
+              <li>Ein <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeSet.html"><code>TreeSet</code></a> ist ein sortiertes Set, das die natürliche Ordnung der Elemente oder einen angegebenen Comparator verwendet.</li>
+              <li>Duplikate werden ebenso über die natürliche Ordnung oder den Comparator bestimmt (nicht über <code>equals()</code> und <code>hashCode()</code>).</li>
+              <li><em>Siehe Codebeispiele</em> für mehr Details.</li>
+            </ul>
+
+    <pre><code>
+//Verwendet die natürliche Ordnung (compareTo() Methode)
+Set&lt;Student&gt; studentTreeSet = new TreeSet&lt;&gt;();
+
+//Verwendet die Logik des StudentGradeComparator
+Set&lt;Student&gt; studentTreeSetWithComparator = new TreeSet&lt;&gt;(new StudentGradeComparator());
+    </code></pre>
+      </section>
+    
+<section>
+  <h2>Anwendung - Sortieren von Arrays</h2>
+<p> <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#sort(java.lang.Object[])"><code>Arrays.sort()</code></a> ermöglicht die Sortierng von klassischen Arrays.</p>
+
+<pre><code>
+Student[] studentArray = {s1, s2, s3};
+
+//Sortiert das Array nach der natürlichen Ordnung (compareTo() Methode)
+Arrays.sort(studentArray);
+
+//Sortiert das Array absteigend nach der natürlichen Ordnung (compareTo() Methode)
+Arrays.sort(studentArray, Collections.reverseOrder());
+
+//Sortiert das Array nach der Logik des StudentGradeComparator
+Arrays.sort(studentArray, new StudentGradeComparator());
+</code></pre>
+
+</section>
+      
+<section>
+  <h2>Lambda Expressions& Method References</h2>
+  <ul>
+    <li>Comparatoren können sehr effizient mit Lambda-Ausdrücken oder Method References erstellt werden.</li>
+    <li>Dazu fehlt uns aber noch die Einführung in Lambda-Ausdrücke und Method References. -> kommt später.</li>
+  </ul>
+  <pre>
+    <code>
+      List&lt;Student&gt; students = new ArrayList&lt;&gt;(List.of(s1, s2, s3));
+      
+      //Sortiert die Liste nach der Logik des StudentGradeComparator mit einem Lambda-Ausdruck
+      students.sort((s1, s2) -&gt; Integer.compare(s1.getGradeLevel(), s2.getGradeLevel()));
+      
+      //Sortiert die Liste nach der Logik des StudentGradeComparator mit einer Method Reference
+      students.sort(Comparator.comparingInt(Student::getGradeLevel));
+    </code>
+  </pre>
+</section>
+
+      <section>
+        <h2>Fragen?</h2>
+        <h3>Anregungen?</h3>
+        <h3>Bemerkungen?</h3>
+      </section>
+
+    </div>
+  </div>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+	<script src="../../reveal-config.js"></script>
+</body>
+</html>

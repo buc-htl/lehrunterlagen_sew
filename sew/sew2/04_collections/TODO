@@ -1,16 +1,24 @@
-überarbeite den Aufbau der Codebeispiele
+überarbeite den Aufbau der Codebeispiele - Set bereits überarbeitet, andere Codebeispiel noch ansehen.
 
 Hilfsklasse Collections noch nirgends erwähnt, oder?
 
 weiterführende Sortiermöglichkeiten erklären - advanced module?
 
-in den Folien zum Sortieren direkt ein kleines Codebeispiel einbauen um Generics zu erklären
+Detailanfordeungen von equals und hashCode einbauen oder doch zuviel? https://www.baeldung.com/java-equals-hashcode-contracts
 
 in den Übungen noch einbauen: Iterator und löschen von Elementen
+
+avoid the substraction trick: https://www.baeldung.com/java-comparator-comparable#avoid-subtraction
+Comparator comparing: https://www.baeldung.com/java-8-comparator-comparing
 
 evt. gute Videos (von SuS empfohlen):
 https://www.youtube.com/watch?v=ZA2oNhtNk3w
 https://www.youtube.com/watch?v=oAp4GYprVHM
 
-avoid the substraction trick: https://www.baeldung.com/java-comparator-comparable#avoid-subtraction
-Comparator comparing: https://www.baeldung.com/java-8-comparator-comparing
+
+offen: 
+Maps in Collections erklären
+
+noch Vorschau auf Filelesen in Übung einbauen, damit wir Files lesen können in den Übungen. Pfade beachten.
+
+Wäre sowohl für JavaFX als auch für Collections sinnvoll, Lambda-Ausdrücke zu kennen.
