@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Java Maps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <section>
+        <h1>Java Maps</h1>
+        <p class="center">DI Reinhold Buchinger</p>
+        <p class="center small">Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
+      </section>
+
+
+      <section>
+        <h2>Ziele</h2>
+        <ul>
+          <li>Das Konzept einer Map verstehen</li>
+          <li>Typische Anwendungsfälle für Maps kennen</li>
+          <li>Maps in Java verwenden können</li>
+          <li>Unterschiede zwischen HashMap, TreeMap und LinkedHashMap kennen</li>
+        </ul>
+      </section>
+
+
+      <!-- GRUNDLAGEN: WAS IST EINE MAP? -->
+      <section>
+        <h2>Was ist eine Map?</h2>
+      </section>
+
+      <section>
+        <h3>Definition</h3>
+        <ul>
+          <li>Eine <strong>Map</strong> speichert Daten als <strong>Schlüssel-Wert-Paare</strong> (Key-Value-Pairs).</li>
+          <li>Jeder Schlüssel kommt <strong>nur einmal</strong> vor.</li>
+          <li>Über den Schlüssel kann der zugehörige Wert <strong>schnell gefunden</strong> werden.</li>
+          <li>Auch bekannt als: <em>Dictionary, Assoziatives Array, Hash Table</em></li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h3>Konzeptionelles Beispiel Key/Value</h3>
+        <table style="font-size: 0.8em; margin: auto;">
+          <thead>
+            <tr>
+              <th>Schlüssel (Key)</th>
+              <th>Wert (Value)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>"Anna Müller"</td>
+              <td>"0664-1234567"</td>
+            </tr>
+            <tr>
+              <td>"Bob Schmidt"</td>
+              <td>"0699-9876543"</td>
+            </tr>
+            <tr>
+              <td>"Clara Wagner"</td>
+              <td>"0660-5551234"</td>
+            </tr>
+            <tr>
+              <td>"David Klein"</td>
+              <td>"0676-7778888"</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 1em;">Über den Namen (Key) kann die Telefonnummer (Value) schnell gefunden werden.</p>
+      </section>
+
+      <section>
+        <h3>Unterschied zu Listen und Sets</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em; font-size: 0.75em;">
+          <div>
+            <h4>Liste (List)</h4>
+            <ul>
+              <li>Zugriff über <strong>Index</strong> (0, 1, 2, ...)</li>
+              <li>Reihenfolge ist wichtig</li>
+              <li>Doppelte Werte erlaubt</li>
+              <li>Gut für geordnete Sammlungen</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Set</h4>
+            <ul>
+              <li>Keine Indizes</li>
+              <li>Reihenfolge meist unwichtig</li>
+              <li><strong>Keine Duplikate</strong></li>
+              <li>Gut für eindeutige Elemente</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Map</h4>
+            <ul>
+              <li>Zugriff über <strong>Schlüssel</strong> (beliebiger Typ)</li>
+              <li>Reihenfolge meist unwichtig</li>
+              <li>Jeder Schlüssel nur einmal</li>
+              <li>Gut für Zuordnungen/Lookup</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANWENDUNGSFÄLLE -->
+      <section>
+        <h2>Typische Anwendungsfälle von Maps</h2>
+      </section>
+
+      <section>
+        <h3>1. Übersetzungen / Lookups</h3>
+        <ul>
+          <li><strong>Ländercodes:</strong> "AT" → "Österreich"</li>
+          <li><strong>Fehlercodes:</strong> 404 → "Not Found"</li>
+          <li><strong>Abkürzungen:</strong> "ASAP" → "As Soon As Possible"</li>
+          <li><strong>Wörterbücher:</strong> "hello" → "hallo"</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>2. Zählen von Vorkommen</h3>
+        <ul>
+          <li><strong>Worthäufigkeit:</strong> "Java" → 42 (Anzahl der Vorkommen)</li>
+          <li><strong>Charakterstatistiken:</strong> 'a' → 15</li>
+          <li><strong>Votes:</strong> "Kandidat A" → 1234 Stimmen</li>
+        </ul>
+        <pre><code class="java" data-trim>
+// Beispiel: Wie oft kommt jedes Wort vor?
+Map&lt;String, Integer&gt; wordCount = new HashMap&lt;&gt;();
+wordCount.put("Java", 42);
+wordCount.put("Python", 23);
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>3. Konfigurationen / Einstellungen</h3>
+        <ul>
+          <li><strong>Settings:</strong> "theme" → "dark"</li>
+          <li><strong>Environment Variables:</strong> "PATH" → "/usr/bin:/bin"</li>
+          <li><strong>Properties:</strong> "database.url" → "jdbc:..."</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>4. Indizierung von Objekten</h3>
+        <ul>
+          <li><strong>Matrikelnummer → Student</strong></li>
+          <li><strong>ISBN → Buch</strong></li>
+          <li><strong>ID → Datensatz</strong></li>
+        </ul>
+        <pre><code class="java" data-trim>
+Map&lt;String, Student&gt; students = new HashMap&lt;&gt;();
+students.put("12345", new Student("Max Mustermann"));
+Student s = students.get("12345"); // Schneller Zugriff!
+        </code></pre>
+      </section>
+
+
+      <!-- JAVA MAP INTERFACE -->
+      <section>
+        <h2>Maps in Java</h2>
+      </section>
+
+      <section>
+        <h3>Das Map Interface</h3>
+        <ul>
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html" target="_blank" rel="noopener noreferrer">Map</a> ist ein <strong>Interface</strong> - nicht direkt instanziierbar</li>
+          <li><strong>Wichtig:</strong> Im Gegensatz zu <code>List</code> und <code>Set</code> leitet <code>Map</code> <strong>nicht</strong> vom <code>Collection</code> Interface ab.</li>
+          <li>Wie bei List und Set gibt es verschiedene Implementierungen.</li>
+          <li>Generische Typangabe: <code>Map&lt;K, V&gt;</code> - <strong>K</strong> = Key (Schlüssel), <strong>V</strong> = Value (Wert)</li>
+        </ul>
+        <pre><code class="java" data-trim>
+import java.util.Map;
+import java.util.HashMap;
+
+Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Wichtigste Implementierungen</h3>
+        <table style="font-size: 0.7em; margin: auto;">
+          <thead>
+            <tr>
+              <th>Klasse</th>
+              <th>Eigenschaften</th>
+              <th>Wann verwenden?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HashMap</strong></td>
+              <td>Schnell, keine Ordnung</td>
+              <td>Standard-Wahl für die meisten Fälle</td>
+            </tr>
+            <tr>
+              <td><strong>TreeMap</strong></td>
+              <td>Sortiert nach Schlüsseln</td>
+              <td>Wenn Sortierung wichtig ist</td>
+            </tr>
+            <tr>
+              <td><strong>LinkedHashMap</strong></td>
+              <td>Erhält Einfüge-Reihenfolge</td>
+              <td>Wenn Reihenfolge beibehalten werden soll</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+
+      <!-- HASHMAP -->
+      <section>
+        <h2>HashMap</h2>
+      </section>
+
+      <section>
+        <h3>HashMap - Eigenschaften</h3>
+        <ul>
+          <li>Die <strong>am häufigsten verwendete</strong> Map-Implementierung</li>
+          <li>Basiert auf einer <strong>Hash-Tabelle</strong></li>
+          <li>Sehr <strong>schneller Zugriff</strong> </li>
+          <li><strong>Keine Garantie</strong> über die Reihenfolge der Elemente</li>
+          <li>Erlaubt <code>null</code> als Schlüssel und Wert</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>HashMap - Erstellen</h3>
+        <pre><code class="java" data-trim>
+import java.util.HashMap;
+import java.util.Map;
+
+//Keys sind Strings, Values sind Integers
+Map&lt;String, Integer&gt; alter = new HashMap&lt;&gt;();
+
+// Direkt als HashMap
+HashMap&lt;String, Integer&gt; alter = new HashMap&lt;&gt;();
+        </code></pre>
+        <p style="font-size: 0.8em; margin-top: 1em;">
+          <em>Tipp:</em> Nutze das Interface <code>Map</code> als Typ für eine Unabhängigkeit von der konkreten Implementierung.
+        </p>
+      </section>
+
+      <section>
+        <h3>Wichtige Methoden</h3>
+        <pre><code class="java" data-trim>
+Map&lt;String, Integer&gt; alter = new HashMap&lt;&gt;();
+
+// Einfügen
+alter.put("Anna", 25);
+alter.put("Bob", 30);
+
+// Abrufen
+int annaAlter = alter.get("Anna");  // 25
+
+// Prüfen ob Schlüssel existiert
+boolean vorhanden = alter.containsKey("Anna");  // true
+
+// Prüfen ob Wert existiert
+boolean hatWert = alter.containsValue(30);  // true
+
+// Löschen
+alter.remove("Bob");
+
+// Größe
+int anzahl = alter.size();  // 1
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Vorsicht: get() kann null zurückgeben!</h3>
+        <pre><code class="java" data-trim>
+Map&lt;String, Integer&gt; alter = new HashMap&lt;&gt;();
+alter.put("Anna", 25);
+
+// Gefahr: NullPointerException!
+int x = alter.get("Bob");  // Bob existiert nicht → null
+                           // Wird zu int zugewiesen → Fehler!
+
+// Besser: Erst prüfen
+if (alter.containsKey("Bob")) {
+    int bobAlter = alter.get("Bob");
+}
+
+// Oder: getOrDefault verwenden
+int bobAlter = alter.getOrDefault("Bob", 0);  // 0 als Default
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Über Map iterieren - Variante 1</h3>
+        <pre><code class="java" data-trim>
+Map&lt;String, Integer&gt; alter = new HashMap&lt;&gt;();
+alter.put("Anna", 25);
+alter.put("Bob", 30);
+alter.put("Clara", 28);
+
+// Über Schlüssel iterieren, keySet() gibt Set aller Schlüssel zurück
+for (String name : alter.keySet()) {
+    int age = alter.get(name);
+    System.out.println(name + " ist " + age + " Jahre alt");
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Über Map iterieren - Variante 2</h3>
+        <pre><code class="java" data-trim>
+// Über Einträge (Entry) iterieren (effizienter!)
+for (Map.Entry&lt;String, Integer&gt; entry : alter.entrySet()) {
+    String name = entry.getKey();
+    int age = entry.getValue();
+    System.out.println(name + " ist " + age + " Jahre alt");
+}
+        </code></pre>
+        <p style="font-size: 0.8em; margin-top: 1em;">
+          <em>Tipp:</em> Diese Variante ist effizienter, da kein zweiter Lookup nötig ist.
+        </p>
+      </section>
+
+      <section>
+        <h3>Über Map iterieren - Variante 3</h3>
+        <pre><code class="java" data-trim>
+// Nur über Werte iterieren
+for (Integer age : alter.values()) {
+    System.out.println("Jemand ist " + age + " Jahre alt");
+}
+        </code></pre>
+        <p style="font-size: 0.8em; margin-top: 1em;">
+          <em>Hinweis:</em> Hier haben wir keinen Zugriff auf die Schlüssel.
+        </p>
+      </section>
+
+
+      <!-- TREEMAP -->
+      <section>
+        <h2>TreeMap</h2>
+      </section>
+
+      <section>
+        <h3>TreeMap - Eigenschaften</h3>
+        <ul>
+          <li>Elemente sind <strong>sortiert nach Schlüsseln</strong></li>
+          <li>Zugriff etwas langsamer als HashMap</li>
+          <li>Schlüssel müssen <strong>vergleichbar</strong> sein (Comparable oder Comparator)</li>
+          <li>Erlaubt <strong>kein null</strong> als Schlüssel</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>TreeMap - Beispiel</h3>
+        <pre><code class="java" data-trim>
+import java.util.TreeMap;
+import java.util.Map;
+
+Map&lt;String, Integer&gt; noten = new TreeMap&lt;&gt;();
+noten.put("Clara", 2);
+noten.put("Anna", 1);
+noten.put("Bob", 3);
+
+// Ausgabe: Sortiert alphabetisch nach Namen!
+for (String name : noten.keySet()) {
+    System.out.println(name + ": " + noten.get(name));
+}
+// Anna: 1
+// Bob: 3
+// Clara: 2
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Wann TreeMap verwenden?</h3>
+        <ul>
+          <li>Wenn die <strong>Schlüssel sortiert</strong> bleiben sollen</li>
+          <li>Für <strong>Bereichsabfragen</strong> (z.B. alle Einträge zwischen X und Y)</li>
+          <li>Wenn du die <strong>kleinsten/größten</strong> Schlüssel benötigst</li>
+        </ul>
+        <pre><code class="java" data-trim>
+TreeMap&lt;Integer, String&gt; map = new TreeMap&lt;&gt;();
+map.put(3, "Drei");
+map.put(1, "Eins");
+map.put(5, "Fünf");
+
+Integer first = map.firstKey();  // 1
+Integer last = map.lastKey();    // 5
+        </code></pre>
+      </section>
+
+
+      <!-- LINKEDHASHMAP -->
+      <section>
+        <h2>LinkedHashMap</h2>
+      </section>
+
+      <section>
+        <h3>LinkedHashMap - Eigenschaften</h3>
+        <ul>
+          <li>Behält die <strong>Einfüge-Reihenfolge</strong> bei</li>
+          <li>Etwas langsamer als HashMap </li>
+          <li>Nützlich wenn Reihenfolge wichtig ist, aber keine Sortierung</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>LinkedHashMap - Beispiel</h3>
+        <pre><code class="java" data-trim>
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+Map&lt;String, Integer&gt; reihenfolge = new LinkedHashMap&lt;&gt;();
+reihenfolge.put("Zweiter", 2);
+reihenfolge.put("Erster", 1);
+reihenfolge.put("Dritter", 3);
+
+// Ausgabe: In Einfüge-Reihenfolge!
+for (String key : reihenfolge.keySet()) {
+    System.out.println(key);
+}
+// Zweiter
+// Erster
+// Dritter
+        </code></pre>
+      </section>
+
+
+      <!-- PRAKTISCHES BEISPIEL -->
+      <section>
+        <h2>Praktisches Beispiel</h2>
+        <h3>Worthäufigkeit zählen</h3>
+      </section>
+
+      <section>
+        <h3>Aufgabe</h3>
+        <p>Zähle wie oft jedes Wort in einem Text vorkommt.</p>
+        <pre><code class="java" data-trim>
+String text = "Java ist toll Java macht Spaß Java ist super";
+String[] worte = text.split(" ");
+
+Map&lt;String, Integer&gt; wordCount = new HashMap&lt;&gt;();
+
+for (String wort : worte) {
+    // Wenn Wort schon existiert: Zähler erhöhen
+    // Sonst: Mit 1 beginnen
+    if (wordCount.containsKey(wort)) {
+        int count = wordCount.get(wort);
+        wordCount.put(wort, count + 1);
+    } else {
+        wordCount.put(wort, 1);
+    }
+}
+
+System.out.println(wordCount);
+// {Java=3, ist=2, toll=1, macht=1, Spaß=1, super=1}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Elegantere Variante</h3>
+        <pre><code class="java" data-trim>
+String text = "Java ist toll Java macht Spaß Java ist super";
+String[] worte = text.split(" ");
+
+Map&lt;String, Integer&gt; wordCount = new HashMap&lt;&gt;();
+
+for (String wort : worte) {
+    // getOrDefault: Gibt 0 zurück wenn Schlüssel nicht existiert
+    int count = wordCount.getOrDefault(wort, 0);
+    wordCount.put(wort, count + 1);
+}
+      </code></pre>
+      </section>
+
+
+      <!-- WICHTIGE HINWEISE -->
+      <section>
+        <h2>Wichtige Hinweise</h2>
+      </section>
+
+      <section>
+        <h3>Schlüssel-Objekte müssen...</h3>
+        <ul>
+          <li><strong>equals()</strong> und <strong>hashCode()</strong> korrekt implementieren</li>
+          <li><strong>Immutable</strong> sein (sich nicht ändern)</li>
+        </ul>
+        <pre><code class="java" data-trim>
+// SCHLECHT! Listen ändern sich und sind nicht stabil
+List&lt;String&gt; key = new ArrayList&lt;&gt;();
+key.add("test");
+map.put(key, "Wert");
+key.add("mehr");  // Schlüssel ändert sich → Probleme!
+
+// GUT: String, Integer, eigene immutable Klassen
+String key = "test";
+map.put(key, "Wert");
+        </code></pre>
+      </section>
+
+<!--       <section>
+        <h3>Performance-Überlegungen</h3>
+        <table style="font-size: 0.7em; margin: auto;">
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>HashMap</th>
+              <th>TreeMap</th>
+              <th>LinkedHashMap</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>get/put</td>
+              <td>O(1)</td>
+              <td>O(log n)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>containsKey</td>
+              <td>O(1)</td>
+              <td>O(log n)</td>
+              <td>O(1)</td>
+            </tr>
+            <tr>
+              <td>Iteration</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+              <td>O(n)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 1em; font-size: 0.8em;">
+          <strong>Faustregel:</strong> HashMap ist in den meisten Fällen die beste Wahl!
+        </p>
+      </section>
+ -->
+
+<section>
+  <p>Vergiss nicht, dir die Codebeispiele anzusehen!</p>
+</section>
+
+    <section>
+        <h2>Zusammenfassung</h2>
+        <ul>
+          <li>Maps speichern <strong>Schlüssel-Wert-Paare</strong></li>
+          <li>Jeder Schlüssel kommt nur <strong>einmal</strong> vor</li>
+          <li><strong>HashMap</strong>: Schnell, keine Ordnung (Standard-Wahl)</li>
+          <li><strong>TreeMap</strong>: Sortiert nach Schlüsseln</li>
+          <li><strong>LinkedHashMap</strong>: Behält Einfüge-Reihenfolge</li>
+          <li>Wichtige Methoden: <code>put(), get(), containsKey(), remove()</code></li>
+          <li>Anwendungsfälle: Lookups, Zählen, Caching, Indizierung</li>
+         </ul>
+      </section>
+
+
+      <section>
+        <h2>Fragen? Anregungen? Bemerkungen?</h2>
+      </section>
+
+
+
+
+      
+
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+	<script src="../../reveal-config.js"></script>
+</body>
+</html>
