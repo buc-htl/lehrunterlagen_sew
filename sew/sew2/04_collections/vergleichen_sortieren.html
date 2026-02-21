@@ -166,7 +166,7 @@ System.out.println(s1 == s3); //false</code></pre>
       <section>
         <h2>Anwendungsfall HashSet und LinkedHashSet</h2>
         <ul>
-          <li>HashSet und LinkedHashSet verwenden <code>hashCode()</code> und <code>equals()</code>, um Duplikate zu erkennen.</li>
+          <li>Jede Datenstruktur mit "Hash..." im Namen (z.B. HashSet und LinkedHashSet verwenden) <code>hashCode()</code> und <code>equals()</code>, um Duplikate zu erkennen.</li>
           <li>Zuerst wird <code>hashCode()</code> aufgerufen. Sind die Hashwerte gleich (mögliche Kollision), wird <code>equals()</code> aufgerufen.</li>
           <li>Wenn <code>hashCode()</code> und <code>equals()</code> true liefern, handelt es sich um ein Duplikat und das Objekt wird nicht hinzugefügt.</li>
           <li>Schaue dir die Codebeispiele dazu an!</li>
