@@ -114,7 +114,7 @@ println(s.toUpperCase());
 
 			<section>
 				<h3>Strings untersuchen</h3>
-				<table class="r-fit-text">
+				<table class="r-fit-text" >
 					<tr>
 						<td><a
 								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#length()"><code>text1.length()</code></a>
@@ -123,55 +123,55 @@ println(s.toUpperCase());
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#charAt(int)"><code>text1.charAt(index)</code>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#charAt(int)"><code>text1.charAt(int index)</code>
 							</a></td>
 						<td>Liefert das Zeichen, das sich bei <code>text1</code> an der Position <code>index</code>
 							befindet.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#equals(java.lang.Object)"><code>text1.equals(text2)</code></a>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#equals(java.lang.Object)"><code>text1.equals(String text2)</code></a>
 						</td>
 						<td>Liefert <code>true</code>, wenn der <code>text1</code> gleich <code>text2</code> ist.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#equalsIgnoreCase(java.lang.String)"><code>text1.equalsIgnoreCase(text2)</code></a>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#equalsIgnoreCase(java.lang.String)"><code>text1.equalsIgnoreCase(String text2)</code></a>
 						</td>
 						<td>Wie <code>equals()</code>, zwischen Klein- und Großschreibung wird nicht unterschieden.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#startsWith(java.lang.String)"><code>text1.startsWith(text2)</code>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#startsWith(java.lang.String)"><code>text1.startsWith(String text2)</code>
 							</a></td>
 						<td>Liefert <code>true</code>, wenn <code>text1</code> mit <code>text2</code> beginnt.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#endsWith(java.lang.String)"><code>text1.endsWith(text2)</code></a>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#endsWith(java.lang.String)"><code>text1.endsWith(String text2)</code></a>
 						</td>
 						<td>Liefert <code>true</code>, wenn <code>text1</code> mit <code>text2</code> endet.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#contains(java.lang.CharSequence)"><code>text1.contains(text2)</code></a>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#contains(java.lang.CharSequence)"><code>text1.contains(String text2)</code></a>
 						</td>
 						<td>Liefert <code>true</code>, wenn <code>text2</code> in <code>text1</code> enthalten ist.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(int)"><code>text1.indexOf(ch)</code></a><br>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(int)"><code>text1.indexOf(char ch)</code></a><br>
 							<a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(java.lang.String)"><code>text1.indexOf(text2)</code></a>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(java.lang.String)"><code>text1.indexOf(String text2)</code></a>
 						</td>
 						<td>Liefert den Index des ersten Vorkommens von <code>ch</code> bzw. <code>text2</code> in
 							<code>text1</code>, oder -1, wenn nicht gefunden.</td>
 					</tr>
 					<tr>
 						<td><a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(int,int)"><code>text1.indexOf(ch, index)</code></a><br>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(int,int)"><code>text1.indexOf(char ch, int index)</code></a><br>
 							<a
-								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(java.lang.String,int)"><code>text1.indexOf(text2,index)</code></a>
+								href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#indexOf(java.lang.String,int)"><code>text1.indexOf(String text2, int index)</code></a>
 						</td>
 						<td>Wie oben, die Suche beginnt aber erst an der Position <code>index</code>.</td>
 					</tr>
@@ -188,8 +188,17 @@ println(s.toUpperCase());
 			
 					char c = sentence.charAt(5);    //'e' (das Zeichen an der Indexpos. 5)
 			
-					int i = sentence.indexOf("r");  //2 (der Index des ersten "r")
-					i = sentence.indexOf("r",3);    //6 (der Index des ersten "r" ab Pos. 3)
+					boolean b = sentence.equals("wir lernen strings!"); //false
+					b = sentence.equalsIgnoreCase("wir lernen strings!"); //true
+
+					b = sentence.startsWith("Wir"); //true
+					b = sentence.endsWith("!");    //true
+					
+					b = sentence.contains("lern"); //true (weil "lern" im String enthalten ist)
+
+					int i = sentence.indexOf('r');  //2 (der Index des ersten 'r')
+					i = sentence.indexOf('R');    //-1 (weil 'R' nicht im String enthalten ist)
+					i = sentence.indexOf("r", 3);    //6 (der Index des ersten "r" ab Pos. 3)
 					i = sentence.indexOf("nen");	//7 (der (Start-)Index des ersten "nen")
 </code></pre>
 			</section>
@@ -220,31 +229,31 @@ println(s.toUpperCase());
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#substring(int)"><code>text1.substring(index)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#substring(int)"><code>text1.substring(int index)</code></a>
 							</td>
 							<td>Liefert den Teil von <code>text1</code> von Position <code>index</code> bis zum Ende.
 							</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#substring(int,int)"><code>text1.substring(index, ende)</code>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#substring(int,int)"><code>text1.substring(int index, int ende)</code>
 								</a></td>
 							<td>Liefert den Teil von <code>text1</code> von Position <code>index</code> bis
 								<code>ende-1</code>.</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#replace(char,char)"><code>text1.replace(ch1, ch2)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#replace(char,char)"><code>text1.replace(char ch1, char ch2)</code></a>
 								<br>
 								<a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#replace(java.lang.CharSequence,java.lang.CharSequence)"><code>text1.replace(text2, text3)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#replace(java.lang.CharSequence,java.lang.CharSequence)"><code>text1.replace(String text2, String text3)</code></a>
 							</td>
 							<td>Ersetzt in <code>text1</code> alle Vorkommnisse von <code>ch1</code> durch
 								<code>ch2</code> (bzw. <code>text2</code> durch <code>text3</code>).</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#split(java.lang.String)"><code>text1.split(text2)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html#split(java.lang.String)"><code>text1.split(String text2)</code></a>
 							</td>
 							<td>Zerteilt <code>text1</code> überall, wo text2 vorkommt, und liefert die Teile in einem
 								<code>String[]</code>. </td>
@@ -257,12 +266,17 @@ println(s.toUpperCase());
 				<h3>Beispiele</h3>
 				<pre><code data-trim class="language-java">
 					String sentence = "Wir verändern Strings!";
+					
+					String erg = sentence.toLowerCase(); //erg = "wir verändern strings!"
+					erg = sentence.toUpperCase(); //erg = "WIR VERÄNDERN STRINGS!"
+				
+					erg = "  Hallo  ".trim(); //erg = "Hallo"
 
-					System.out.println(sentence.toUpperCase());
+					erg = sentence.substring(4); //erg = "verändern Strings!"
+					String firstWord= sentence.substring(0,3); //firstWord = "Wir"
 			
-					String firstWord= sentence.substring(0,3); //Wir
-			
-					String message = sentence.replace(" ", "-"); //Wir-verändern-Strings!
+					String message = sentence.replace(' ', '-'); //message = "Wir-verändern-Strings!"
+					message = sentence.replace("Wir", "Ihr"); //message = "Ihr verändern Strings!"
 	</code></pre>
 			</section>
 
@@ -291,32 +305,32 @@ println(s.toUpperCase());
 					<table>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Byte.html#parseByte(java.lang.String)"><code>Byte.parseByte(text)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Byte.html#parseByte(java.lang.String)"><code>Byte.parseByte(String text)</code></a>
 							</td>
 							<td>Wandelt <code>text</code> in eine <code>byte</code>-Zahl um und liefert diese als Ergebnis.</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String)"><code>Integer.parseInt(text)</code>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String)"><code>Integer.parseInt(String text)</code>
 								</a></td>
 							<td>Wandelt <code>text</code> in eine <code>int</code>-Zahl um und liefert diese als Ergebnis.</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Long.html#parseLong(java.lang.String)"><code>Long.parseLong(text)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Long.html#parseLong(java.lang.String)"><code>Long.parseLong(String text)</code></a>
 							</td>
 							<td>Wandelt <code>text</code> in eine <code>long</code>-Zahl um und liefert diese als Ergebnis.</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Float.html#parseFloat(java.lang.String)"><code>Float.parseFloat(text)</code></a>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Float.html#parseFloat(java.lang.String)"><code>Float.parseFloat(String text)</code></a>
 							</td>
 							<td>Wandelt <code>text</code> in eine <code>float</code>-Zahl um und liefert diese als Ergebnis.
 							</td>
 						</tr>
 						<tr>
 							<td><a
-									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Double.html#parseDouble(java.lang.String)"><code>Double.parseDouble(text)</code>
+									href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Double.html#parseDouble(java.lang.String)"><code>Double.parseDouble(String text)</code>
 								</a></td>
 							<td>Wandelt <code>text</code> in eine <code>double</code>-Zahl um und liefert diese als Ergebnis.</td>
 						</tr>
@@ -338,6 +352,7 @@ println(s.toUpperCase());
 					float z = Float.parseFloat("2.3");
 					
 					int n3 = Integer.parseInt("2.3");   //NumberFormatException - Programm stürzt ab
+					int n4 = Integer.parseInt("a2");   //NumberFormatException - Programm stürzt ab
 			</code></pre>
 			</section>
 
@@ -391,25 +406,25 @@ println(s.toUpperCase());
 			<table class="r-fit-text">
 				<tr>
 					<td><a
-							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isDigit(char)"><code>Character.isDigit(ch)</code></a>
+							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isDigit(char)"><code>Character.isDigit(char ch)</code></a>
 					</td>
 					<td>Liefert <code>true</code> wenn <code>ch</code> eine Ziffer ist.</td>
 				</tr>
 				<tr>
 					<td><a
-							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isLetter(char)"><code>Character.isLetter(ch)</code></a>
+							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isLetter(char)"><code>Character.isLetter(char ch)</code></a>
 					</td>
 					<td>Liefert <code>true</code> wenn <code>ch</code> ein Buchstabe ist. Achtung: auch für nicht lateinische Buchstaben wird <code>true</code> geliefert (z.B. <a href="https://www.compart.com/de/unicode/category/Lo">sonstige Buchstaben</a>)</td>
 				</tr>
 				<tr>
 					<td><a
-							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isLowerCase(char)"><code>Character.isLowercase(ch)</code></a>
+							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isLowerCase(char)"><code>Character.isLowercase(char ch)</code></a>
 					</td>
 					<td>Liefert <code>true</code> wenn <code>ch</code> ein Kleinbuchstabe ist.</td>
 				</tr>
 				<tr>
 					<td><a
-							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isUpperCase(char)"><code>Character.isUpperCase(ch)</code></a>
+							href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/Character.html#isUpperCase(char)"><code>Character.isUpperCase(char ch)</code></a>
 					</td>
 					<td>Liefert <code>true</code> wenn <code>ch</code> ein Großbuchstabe ist.</td>
 				</tr>
