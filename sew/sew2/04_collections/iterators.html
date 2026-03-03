@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Java Iterators</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <section>
+        <h1>Java Iterators</h1>
+        <p class="center">DI Reinhold Buchinger</p>
+        <p class="center small">Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
+      </section>
+
+
+      <section>
+        <h2>Ziele</h2>
+        <ul>
+          <li>Verstehen, wozu Iterators verwendet werden</li>
+          <li>Einen Iterator erstellen und verwenden können</li>
+          <li>Unterschiede zwischen Iterator und for-each kennen</li>
+          <li>Typische Fehler beim Arbeiten mit Iterators vermeiden</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Problem: Collections durchlaufen</h2>
+        <p>Wie können wir über alle Elemente einer Collection iterieren?</p>
+        <pre><code class="java" data-trim>
+List&lt;String&gt; namen = new ArrayList&lt;&gt;();
+namen.add("Anna");
+namen.add("Bob");
+namen.add("Clara");
+
+// Bei ArrayList: Index verwenden
+for (int i = 0; i &lt; namen.size(); i++) {
+    System.out.println(namen.get(i));
+}
+        </code></pre>
+        <p class="fragment">❌ Aber: Nicht alle Collections haben einen Index!</p>
+        <p class="fragment">z.B. <strong>Set</strong> hat keine <code>get()</code> Methode</p>
+      </section>
+
+
+      <section>
+        <h2>Lösung: Iterator</h2>
+        <p>Ein <strong>Iterator</strong> ist ein Objekt, das...</p>
+        <ul>
+          <li>über die Elemente einer Collection iteriert</li>
+          <li>unabhängig von der konkreten Collection-Implementierung funktioniert</li>
+          <li>sequentiellen Zugriff auf Elemente ermöglicht</li>
+        </ul>
+        <p class="fragment center big">Einheitliche Methode, um über <strong>alle</strong> Collections zu iterieren!</p>
+      </section>
+
+
+      <section>
+        <h2>Iterator Interface</h2>
+        <p>Das <code>Iterator&lt;E&gt;</code> Interface definiert folgende Methoden:</p>
+        <table>
+          <tr>
+            <th>Methode</th>
+            <th>Beschreibung</th>
+          </tr>
+          <tr>
+            <td><code>boolean hasNext()</code></td>
+            <td>Gibt <code>true</code> zurück, wenn noch weitere Elemente vorhanden sind</td>
+          </tr>
+          <tr>
+            <td><code>E next()</code></td>
+            <td>Gibt das nächste Element zurück und bewegt den Iterator weiter</td>
+          </tr>
+          <tr>
+            <td><code>void remove()</code></td>
+            <td>Entfernt das zuletzt von <code>next()</code> zurückgegebene Element</td>
+          </tr>
+        </table>
+      </section>
+
+
+      <section>
+        <h2>Iterator erstellen</h2>
+        <p>Jede Collection hat eine <code>iterator()</code> Methode:</p>
+        <pre><code class="java" data-trim>
+List&lt;String&gt; namen = new ArrayList&lt;&gt;();
+namen.add("Anna");
+namen.add("Bob");
+namen.add("Clara");
+
+// Iterator erstellen
+Iterator&lt;String&gt; iterator = namen.iterator();
+        </code></pre>
+        <p class="small">💡 Muss importiert werden: <code>import java.util.Iterator;</code></p>
+      </section>
+
+
+      <section>
+        <h2>Iterator verwenden</h2>
+        <pre><code class="java" data-trim data-line-numbers>
+List&lt;String&gt; namen = new ArrayList&lt;&gt;();
+namen.add("Anna");
+namen.add("Bob");
+namen.add("Clara");
+
+Iterator&lt;String&gt; iterator = namen.iterator();
+
+while (iterator.hasNext()) {
+    String name = iterator.next();
+    System.out.println(name);
+}
+        </code></pre>
+        <p class="fragment">Ausgabe: Anna, Bob, Clara</p>
+      </section>
+
+
+      <section>
+        <h2>Wie funktioniert es?</h2>
+        <div class="r-stack">
+          <div class="fragment fade-out" data-fragment-index="0">
+            <pre><code class="java">Iterator&lt;String&gt; it = namen.iterator();</code></pre>
+            <p>▼ Iterator zeigt vor das erste Element</p>
+            <pre class="small">▼
+[Anna, Bob, Clara]</pre>
+          </div>
+          <div class="fragment fade-in-then-out" data-fragment-index="0">
+            <pre><code class="java">it.hasNext() → true</code></pre>
+            <p>✓ Es gibt ein nächstes Element</p>
+            <pre class="small">▼
+[Anna, Bob, Clara]</pre>
+          </div>
+          <div class="fragment fade-in-then-out" data-fragment-index="1">
+            <pre><code class="java">it.next() → "Anna"</code></pre>
+            <p>↓ Iterator bewegt sich weiter</p>
+            <pre class="small">[Anna] ▼ [Bob, Clara]</pre>
+          </div>
+          <div class="fragment fade-in-then-out" data-fragment-index="2">
+            <pre><code class="java">it.hasNext() → true</code></pre>
+            <pre><code class="java">it.next() → "Bob"</code></pre>
+            <pre class="small">[Anna, Bob] ▼ [Clara]</pre>
+          </div>
+          <div class="fragment fade-in" data-fragment-index="3">
+            <pre><code class="java">it.hasNext() → true</code></pre>
+            <pre><code class="java">it.next() → "Clara"</code></pre>
+            <pre><code class="java">it.hasNext() → false</code></pre>
+            <pre class="small">[Anna, Bob, Clara] ▼</pre>
+          </div>
+        </div>
+      </section>
+
+
+      <section>
+        <h2>Iterator mit Set</h2>
+        <p>Iterator funktioniert mit <strong>allen</strong> Collections:</p>
+        <pre><code class="java" data-trim>
+Set&lt;Integer&gt; zahlen = new HashSet&lt;&gt;();
+zahlen.add(42);
+zahlen.add(15);
+zahlen.add(8);
+
+Iterator&lt;Integer&gt; iterator = zahlen.iterator();
+
+while (iterator.hasNext()) {
+    Integer zahl = iterator.next();
+    System.out.println(zahl);
+}
+        </code></pre>
+        <p class="small">💡 Reihenfolge bei HashSet ist nicht garantiert!</p>
+      </section>
+
+
+      <section>
+        <h2>Iterator vs. for-each</h2>
+        <div class="r-hstack">
+          <div>
+            <h3>Mit Iterator</h3>
+            <pre><code class="java small" data-trim>
+Iterator&lt;String&gt; it = 
+    namen.iterator();
+
+while (it.hasNext()) {
+    String name = it.next();
+    System.out.println(name);
+}
+            </code></pre>
+          </div>
+          <div class="fragment">
+            <h3>Mit for-each</h3>
+            <pre><code class="java small" data-trim>
+
+
+for (String name : namen) {
+    System.out.println(name);
+}
+            </code></pre>
+          </div>
+        </div>
+        <p class="fragment center">for-each verwendet intern einen Iterator! ✨</p>
+      </section>
+
+
+      <section>
+        <h2>Wann braucht man Iterator?</h2>
+        <p>for-each ist meistens besser lesbar. Iterator braucht man, wenn man:</p>
+        <ul>
+          <li class="fragment">Elemente während der Iteration <strong>entfernen</strong> möchte</li>
+          <li class="fragment">mehrere Collections <strong>parallel</strong> durchlaufen will</li>
+          <li class="fragment">die Iteration <strong>unterbrechen</strong> und später fortsetzen will</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Elemente entfernen - FALSCH! ❌</h2>
+        <pre><code class="java" data-trim>
+List&lt;String&gt; namen = new ArrayList&lt;&gt;();
+namen.add("Anna");
+namen.add("Bob");
+namen.add("Clara");
+
+// NIEMALS während for-each entfernen!
+for (String name : namen) {
+    if (name.equals("Bob")) {
+        namen.remove(name); // ❌ ConcurrentModificationException!
+    }
+}
+        </code></pre>
+        <p class="fragment error">💥 Wirft eine <code>ConcurrentModificationException</code></p>
+      </section>
+
+
+      <section>
+        <h2>Elemente entfernen - RICHTIG! ✓</h2>
+        <pre><code class="java" data-trim>
+List&lt;String&gt; namen = new ArrayList&lt;&gt;();
+namen.add("Anna");
+namen.add("Bob");
+namen.add("Clara");
+
+Iterator&lt;String&gt; iterator = namen.iterator();
+
+while (iterator.hasNext()) {
+    String name = iterator.next();
+    if (name.equals("Bob")) {
+        iterator.remove(); // ✓ Funktioniert!
+    }
+}
+        </code></pre>
+        <p class="fragment">Ergebnis: [Anna, Clara]</p>
+      </section>
+
+
+      <section>
+        <h2>remove() - Wichtige Regeln</h2>
+        <ul>
+          <li><code>remove()</code> kann nur <strong>nach</strong> einem <code>next()</code> Aufruf verwendet werden</li>
+          <li><code>remove()</code> kann nur <strong>einmal</strong> pro <code>next()</code> aufgerufen werden</li>
+          <li>Entfernt das zuletzt von <code>next()</code> zurückgegebene Element</li>
+        </ul>
+        <pre class="fragment"><code class="java" data-trim>
+Iterator&lt;String&gt; it = namen.iterator();
+it.remove(); // ❌ IllegalStateException - kein next() davor!
+
+it.next();
+it.remove(); // ✓ OK
+it.remove(); // ❌ IllegalStateException - zwei mal hintereinander!
+        </code></pre>
+      </section>
+
+
+      <section>
+        <h2>Beispiel: Ungerade Zahlen entfernen</h2>
+        <pre><code class="java" data-trim data-line-numbers>
+List&lt;Integer&gt; zahlen = new ArrayList&lt;&gt;();
+zahlen.add(1);
+zahlen.add(2);
+zahlen.add(3);
+zahlen.add(4);
+zahlen.add(5);
+
+System.out.println("Vorher: " + zahlen);
+
+Iterator&lt;Integer&gt; iterator = zahlen.iterator();
+while (iterator.hasNext()) {
+    Integer zahl = iterator.next();
+    if (zahl % 2 != 0) { // ungerade?
+        iterator.remove();
+    }
+}
+
+System.out.println("Nachher: " + zahlen);
+        </code></pre>
+        <p class="fragment">Ausgabe: Vorher: [1, 2, 3, 4, 5] → Nachher: [2, 4]</p>
+      </section>
+
+      
+      <section>
+        <h2>Usecase : Parallel durchlaufen</h2>
+        <p>Zwei Listen gleichzeitig durchlaufen:</p>
+        <pre><code class="java" data-trim>
+List&lt;String&gt; vornamen = Arrays.asList("Anna", "Bob", "Clara");
+List&lt;String&gt; nachnamen = Arrays.asList("Schmidt", "Müller", "Wagner");
+
+Iterator&lt;String&gt; vornameIter = vornamen.iterator();
+Iterator&lt;String&gt; nachnameIter = nachnamen.iterator();
+
+while (vornameIter.hasNext() &amp;&amp; nachnameIter.hasNext()) {
+    String vorname = vornameIter.next();
+    String nachname = nachnameIter.next();
+    System.out.println(vorname + " " + nachname);
+}
+        </code></pre>
+        <p class="fragment">Ausgabe: Anna Schmidt, Bob Müller, Clara Wagner</p>
+        <p class="small fragment">💡 Mit for-each nicht möglich, da man nur über eine Collection iteriert</p>
+      </section>
+
+
+      <section>
+        <h2>Usecase : Iteration unterbrechen</h2>
+        <p>Iterator als Instanzvariable speichern und später fortsetzen:</p>
+        <pre><code class="java" data-trim>
+List&lt;Integer&gt; daten = Arrays.asList(10, 20, 30, 40, 50);
+Iterator&lt;Integer&gt; iterator = daten.iterator();
+
+// Erste Verarbeitung - nur 2 Elemente
+System.out.println("Teil 1:");
+for (int i = 0; i &lt; 2 &amp;&amp; iterator.hasNext(); i++) {
+    System.out.println(iterator.next());
+}
+
+// ... anderer Code ...
+
+// Später fortsetzen
+System.out.println("Teil 2:");
+while (iterator.hasNext()) {
+    System.out.println(iterator.next());
+}
+        </code></pre>
+        <p class="fragment">Ausgabe: Teil 1: 10, 20 → Teil 2: 30, 40, 50</p>
+      </section>
+
+
+      <section>
+        <h2>ListIterator</h2>
+        <p>Für Listen gibt es zusätzlich <code>ListIterator&lt;E&gt;</code>:</p>
+        <ul>
+          <li>Erweitert <code>Iterator&lt;E&gt;</code></li>
+          <li>Ermöglicht bidirektionale Traversierung (vor und zurück)</li>
+          <li>Zusätzliche Methoden: <code>hasPrevious()</code>, <code>previous()</code>, <code>add()</code>, <code>set()</code></li>
+        </ul>
+        <pre><code class="java" data-trim>
+List&lt;String&gt; namen = new ArrayList&lt;&gt;();
+namen.add("Anna");
+namen.add("Bob");
+
+ListIterator&lt;String&gt; listIterator = namen.listIterator();
+        </code></pre>
+      </section>
+
+
+      <section>
+        <h2>Zusammenfassung</h2>
+        <ul>
+          <li><strong>Iterator</strong> ermöglicht einheitlichen Zugriff auf alle Collections</li>
+          <li>Hauptmethoden: <code>hasNext()</code>, <code>next()</code>, <code>remove()</code></li>
+          <li>for-each verwendet intern einen Iterator</li>
+          <li>Iterator notwendig zum sicheren Entfernen während Iteration</li>
+          <li>Niemals Collection direkt ändern während for-each!</li>
+          <li><code>ListIterator</code> bietet erweiterte Funktionen für Listen</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Best Practices</h2>
+        <ul>
+          <li>✓ Verwende for-each, wenn du nur lesend iterierst</li>
+          <li>✓ Verwende Iterator, wenn du Elemente entfernen musst</li>
+          <li>✓ Prüfe immer mit <code>hasNext()</code> vor <code>next()</code></li>
+          <li>❌ Ändere Collection nicht direkt während for-each</li>
+          <li>❌ Rufe <code>remove()</code> nicht ohne vorheriges <code>next()</code> auf</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Fragen? Anregungen? Bemerkungen?</h2>
+      </section>
+
+
+
+
+      
+
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+	<script src="../../reveal-config.js"></script>
+</body>
+</html>
