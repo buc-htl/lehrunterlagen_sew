@@ -35,7 +35,7 @@ public static void copyTextFile (String srcFile, String destFile) throws IOExcep
 }
 ```
 
-Zeichensatz: entweder wie angegeben oder ein vordefinierter Zeichensatz aus der Klasse [`StandardCharsets`](https://docs.oracle.com/javase/10/docs/api/java/nio/charset/StandardCharsets.html).
+Zeichensatz: Entweder mit einem String wie im Beispiel angeben oder, besser, ein vordefinierter Zeichensatz aus der Klasse [`StandardCharsets`](https://docs.oracle.com/javase/10/docs/api/java/nio/charset/StandardCharsets.html) verwenden. Wird kein Charset angegeben, so wird UTF-8 verwendet.
 
 Wichtig: Beim Ausführen des Programms ist das *working directory* der *oberste* Ordner des Projekts.
 

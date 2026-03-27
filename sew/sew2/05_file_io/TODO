@@ -1,3 +1,5 @@
 Encoding: UTF/Unicode, ASCII bereits Thema in GINF, reicht ein kurzes Wiederholen und Fokus wie man es in Java einsetzt
 
+/*
 unsigned vs signed und notwendiges Maskieren noch behandeln! (noch das Casten/Maskieren bei byte <-> int erklären)
+*/
