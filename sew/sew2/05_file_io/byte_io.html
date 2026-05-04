@@ -167,8 +167,8 @@ beliebigen Datei anhand der Methode <code>copyFile</code>,welche die
 Datei mit dem Namen (inkl. Pfad) <code>srcFile</code> in die Datei
 <code>destFile</code> kopiert.</p>
 <p>Da die Datei als Ganzes eingelesen wird, muss man sich sicher sein,
-dass das sinnvoll ist und sich auch wirklich im Hauptspeicher ausgeht.
-(z.B. Mit einem Blue-Ray-Film würde ich das nicht machen.)</p>
+dass das sinnvoll ist und sich auch wirklich im Hauptspeicher
+ausgeht.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">copyFile</span><span class="op">(</span><span class="bu">String</span> srcFile<span class="op">,</span> <span class="bu">String</span> destFile<span class="op">)</span> <span class="kw">throws</span> <span class="bu">IOException</span> <span class="op">{</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -180,9 +180,8 @@ class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <h2 id="byte-inputoutput---lesebuffer">Byte-Input/Output -
 Lesebuffer</h2>
-<p>Diesmal wird nicht die gesamte Datei mit einem Befehl eingelesen,
-sondern man legt fest wie viele Bytes auf einmal gelesen werden sollen.
-Lies dir in der Dokumentation der Java API die Details zu <a
+<p>Man kann auch festlegen, wie viele Bytes auf einmal gelesen werden
+sollen. Lies dir in der Dokumentation der Java API die Details zu <a
 href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html#read-byte:A-int-int-">read(…)</a>
 und <a
 href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html#write-byte:A-int-int-">write(…)</a>

@@ -8,7 +8,7 @@ Beim Lesen von Textdateien werden die gespeicherten Bytes entsprechend der Kodie
 
 Die folgende Methode demonstriert das Lesen und das Schreiben einer beliebigen Datei anhand der Methode `copyFile`,welche die Datei mit dem Namen (inkl. Pfad) `srcFile` in die Datei `destFile` kopiert.
 
-Da die Datei als Ganzes eingelesen wird, muss man sich sicher sein, dass das sinnvoll ist und sich auch wirklich im Hauptspeicher ausgeht. (z.B. Mit einem Blue-Ray-Film würde ich das nicht machen.)
+Da die Datei als Ganzes eingelesen wird, muss man sich sicher sein, dass das sinnvoll ist und sich auch wirklich im Hauptspeicher ausgeht.
 
 ```Java
 public static void copyFile(String srcFile, String destFile) throws IOException {
@@ -23,7 +23,7 @@ public static void copyFile(String srcFile, String destFile) throws IOException 
 
 ## Byte-Input/Output - Lesebuffer
 
-Diesmal wird nicht die gesamte Datei mit einem Befehl eingelesen, sondern man legt fest wie viele Bytes auf einmal gelesen werden sollen.
+Man kann auch festlegen, wie viele Bytes auf einmal gelesen werden sollen.
 Lies dir in der Dokumentation der Java API die Details zu [read(...)](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html#read-byte:A-int-int-) und [write(...)](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html#write-byte:A-int-int-) durch um die Bedeutung der Parameter korrekt zu verstehen.
 
 Mittels kann man n Bytes beim Einlesen überspringen.
@@ -46,16 +46,27 @@ public static void copyFile(String srcFile, String destFile) throws IOException
             // Beide Dateien werden automatisch geschlossen, sobald der
             // try-Block verlassen wird!
     ) {
-        byte[] buffer = new byte[2048]; // Lesebuffer
+        byte[] buffer = new byte[8192]; // Lesebuffer
         int    bytesRead;               // Anzahl der gelesenen Bytes
 
         // Kopiert die gesamte Datei
-        while ((bytesRead = in.read(buffer, 0, buffer.length)) > 0) {
+        while ((bytesRead = in.read(buffer, 0, buffer.length)) != -1) {
             out.write(buffer,0, bytesRead);
         }
     }
 }
 ```
+
+Man kann den Input- und OutputStream auch wieder buffern, um die Performance zu verbessern. Buffern bedeutet, dass die Daten nicht direkt von der Festplatte gelesen oder auf die Festplatte geschrieben werden, sondern zuerst in einem Zwischenspeicher (Buffer) gehalten werden. Das reduziert die Anzahl der Zugriffe auf die Festplatte und verbessert dadurch die Performance.
+
+```Java
+try (
+    InputStream in  = new BufferedInputStream(Files.newInputStream(Paths.get(srcFile));
+
+    OutputStream out = new BufferedOutputStream(Files.newOutputStream(Paths.get(destFile)));
+    ) {
+        ...
+    }
 
 ***Tipp:*** Erzeuge dir im Projektverzeichis einen Ordner `resources` mit einer Bilddatei mit dem Namen "meinBild.png". Du kannst dann die Datei mit `copyFile("resources/meinBild.png", "resources/meinBild_neu.png")` kopieren.
 
@@ -76,4 +87,5 @@ OutputStream out = Files.newOutputStream(
 
 ### Bytes überspringen
 
-Mit der Methode [`in.skip(count)`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html#skip-long-) kann man *count* Bytes überspringen, dh. das Einlesen beginnt danach bzw. geht danach weiter.
+Mit der Methode [`in.skip(count)`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html#skip-long-) kann man *count* Bytes überspringen, dh. das Einlesen beginnt danach bzw. geht danach weiter. Die Methode liefert die tatsächlich übersprungenen Bytes zurück, welche kleiner als *count* sein können, wenn das Ende der Datei erreicht wird.
+

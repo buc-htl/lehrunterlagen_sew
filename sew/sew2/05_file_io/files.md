@@ -2,13 +2,13 @@
 
 # Die Klasse Files
 
-Die Klasse [`Files`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html) bietet viele nützliche Methoden zum Arbeiten mit Dateien und Ordnern.
+Die Klasse [`Files`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html) bietet, neben dem reinen Lesen und Schreiben von Dateien, viele nützliche Methoden zum Arbeiten mit Dateien und Ordnern.
 
 ## Datei kopieren
 
 [`Files.copy(...)`](https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#copy-java.nio.file.Path-java.nio.file.Path-java.nio.file.CopyOption...-) kopiert eine Datei.
 
-Achtung: Falls ein Ordner kopiert wird, so wird nur der Ordner nicht jedoch sein Inhalt kopiert.
+Achtung: Falls ein Ordner kopiert wird, so wird nur der Ordner, nicht jedoch sein Inhalt, kopiert.
 
 ```java
 Files.copy(
