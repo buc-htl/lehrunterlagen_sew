@@ -67,6 +67,7 @@ try (
     ) {
         ...
     }
+```
 
 ***Tipp:*** Erzeuge dir im Projektverzeichis einen Ordner `resources` mit einer Bilddatei mit dem Namen "meinBild.png". Du kannst dann die Datei mit `copyFile("resources/meinBild.png", "resources/meinBild_neu.png")` kopieren.
 

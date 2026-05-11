@@ -144,7 +144,9 @@ id="toc-byte-inputoutput---ganze-binärdateien">Byte-Input/Output - ganze
 Binärdateien</a></li>
 <li><a href="#byte-inputoutput---lesebuffer"
 id="toc-byte-inputoutput---lesebuffer">Byte-Input/Output -
-Lesebuffer</a>
+Lesebuffer</a></li>
+<li><a href="#byte-output-with-append"
+id="toc-byte-output-with-append">Byte-Output with append</a>
 <ul>
 <li><a href="#bytes-überspringen" id="toc-bytes-überspringen">Bytes
 überspringen</a></li>
@@ -225,23 +227,26 @@ class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">OutputStream</span> out <span class="op">=</span> <span class="kw">new</span> <span class="bu">BufferedOutputStream</span><span class="op">(</span>Files<span class="op">.</span><span class="fu">newOutputStream</span><span class="op">(</span>Paths<span class="op">.</span><span class="fu">get</span><span class="op">(</span>destFile<span class="op">)));</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">)</span> <span class="op">{</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">...</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="op">***</span>Tipp<span class="op">:***</span> Erzeuge dir im Projektverzeichis einen Ordner `resources` mit einer Bilddatei mit dem Namen <span class="st">&quot;meinBild.png&quot;</span><span class="op">.</span> <span class="fu">Du</span> kannst dann die Datei mit `<span class="fu">copyFile</span><span class="op">(</span><span class="st">&quot;resources/meinBild.png&quot;</span><span class="op">,</span> <span class="st">&quot;resources/meinBild_neu.png&quot;</span><span class="op">)</span>` kopieren<span class="op">.</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>## <span class="bu">Byte</span><span class="op">-</span>Output with append</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>Sollte eine bereits existierende Datei zum Schreiben geöffnet werden<span class="op">,</span> so wird normalerweise der alte Dateiinhalt komplett gelöscht<span class="op">.</span> <span class="fu">In</span> der Datei steht dann nur die neu geschriebenen Bytes<span class="op">.</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">M</span>öchte man das verhindern und die neuen Bytes an die schon existierenden hinten anhängen<span class="op">,</span> so muss man das beim Öffnen entsprechend angeben<span class="op">:</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>```Java</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">// Öffnet eine Datei zum Schreiben, ohne dass der alte Dateiinhalt gelöscht wird</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">OutputStream</span> out <span class="op">=</span> Files<span class="op">.</span><span class="fu">newOutputStream</span><span class="op">(</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    Paths<span class="op">.</span><span class="fu">get</span><span class="op">(</span>destFile<span class="op">),</span>         <span class="co">// die zu schreibende Datei</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    StandardOpenOption<span class="op">.</span><span class="fu">APPEND</span>    <span class="co">// die Datei wird erweitert</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                 <span class="co">// --&gt; die neuen Bytes werden hinten angehängt</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div>
+<p><strong><em>Tipp:</em></strong> Erzeuge dir im Projektverzeichis
+einen Ordner <code>resources</code> mit einer Bilddatei mit dem Namen
+“meinBild.png”. Du kannst dann die Datei mit
+<code>copyFile("resources/meinBild.png", "resources/meinBild_neu.png")</code>
+kopieren.</p>
+<h2 id="byte-output-with-append">Byte-Output with append</h2>
+<p>Sollte eine bereits existierende Datei zum Schreiben geöffnet werden,
+so wird normalerweise der alte Dateiinhalt komplett gelöscht. In der
+Datei steht dann nur die neu geschriebenen Bytes.</p>
+<p>Möchte man das verhindern und die neuen Bytes an die schon
+existierenden hinten anhängen, so muss man das beim Öffnen entsprechend
+angeben:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Öffnet eine Datei zum Schreiben, ohne dass der alte Dateiinhalt gelöscht wird</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">OutputStream</span> out <span class="op">=</span> Files<span class="op">.</span><span class="fu">newOutputStream</span><span class="op">(</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    Paths<span class="op">.</span><span class="fu">get</span><span class="op">(</span>destFile<span class="op">),</span>         <span class="co">// die zu schreibende Datei</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    StandardOpenOption<span class="op">.</span><span class="fu">APPEND</span>    <span class="co">// die Datei wird erweitert</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="co">// --&gt; die neuen Bytes werden hinten angehängt</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">);</span></span></code></pre></div>
 <h3 id="bytes-überspringen">Bytes überspringen</h3>
 <p>Mit der Methode <a
 href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html#skip-long-"><code>in.skip(count)</code></a>
