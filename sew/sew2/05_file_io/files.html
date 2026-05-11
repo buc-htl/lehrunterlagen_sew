@@ -169,14 +169,14 @@ ohne Unterordner</a></li>
 <h1 id="die-klasse-files">Die Klasse Files</h1>
 <p>Die Klasse <a
 href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html"><code>Files</code></a>
-bietet viele nützliche Methoden zum Arbeiten mit Dateien und
-Ordnern.</p>
+bietet, neben dem reinen Lesen und Schreiben von Dateien, viele
+nützliche Methoden zum Arbeiten mit Dateien und Ordnern.</p>
 <h2 id="datei-kopieren">Datei kopieren</h2>
 <p><a
 href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#copy-java.nio.file.Path-java.nio.file.Path-java.nio.file.CopyOption...-"><code>Files.copy(...)</code></a>
 kopiert eine Datei.</p>
-<p>Achtung: Falls ein Ordner kopiert wird, so wird nur der Ordner nicht
-jedoch sein Inhalt kopiert.</p>
+<p>Achtung: Falls ein Ordner kopiert wird, so wird nur der Ordner, nicht
+jedoch sein Inhalt, kopiert.</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Files<span class="op">.</span><span class="fu">copy</span><span class="op">(</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    Paths<span class="op">.</span><span class="fu">get</span><span class="op">(</span><span class="st">&quot;resources/meinBild.png&quot;</span><span class="op">),</span>      <span class="co">// Source-File</span></span>
