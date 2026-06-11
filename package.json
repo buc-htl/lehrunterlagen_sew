@@ -10,5 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pd": "cd $INIT_CWD && find . -type f -name '*.md' -maxdepth 1 -execdir sh -c 'pandoc -s --template=GitHub.html5  --toc --toc-depth=3 -f markdown+example_lists+fenced_code_blocks+fenced_code_attributes+tex_math_single_backslash+tex_math_dollars --mathjax -t html5 --filter pandoc-plantuml  \"${0}\" -o \"${0%.md}.html\"' {} \\;",
     "pd_pdf": "cd $INIT_CWD && find . -type f -name '*.md' -maxdepth 1 -execdir sh -c 'pandoc -s -f markdown+example_lists+fenced_code_blocks+fenced_code_attributes+tex_math_single_backslash+tex_math_dollars --mathjax -t pdf --filter pandoc-plantuml  \"${0}\" -o \"${0%.md}.pdf\"' {} \\;"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "reveal.js": "^6.0.1"
   }
 }

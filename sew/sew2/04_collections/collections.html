@@ -1,16 +1,23 @@
 <!doctype html>
 <html lang="de">
+
 <head>
   <meta charset="utf-8">
   <title>Java Collections</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="../../../theme/htl.css">
+  <link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer"  onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reset.css';">/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reveal.css';" />
 
 	<link rel="stylesheet" href="../../../theme/htl.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../node_modules/highlight.js/styles/stackoverflow-light.css';"> -->
 </head>
+
 <body>
   <div class="reveal">
     <div class="slides">
@@ -56,16 +63,17 @@
           <li>Als "Collection" bezeichnet man eine Gruppe von zusammengehörigen Objekten.</li>
           <li>Es gibt (neben Arrays) verschiede Datenstrukturen, die mehrere Objekte speichern:
             <ul>
-              
+
               <li><strong>List</strong>: definierte Reihenfolge, Duplikate erlaubt</li>
               <li><strong>Set</strong>: keine Duplikate erlaubt</li>
               <li><strong>Map</strong>: Schlüssel-Wert-Paare</li>
             </ul>
           </li>
-          <li>Java stellt verschiedene Interfaces und konkrete Implementierungen (Klassen) für die unterschiedlichen Datenstrukturen bereit.</li>
+          <li>Java stellt verschiedene Interfaces und konkrete Implementierungen (Klassen) für die unterschiedlichen
+            Datenstrukturen bereit.</li>
         </ul>
         <p></p>
-  
+
       </section>
 
 
@@ -79,10 +87,18 @@
         </ul>
         <p>Die Java API kennt u.a folgende Implementierungen einer Liste:</p>
         <ul>
-          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a> (bessere Performance Speicherung/Zugriff)</li>
-          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html">LinkedList</a> (bessere Performance bei Manipulationen)</li>
-          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Vector.html">Vector</a> (synchronized - nur ein Thread gleichzeitig)</li>
-          <li class="medium"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Stack.html">Stack</a> (LIFO – last-in-first-out)</li>
+          <li class="medium"><a
+              href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a>
+            (bessere Performance Speicherung/Zugriff)</li>
+          <li class="medium"><a
+              href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html">LinkedList</a>
+            (bessere Performance bei Manipulationen)</li>
+          <li class="medium"><a
+              href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Vector.html">Vector</a>
+            (synchronized - nur ein Thread gleichzeitig)</li>
+          <li class="medium"><a
+              href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Stack.html">Stack</a> (LIFO –
+            last-in-first-out)</li>
         </ul>
       </section>
 
@@ -96,9 +112,15 @@
         </ul>
         <p>Die Java API kennt drei konkrete Implementierungen eines Sets:</p>
         <ul>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashSet.html">HashSet</a></strong> (keine Ordnung)</li>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeSet.html">TreeSet</a></strong> (Elemente sind immer geordnet)</li>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedHashSet.html">LinkedHashSet</a></strong> (Reihenfolge des Einfügens bleibt erhalten)</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashSet.html">HashSet</a></strong>
+            (keine Ordnung)</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeSet.html">TreeSet</a></strong>
+            (Elemente sind immer geordnet)</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedHashSet.html">LinkedHashSet</a></strong>
+            (Reihenfolge des Einfügens bleibt erhalten)</li>
         </ul>
       </section>
 
@@ -113,18 +135,26 @@
         </ul>
         <p>Die Java API kennt drei konkrete Implementierungen einer Map (vgl. Sets!):</p>
         <ul>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html">HashMap</a></strong> (keine Ordnung)</li>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeMap.html">TreeMap</a></strong> (Elemente sind immer geordnet)</li>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedHashMap.html">LinkedHashMap</a></strong> (Reihenfolge des Einfügens bleibt erhalten)</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html">HashMap</a></strong>
+            (keine Ordnung)</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeMap.html">TreeMap</a></strong>
+            (Elemente sind immer geordnet)</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedHashMap.html">LinkedHashMap</a></strong>
+            (Reihenfolge des Einfügens bleibt erhalten)</li>
         </ul>
       </section>
 
       <section>
         <h2>Generics</h2>
         <ul>
-          <li>Eine Collection (z.B. ArrayList) ist so implementiert, dass ein beliebiger Datentyp darin gespeichert werden kann.</li>
+          <li>Eine Collection (z.B. ArrayList) ist so implementiert, dass ein beliebiger Datentyp darin gespeichert
+            werden kann.</li>
           <li>Im Code wird aber angegeben, welchen Datentyp man in der Collection speichern will.</li>
-          <li>Erlaubt eine Überprüfung  bereits vom Compiler / IDE, ob nur Objekte vom gewünschten Datentyp eingefügt werden.</li>
+          <li>Erlaubt eine Überprüfung bereits vom Compiler / IDE, ob nur Objekte vom gewünschten Datentyp eingefügt
+            werden.</li>
           <li>So werden diese Fehler nicht erst bei der Programmausführung erkannt.</li>
           <li>&lt;&gt; kennzeichnen in Java Generics.</li>
         </ul>
@@ -135,8 +165,10 @@
         <h2>Generics - Beispiel</h2>
         <ul>
           <li>Die Variable <code>list</code> hat den Datentyp ArrayList.</li>
-          <li>&lt;String&gt; kennzeichnen den Datentyp mit dem die Klasse arbeiten soll. In dieser Arraylist können also nur Strings gespeichert werden.</li>
-          <li>Auf der rechten Seiten reichen leere &lt;&gt; aus, da der Compiler den Datentyp aus dem linken Teil ableiten kann.</li>
+          <li>&lt;String&gt; kennzeichnen den Datentyp mit dem die Klasse arbeiten soll. In dieser Arraylist können also
+            nur Strings gespeichert werden.</li>
+          <li>Auf der rechten Seiten reichen leere &lt;&gt; aus, da der Compiler den Datentyp aus dem linken Teil
+            ableiten kann.</li>
         </ul>
         <pre><code class="language-java">ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</code></pre>
       </section>
@@ -148,10 +180,10 @@
           <li>Für eine Arraylist von Strings wäre E also String.</li>
         </ul>
         <div>
-            <img src="images/javaAPI-ArrayList.png" alt="Java API - ArrayList Header ">
-            <img src="images/javaAPI-ArrayList-add.png" alt="Java API - ArrayList add Method">
+          <img src="images/javaAPI-ArrayList.png" alt="Java API - ArrayList Header ">
+          <img src="images/javaAPI-ArrayList-add.png" alt="Java API - ArrayList add Method">
         </div>
-    
+
       </section>
 
 
@@ -164,7 +196,8 @@
         <h2>Interface</h2>
         <p><strong>Wiederholung: Was ist ein <a href="../02_oop_part2/interfaces.html">Interface</a>?</strong></p>
         <ul>
-          <li>Ein <a href="../02_oop_part2/interfaces.html">Interface</a> besitzt grundsätzlich keine Implementierungen, sondern nur Methodenköpfe und Konstanten.</li>
+          <li>Ein <a href="../02_oop_part2/interfaces.html">Interface</a> besitzt grundsätzlich keine Implementierungen,
+            sondern nur Methodenköpfe und Konstanten.</li>
           <li>Trennt die Definition der <strong>Schnittstelle</strong> von der Implementierung.</li>
         </ul>
         <pre><code class="language-java">
@@ -183,30 +216,41 @@ public class Horse implements RidableAnimal {
       <section>
         <h2>relevante Interfaces in der Java API</h2>
         <ul>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html">Collection</a></strong> ist ein Interface der Java API
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html">Collection</a></strong>
+            ist ein Interface der Java API
             <ul>
               <li>definiert die grundlegenden Methoden für Collection-Typen</li>
             </ul>
           </li>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html">List</a></strong> und <strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Set.html">Set</a></strong> sind ebenfalls Interfaces und <strong>erben</strong> von Collection
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html">List</a></strong>
+            und <strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Set.html">Set</a></strong>
+            sind ebenfalls Interfaces und <strong>erben</strong> von Collection
             <ul>
               <li>Besitzen alle Methoden von Collection und definieren zusätzliche Methoden.</li>
             </ul>
           </li>
-          <li><strong><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html">Map</a></strong> ist ebenfalls ein Interface der Java API (erbt aber nicht vom Interface Collection).</li>
+          <li><strong><a
+                href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html">Map</a></strong>
+            ist ebenfalls ein Interface der Java API (erbt aber nicht vom Interface Collection).</li>
         </ul>
       </section>
 
       <section>
         <h2>Interfaces &amp; Klassen - Beispiel</h2>
-        
-            <ul>
-              <li>Die Klasse <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a></strong> (als Beispiel)  ist eine konkrete Implementierung des Interfaces List.</li>
-              <li>Implementiert alle Methoden des Interfaces (und noch ein paar zusätzliche).</li>
-              <li>Es kann ein Objekt von der Klasse ArrayList erstellt werden (von einem Interface kann kein Objekt erstellt werden).</li>
-              <li>LinkedList, Stack,...sind weitere Implementierungen des Interfaces List.</li>    
-            </ul>
-          </li>
+
+        <ul>
+          <li>Die Klasse <a
+              href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html">ArrayList</a></strong>
+            (als Beispiel) ist eine konkrete Implementierung des Interfaces List.</li>
+          <li>Implementiert alle Methoden des Interfaces (und noch ein paar zusätzliche).</li>
+          <li>Es kann ein Objekt von der Klasse ArrayList erstellt werden (von einem Interface kann kein Objekt erstellt
+            werden).</li>
+          <li>LinkedList, Stack,...sind weitere Implementierungen des Interfaces List.</li>
+        </ul>
+        </li>
       </section>
 
 
@@ -221,9 +265,12 @@ public class Horse implements RidableAnimal {
         <pre><code class="language-java">? list = new ArrayList&lt;&gt;();</code></pre>
         <p>Welchen Datentyp <strong>kann</strong> die Variable <code>list</code> haben?</p>
         <p>Welcher Datentyp <strong>soll</strong> verwendet werden und warum?</p>
-        
-        <p class="fragment"><code>Collection</code>, <code>List</code>, <code>ArrayList</code> sind mögliche Datentypen für die Variable <code>list</code>. 
-        <p class="fragment">Es wird empfohlen, den Datentyp <code>List</code> zu verwenden, da dies die Flexibilität erhöht und die Implementierung von <code>ArrayList</code> abstrahiert.</p></p>
+
+        <p class="fragment"><code>Collection</code>, <code>List</code>, <code>ArrayList</code> sind mögliche Datentypen
+          für die Variable <code>list</code>.
+        <p class="fragment">Es wird empfohlen, den Datentyp <code>List</code> zu verwenden, da dies die Flexibilität
+          erhöht und die Implementierung von <code>ArrayList</code> abstrahiert.</p>
+        </p>
       </section>
 
 
@@ -246,64 +293,67 @@ al.ensureCapacity(20);        // the class "ArrayList" has the method "ensureCap
         <h2>Primitive Datentypen vs. Objekte</h2>
         <ul>
           <li>In einer Collection können <strong>nur Objekte</strong> gespeichert werden.</li>
-          <li>Trotzdem läuft der Code wenn primitive Typen (int, float, boolean,...) in Collection gespeichert werden. Warum?</li>
+          <li>Trotzdem läuft der Code wenn primitive Typen (int, float, boolean,...) in Collection gespeichert werden.
+            Warum?</li>
           <li>"Auto(un)boxing": Java nimmt eine automatische Umwandlung primitiver Typ &lt;-&gt; Objekt vor.</li>
-          <li>Jeder primitive Datentyp besitzt in Java ein dazugehörige "Wrapper"-Klasse. Sie "verpacken" (engl. "wrap") einen primitiven Datentyp.</li>
+          <li>Jeder primitive Datentyp besitzt in Java ein dazugehörige "Wrapper"-Klasse. Sie "verpacken" (engl. "wrap")
+            einen primitiven Datentyp.</li>
         </ul>
       </section>
 
-<section>
-  <h2>Wrapper Klassen</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Primitiver Datentyp</th>
-        <th>Wrapper-Klasse</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>byte</td>
-        <td>Byte</td>
-      </tr>
-      <tr>
-        <td>short</td>
-        <td>Short</td>
-      </tr>
-      <tr>
-        <td>int</td>
-        <td>Integer</td>
-      </tr>
-      <tr>
-        <td>long</td>
-        <td>Long</td>
-      </tr>
-      <tr>
-        <td>float</td>
-        <td>Float</td>
-      </tr>
-      <tr>
-        <td>double</td>
-        <td>Double</td>
-      </tr>
-      <tr>
-        <td>char</td>
-        <td>Character</td>
-      </tr>
-      <tr>
-        <td>boolean</td>
-        <td>Boolean</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+      <section>
+        <h2>Wrapper Klassen</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Primitiver Datentyp</th>
+              <th>Wrapper-Klasse</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>byte</td>
+              <td>Byte</td>
+            </tr>
+            <tr>
+              <td>short</td>
+              <td>Short</td>
+            </tr>
+            <tr>
+              <td>int</td>
+              <td>Integer</td>
+            </tr>
+            <tr>
+              <td>long</td>
+              <td>Long</td>
+            </tr>
+            <tr>
+              <td>float</td>
+              <td>Float</td>
+            </tr>
+            <tr>
+              <td>double</td>
+              <td>Double</td>
+            </tr>
+            <tr>
+              <td>char</td>
+              <td>Character</td>
+            </tr>
+            <tr>
+              <td>boolean</td>
+              <td>Boolean</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
 
       <section>
         <h2>Conversion Konstruktor</h2>
         <ul>
           <li>Jede Collection Implementierung besitzt einen Konstruktor mit einem Parameter vom Typ Collection.</li>
-          <li>Dieser Konstruktor initialisiert die neue Collection mit allen Elementen der übergegebenen Collection.</li>
+          <li>Dieser Konstruktor initialisiert die neue Collection mit allen Elementen der übergegebenen Collection.
+          </li>
           <li>Welche Objekte kann ich einem solchen Konstruktor übergeben?</li>
         </ul>
         <p><strong>Beispiel:</strong></p>
@@ -313,16 +363,19 @@ list.add("Semmel");
 HashSet&lt;String&gt; set = new HashSet&lt;&gt;(list);</code></pre>
       </section>
 
- 
+
       <section>
         <h2>Array &lt;-&gt; Collection</h2>
         <p><strong>Umwandlung Collection in Array</strong></p>
         <ul class="left">
-          <li><a href="https://docs.oracle.com/en/java/javase/25/docs//api/java.base/java/util/Collection.html#toArray(T%5B%5D)"><code>toArray()</code></a> Methode des Collection Interface</li>
+          <li><a
+              href="https://docs.oracle.com/en/java/javase/25/docs//api/java.base/java/util/Collection.html#toArray(T%5B%5D)"><code>toArray()</code></a>
+            Methode des Collection Interface</li>
         </ul>
         <p><strong>Umwandlung Array in Collection</strong></p>
         <ul class="left">
-          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#asList(T...)" target="_blank"><code>Arrays.asList()</code></a> + evt. Conversion Konstruktor</li>
+          <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#asList(T...)"
+              target="_blank"><code>Arrays.asList()</code></a> + evt. Conversion Konstruktor</li>
         </ul>
         <pre><code class="language-java">
 String[] names = new String[]{"Paul", "Hannah", "Anna"};
@@ -334,30 +387,32 @@ String[] namesArray = (String[]) set.toArray();
 
 
 
-        <section>
-          <h2>List.of &amp; Set.of</h2>
-          <ul class="medium">
-            <li><code>List.of()</code> und <code>Set.of()</code> sind Factory-Methoden, um schnell unveränderliche Listen und Sets zu erstellen.</li>
-            <li>Die erzeugten Collections sind <strong>immutable</strong> (unveränderlich): Nachträgliches Hinzufügen, Entfernen oder Ändern ist nicht möglich.</li>
-          </ul>
-          <pre><code class="language-java">
+      <section>
+        <h2>List.of &amp; Set.of</h2>
+        <ul class="medium">
+          <li><code>List.of()</code> und <code>Set.of()</code> sind Factory-Methoden, um schnell unveränderliche Listen
+            und Sets zu erstellen.</li>
+          <li>Die erzeugten Collections sind <strong>immutable</strong> (unveränderlich): Nachträgliches Hinzufügen,
+            Entfernen oder Ändern ist nicht möglich.</li>
+        </ul>
+        <pre><code class="language-java">
 List&lt;String&gt; namen = List.of("Paul", "Hannah", "Anna");
 Set&lt;Integer&gt; zahlen = Set.of(1, 2, 3);
 namen.set(0,"Max"); //UnsupportedOperationException
 zahlen.add(4); //UnsupportedOperationException</code></pre>
-          <ul class="medium left">
-            <li>Es lässt sich jedoch leicht eine veränderliche Kopie erstellen.</li>
-            <li>Auch gut geeignet, um Collections mit festen Werten zu initialisieren.</li>
-          </ul>
-          <pre><code class="language-java">
+        <ul class="medium left">
+          <li>Es lässt sich jedoch leicht eine veränderliche Kopie erstellen.</li>
+          <li>Auch gut geeignet, um Collections mit festen Werten zu initialisieren.</li>
+        </ul>
+        <pre><code class="language-java">
 List&lt;String&gt; namen = new ArrayList&lt;&gt;(List.of("Paul", "Hannah", "Anna"));
 namen.add("Max"); </code></pre>
 
-        </section>
+      </section>
 
 
 
- 
+
       <section>
         <h2>Collection durchlaufen</h2>
       </section>
@@ -366,13 +421,13 @@ namen.add("Max"); </code></pre>
       <section>
         <h2>for-Schleife</h2>
         <p>Sinnvoll bei Listen und wenn der Index benötigt wird.</p>
-      <pre><code>
+        <pre><code>
 List&lt;String&gt; myList = new ArrayList&lt;&gt;(List.of("Paul", "Hannah", "Anna"));
 for (int i = 0; i &lt; myList.size(); i++) {
     System.out.println(myList.get(i)); 
 }</code></pre>
       </section>
-     
+
 
       <section>
         <h2>for-each Schleife</h2>
@@ -385,7 +440,8 @@ for (String s: collection) {
 
       <section>
         <h2>Iterator</h2>
-        <p>Ein <strong>Iterator</strong> muss verwendet werden wenn man Elemente während des Durchlaufs entfernen möchte.</p>
+        <p>Ein <strong>Iterator</strong> muss verwendet werden wenn man Elemente während des Durchlaufs entfernen
+          möchte.</p>
         <pre><code class="language-java">Collection&lt;String&gt; collection = new HashSet&lt;&gt;(Arrays.asList("Paul", "Hannah", "Anna"));
 Iterator&lt;String&gt; it = collection.iterator();
 while (it.hasNext()) {
@@ -403,11 +459,11 @@ System.out.println(collection); //[Paul, Anna]</code></pre>
         <p>Behandeln wir später.</p>
       </section>
 
-<section>
-  <p>Vergiss nicht, dir die Codebeispiele anzusehen!</p>
-</section>
+      <section>
+        <p>Vergiss nicht, dir die Codebeispiele anzusehen!</p>
+      </section>
 
-    <section>
+      <section>
         <h2>Zusammenfassung</h2>
         <ul>
           <li>Java Collections sind Datenstrukturen, die mehrere Objekte speichern können.</li>
@@ -425,18 +481,149 @@ System.out.println(collection); //[Paul, Anna]</code></pre>
 
 
 
-      
+
 
     </div>
   </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!--
+<script src="../../../node_modules/reveal.js/dist/reveal.js"> </script>
+<script src="../../../node_modules/reveal.js/dist/plugin/notes.js"> </script>
+<script src="../../../node_modules/reveal.js/dist/plugin/markdown.js"> </script>
+<script src="../../../node_modules/reveal.js/dist/plugin/highlight.js"> </script>
+<script src="../../../node_modules/reveal.js/dist/plugin/search.js"> </script>
 
 
-	<script src="../../reveal-config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js"
+    integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="
+  console.log('!!!!!!!!!!!!!!!!!!!!');
+  var s = document.createElement('script');
+  s.src = '../../../node_modules/reveal.js/dist/reveal.js';
+  console.log(s);
+  document.body.appendChild(s);
+"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js"
+    integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="
+  var s = document.createElement('script');
+  s.src = '../../../node_modules/reveal.js/dist/plugin/notes/notes.min.js';
+  document.head.appendChild(s);
+"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js"
+    integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="
+  var s = document.createElement('script');
+  s.src = '../../../node_modules/reveal.js/dist/plugin/markdown/markdown.min.js';
+  document.head.appendChild(s);
+"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js"
+    integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="
+  var s = document.createElement('script');
+  s.src = '../../../node_modules/reveal.js/dist/reveal.js/dist/plugin/highlight/highlight.min.js';
+  document.head.appendChild(s);
+"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js"
+    integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" onerror="
+  var s = document.createElement('script');
+  s.src = '../../../node_modules/reveal.js/dist/plugin/search/search.min.js';
+  document.head.appendChild(s);
+"></script>
+
+  <script src="../../reveal-config.js"></script>
+-->
+
+
+  <script type="module">
+
+    function loadCSS(url, fallback) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+
+      if (fallback) {
+        link.onerror = () => {
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'stylesheet';
+          fallbackLink.href = fallback;
+          document.head.appendChild(fallbackLink);
+        };
+      }
+      document.head.appendChild(link);
+    }
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS("../../../theme/htl.css");
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css',
+      '../../../node_modules/highlight.js/styles/stackoverflow-light.css'
+    );
+
+    function loadScript(url, fallback) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = resolve;
+
+        if (fallback) {
+          s.onerror = () => {
+            const s2 = document.createElement('script');
+            s2.src = fallback;
+            s2.onload = resolve;
+            s2.onerror = reject;
+            document.head.appendChild(s2);
+          };
+        } else {
+          s.onerror = reject;
+        }
+
+        document.head.appendChild(s);
+      });
+    }
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js',
+      '../../../node_modules/reveal.js/dist/reveal.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/notes.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/markdown.js'
+    );
+
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/highlight.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/search.js'
+    );
+
+    await loadScript("../../reveal-config.js");
+
+  </script>
+
+
 </body>
+
 </html>
