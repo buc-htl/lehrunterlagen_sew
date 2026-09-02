@@ -2,7 +2,6 @@
 title:  'Programmieren im KI-Zeitalter'
 ---
 
-# Programmieren im KI-Zeitalter
 
 Wozu lernen wir überhaupt noch Programmieren, wenn die Künstliche Intelligenz (KI) das doch für uns übernehmen kann? Ist der Unterricht altmodisch? Dieser Text soll aufzeigen, warum Programmieren auch im KI-Zeitalter noch wichtig ist und welche Fähigkeiten man dadurch entwickeln kann.
 
