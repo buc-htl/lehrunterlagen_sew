@@ -5,11 +5,16 @@
   <title>Java Maps</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="../../../theme/htl.css">
+  <link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer"  onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reset.css';">/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reveal.css';" />
 
 	<link rel="stylesheet" href="../../../theme/htl.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../../../node_modules/highlight.js/styles/stackoverflow-light.css';">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../node_modules/highlight.js/styles/stackoverflow-light.css';"> -->
 </head>
 <body>
   <div class="reveal">
@@ -575,13 +580,100 @@ map.put(key, "Wert");
     </div>
   </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js" integrity="sha512-GvouLVZT+gJSJW5eOfpG46xTaBb2c3VeNnbzmDYTRQkFlgvxNhnzZQqiQ/jAyAYPh+a9roBvAHJP6zvXIVq34Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js" integrity="sha512-6LAcdj7pQal9JkdALNexzVKd4zWuYUxOXuzdF21iOx7LJSlF5ibFi2TAR7GQ00XhfPAw7/R8f1dZ69gFGhzXtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js" integrity="sha512-4exkEeyVuaWUFKozXl6L3UCugl6ai1cKnrVFkWUstdrNB2sDxxmPEaHBzTlYm9wX78EjPzEBG0s8k37oPeUFIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js" integrity="sha512-IkPzJ3njtxNL2Frm7zr18CEj9HH+CEFAqh+jSKjXTHVFGtWG1+USbIXINU8zdGmyLpf/OBIVfpNLGNgwhlymkA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js" integrity="sha512-hzXKyeT22k18jZdSR25sVbZqa1UAc8nLubaKsW7EwarLBRtFMZMmLQOc2n29Zv+9r2X8Iex9WJqLudXO8e2x6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-	<script src="../../reveal-config.js"></script>
+	<script src="../../reveal-config.js"></script> -->
+
+    <script type="module">
+
+    function loadCSS(url, fallback) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+
+      if (fallback) {
+        link.onerror = () => {
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'stylesheet';
+          fallbackLink.href = fallback;
+          document.head.appendChild(fallbackLink);
+        };
+      }
+      document.head.appendChild(link);
+    }
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS("../../../theme/htl.css");
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css',
+      '../../../node_modules/highlight.js/styles/stackoverflow-light.css'
+    );
+
+    function loadScript(url, fallback) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = resolve;
+
+        if (fallback) {
+          s.onerror = () => {
+            const s2 = document.createElement('script');
+            s2.src = fallback;
+            s2.onload = resolve;
+            s2.onerror = reject;
+            document.head.appendChild(s2);
+          };
+        } else {
+          s.onerror = reject;
+        }
+
+        document.head.appendChild(s);
+      });
+    }
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js',
+      '../../../node_modules/reveal.js/dist/reveal.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/notes.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/markdown.js'
+    );
+
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/highlight.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/search.js'
+    );
+
+    await loadScript("../../reveal-config.js");
+
+  </script>
 </body>
 </html>
