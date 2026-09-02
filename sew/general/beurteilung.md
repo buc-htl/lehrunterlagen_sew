@@ -4,9 +4,9 @@ title:  'Beurteilung'
 
 ## Grundsatz
 
-Der Sinnd und Zweck des Unterichts besteht darin, dass du **neue Fähigkeiten** (Kompetenzen) erlernst. Diese Fähigkeiten bilden die Basis für weiterführende Fähigkeiten und stellen die Grundlage für deine fachliche und berufliche Entwicklung dar.
+Der Sinn und Zweck des Unterichts besteht darin, dass du **neue Fähigkeiten** (Kompetenzen) erlernst. Diese Fähigkeiten bilden die Basis für weiterführende Fähigkeiten und stellen die Grundlage für deine fachliche und berufliche Entwicklung dar.
 
-Noten sind ein Mittel, um deine Fähigkeiten zu bewerten. Sie sollen dir helfen, deine Stärken und Schwächen zu erkennen und dich gezielt weiterzuentwickeln. Sie sind **nicht** das primäre das Ziel des Unterrichts!
+Noten sind ein Mittel, um deine Fähigkeiten zu bewerten. Sie sollen dir helfen, deine Stärken und Schwächen zu erkennen und dich gezielt weiterzuentwickeln. Sie sind **nicht** das primäre Ziel des Unterrichts!
 
 ## Beurteilung
 
@@ -14,8 +14,8 @@ Jedes Modul besteht aus einem grundlegenden (CORE) und/oder einem erweiterten (A
 
 Für jeden Teil erhältst du eine der folgenden Bewertungen:
 
-- **nicht erfüllt**: Die geforderten Kompetenzen wurden nicht erreicht.
-- **grundlegend erfüllt**: Die geforderten Kompetenzen wurden in den wesentlichen Punkten erreicht.
+- **nicht erfüllt**: Die geforderten Kompetenzen wurden nicht nachgewiesen.
+- **grundlegend erfüllt**: Die geforderten Kompetenzen wurden in den wesentlichen Punkten nachgewiesen.
 - **gänzlich erfüllt**: Die geforderten Kompetenzen werden sicher und selbstständig beherrscht und können für die konkrete Aufgabe begründen bzw. übertragen werden.
 
 Aus den Bewertungen der einzelnen Teile wird folgendermaßen eine Gesamtnote gebildet:
@@ -24,11 +24,11 @@ Aus den Bewertungen der einzelnen Teile wird folgendermaßen eine Gesamtnote geb
 - **Genügend (4)**: im Durchschnitt sind alle CORE Teile grundlegend erfüllt.
 - **Befriedigend (3)**: im Durchschnitt sind alle CORE Teile gänzlich erfüllt.
 - **Gut (2)**: im Durchschnitt sind alle CORE Teile gänzlich erfüllt und alle ADVANCED Teile sind im Durchschnitt grundlegend erfüllt.
-- **Sehr gut (1)**: im Durchschnitt sind alle CORE Teile gänzlich erfüllt alle ADVANCED Teile sind im Durchschnitt gänzlich erfüllt.
+- **Sehr gut (1)**: im Durchschnitt sind alle CORE Teile gänzlich erfüllt und alle ADVANCED Teile sind im Durchschnitt gänzlich erfüllt.
 
-Achtung! Eine bessere Note als Befriedigend ist nur möglich, wenn zumindest alle CORE Teile im Durchschnitt gänzlich erfüllt sind. Man kann alle ADVANCED Teile gänzlich erfüllen, aber wenn ein CORE Teil nicht erfüllt ist, ist die Gesamtnote immer noch Nicht genügend (5).
+Achtung! Eine bessere Note als Befriedigend ist nur möglich, wenn zumindest alle CORE Teile im Durchschnitt gänzlich erfüllt sind. ADVANCED Teile zählen nicht, solange diese Bedingung nicht erfüllt ist. Selbst wenn  alle ADVANCED Teile gänzlich erfüllt sind, aber ein CORE Teil nicht erfüllt ist, ist die Gesamtnote immer noch Nicht genügend (5).
 
-Für die Semesternachricht wird die Hälfte aller CORE und Advanced Teile für die Beurteilung herangezogen. Achtung: Zu Jahresende müssen für eine positive Gesamtnote **ALLE** CORE Teile zumindest grundlegend erfüllt sein.
+Für die Semesternachricht wird die Hälfte aller CORE und Advanced Teile für die Beurteilung herangezogen. Achtung: Zu Jahresende müssen für eine positive Gesamtnote **ALLE** CORE Teile des gesamten Kurses zumindest grundlegend erfüllt sein.
 
 ## Nachweis der Kompetenzen
 
@@ -36,14 +36,15 @@ Die geforderten Kompetenzen werden in der Regel durch Abgabegespräche über abg
 
 ### Abgabegespräche
 
-Abgabegespräche über Übungsaufgaben können jederzeit während des Praxisunterrichts statt finden. Es liegt in der Verantwortung der Schüler*innen, sich rechtzeitig zu Abgabegesprächen zu melden!
+Abgabegespräche über Übungsaufgaben können jederzeit während des Praxisunterrichts statt finden. Es liegt in der Verantwortung der Schüler*innen, sich **rechtzeitig zu Abgabegesprächen zu melden**!
 
 Die Bewertung des Abgabegesprächs richtet sich nach folgenden Grundsätzen:
 
 ### 🔴 Nicht erfüllt
 
-„Ich habe noch nicht ausreichend gezeigt, dass ich das zugrunde liegende Prinzip verstanden habe und es selbstständig anwenden kann.“
+**„Ich habe noch nicht ausreichend gezeigt, dass ich das zugrunde liegende Prinzip verstanden habe und es selbstständig anwenden kann.“**
 
+- Formale Bedingungen nicht erfüllt (z.B. alle Aufgabenpunkte bearbeitet, Code nicht im git-Repository, ...)
 - grundlegende Konzepte nicht erkennbar verstanden
 - wesentliche Teile fehlen oder sind fachlich falsch
 - zentrale Zusammenhänge können nicht erklärt werden
@@ -53,15 +54,14 @@ Die Bewertung des Abgabegesprächs richtet sich nach folgenden Grundsätzen:
 - wesentliche inhaltliche Hilfestellung ist notwendig
 - KI Nutzung ist nicht transparent und wird verschwiegen
 
-### 🟡 Grundlegend Erfüllt
+### 🟡 Grundlegend erfüllt
 
-**„Ich habe gezeigt, dass ich das Prinzip verstanden habe und es bei meiner Aufgabe grundsätzlich anwenden kann.“**
+**„Ich habe gezeigt, dass ich das Prinzip verstanden habe und es bei meinen Aufgaben grundsätzlich anwenden kann.“**
 
-- Formale Bedingungen erfüllt (z.B. alle Aufgabenpunkte bearbeitet, ...)
 - Grundlegendes Konzept ist erkennbar
 - Wesentliche Schritte sind vorhanden 
-- Erklärung ist teilweise unsicher.
-- Einzelne Fachbegriffe fehlen oder werden nicht ganz korrekt verwendet.
+- Erklärung des Codes ist teilweise unsicher
+- Einzelne Fachbegriffe fehlen oder werden nicht ganz korrekt verwendet
 - Randfälle oder leicht veränderte Anforderungen bereiten Schwierigkeiten
 - Der/die Schüler*in braucht gelegentlich einen Hinweis.
 - Kleine Fehler können vorkommen.
@@ -72,20 +72,20 @@ Die Bewertung des Abgabegesprächs richtet sich nach folgenden Grundsätzen:
 
 **„Ich kann meine Lösung selbstständig erklären, begründen und auf eine leicht veränderte Situation übertragen.“**
 
-- Erklärung ist selbstständig und fachlich korrekt
+- Erklärung des Codes ist selbstständig und fachlich korrekt
 - Konzepte werden sicher angewendet
 - Lösungsweg ist fachlich schlüssig
-- Wesentliche Zusammenhänge werden verstanden.
-- Entscheidungen können begründet werden.
+- Wesentliche Zusammenhänge werden verstanden
+- Entscheidungen können begründet werden
 - Im Abgabegespräch sind keine wesentlichen inhaltlichen Hilfen erforderlich
 - Relevante Randfälle werden angemessen berücksichtigt
-- Eine kleine Variation kann selbstständig bearbeitet werden.
+- Eine kleine Variation kann selbstständig bearbeitet werden
 - Einzelne Versprecher oder kleine Codefehler können vorkommen, beeinträchtigen aber nicht die Bewertung.
 
 
 ### PLFs
 
-In der Angabe der PLF wird definiert, welche Teile durch welche Aufgabe(n) nachgewiesen werden müssen. Das Ergebnis der PLF ist keine Note, sondern eine oder mehrere Bewertungen (nicht erfüllt, grundlegend erfüllt, gänzlich erfüllt) für die geforderten Kompetenzen. 
+In der Angabe einer PLF wird definiert, welche Kompetenzen durch welche Aufgabe(n) nachgewiesen werden müssen. Das Ergebnis der PLF ist keine Note, sondern eine oder mehrere Bewertungen (nicht erfüllt, grundlegend erfüllt, gänzlich erfüllt) für die geforderten Kompetenzen. 
 
 Die Bewertung der Beispiele richtet sich nach folgenden Grundsätzen:
 
@@ -96,7 +96,7 @@ Die Bewertung der Beispiele richtet sich nach folgenden Grundsätzen:
 - Syntax-/Logikfehle verhindern die Ausführung/Funktion vollständig.
 - Keine eigenständige Problemlösung erkennbar.
 
-### 🟡 Grundlegend Erfüllt
+### 🟡 Grundlegend erfüllt
 
 - Kerndynamik funktioniert: Der Standardfall (Happy Path) läuft fehlerfrei.
 - Syntax ist korrekt: Grundlegende Strukturen werden richtig eingesetzt.
