@@ -111,6 +111,6 @@ Die Bewertung der Beispiele richtet sich nach folgenden Grundsätzen:
 
 ## Wiederholungen
 
-Ein Abgabegespräch kann max. einmal wiederholt werden, um die geforderten Kompetenzen nachzuweisen bzw. zu verbessern. Wurde die Kompetenz auch im zweiten Versuch nicht nachgewiesen, besteht eine letzte Möglichkeit, die fehlenden Kompetenz zu einem definierten Termin jeweils vor Semster-/Schuljahresende nachzuweisen. Die Lehrkraft entscheidet mind. 2 Wochen vor dem Termin, ob die Kompetenz in einem weiteren Abgabegespräch oder in einem PLF nachgewiesen werden muss.
+Ein Abgabegespräch kann max. einmal wiederholt werden, um die geforderten Kompetenzen nachzuweisen bzw. zu verbessern. Wurde die Kompetenz auch im zweiten Versuch nicht nachgewiesen, besteht eine letzte Möglichkeit, die fehlenden Kompetenz zu einem definierten Termin jeweils vor Semster-/Schuljahresende nachzuweisen. Die Lehrkraft entscheidet mind. 2 Wochen vor dem Termin, ob die Kompetenz in einem weiteren Abgabegespräch oder in einer PLF nachgewiesen werden muss.
 
 War ein geforderter Nachweis in einer PLF nicht erfolgreich, kann der Nachweis bei einem zusätzlichen Termin jeweils vor Semster-/Schuljahresende nachgeholt werden. Die Lehrkraft entscheidet mind. 2 Wochen vor dem Termin, ob die Kompetenz in einer weiteren PLF oder durch zusätzliche Übungsaufgaben + Abgabegespräch nachgewiesen werden muss. Bei der zusätzlichen PLF müssen nur mehr die Teile bearbeitet werden, die im ersten Versuch nicht erfolgreich waren.
