@@ -53,7 +53,7 @@ Wenn ein System im Produktionsbetrieb plötzlich abstürzt oder unerwartetes Ver
 
 ## Vage Zukunftsprognosen
 
-Wie sich die Arbeitswelt in den nächsten Jahren verändern wird, ist unklar. KI wird viele Aufgaben übernehmen, die heute noch von Menschen erledigt werden. Aber es wird auch neue Aufgaben geben, die man sich heute noch nicht vorstellen können. 
+Wie sich die Arbeitswelt in den nächsten Jahren verändern wird, ist unklar. KI wird viele Aufgaben übernehmen, die heute noch von Menschen erledigt werden. Aber es wird auch neue Aufgaben geben, die man sich heute noch nicht vorstellen kann. 
 
 Angesichts dieser Ungewissheit scheint es am sinnvollsten, allgemeine Fähigkeiten (wie logisches Denken, Problemlösen, Kreativität) durch eine spezifische Ausbildung (wie Programmieren) zu entwickeln. Diese allgemeinen Fähigkeiten können in verschiedenen Bereichen Anwendung finden, unabhängig von der konkreten Entwicklung der Berufswelt. 
 
