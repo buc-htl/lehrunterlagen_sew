@@ -7,13 +7,13 @@ title:  'Regeln zur KI-Nutzung bei Programmieraufgaben'
 
 Programmieraufgaben dienen dazu, dass du **selbst Programmierkompetenzen entwickelst und nachweist**.
 
-Du darfst bei der Bearbeitung – sofern für die jeweilige Aufgabe nicht explizit verboten –  KI auf eine sinnvolle und unterstützende Weise verwenden. Entscheidend ist jedoch:
+Du darfst bei der Bearbeitung – sofern für die jeweilige Aufgabe nicht explizit verboten –  KI auf eine sinnvolle und **unterstützende** Weise verwenden. Entscheidend ist jedoch:
 
 **Du musst deinen abgegebenen Code verstehen, erklären, begründen und selbstständig verändern können.**
 
 In Abgabegesprächen wird daher nicht nur das fertige Programm betrachtet, sondern vor allem deine eigene Kompetenz. In PLFs musst du nachweisen, dass du die geforderten Kompetenzen auch ohne KI-Tools beherrschst. 
 
-Erfahrungsgemäss entwickelt man diese Kompetenz nur, wenn zumindest große Teile der Aufgabe selbst erarbeitet werden. 
+Erfahrungsgemäss entwickelt man diese Kompetenz nur, wenn die zentralen Teile der Aufgabe **selbst** erarbeitet werden. 
 
 ---
 
@@ -46,7 +46,7 @@ Du musst insbesondere:
 - Fehler in deinem Programm grundsätzlich untersuchen können,
 - Änderungen am Programm selbst nachvollziehen und durchführen können.
 
-Ein Programm abzugeben, das du selbst nicht erklären kannst, erfüllt den Zweck der Aufgabe nicht.
+Ein Programm abzugeben, das du selbst nicht erklären kannst, erfüllt den Zweck der Aufgabe nicht. Wenn du KI den Lösungsweg generieren lässt, lernst du nicht die geforderten Kompetenzen. Du musst die Aufgabe selbstständig bearbeiten und die KI nur unterstützend einsetzen.
 
 Nicht erlaubt ist
 
