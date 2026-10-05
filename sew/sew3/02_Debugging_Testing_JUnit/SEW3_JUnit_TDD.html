@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Test Driven Development &amp; JUnit</title>
+
+	<link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+	<link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+	<link rel="stylesheet" href="../../../node_modules/reveal.js/dist/theme/white.css">
+	<link rel="stylesheet" href="../../../theme/htl.css">
+	<link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+	<style>
+		.title-slide h1 {
+			font-size: 1.7em;
+		}
+
+		.title-slide p {
+			text-align: center !important;
+			margin: 0.35em 0;
+		}
+
+		.assertion {
+			position: relative;
+			margin: 2em auto 0;
+			width: fit-content;
+			text-align: center;
+		}
+
+		.assertion-label {
+			position: absolute;
+			font-size: 0.65em;
+			white-space: nowrap;
+		}
+
+		.assertion-label.expected {
+			top: -2.6em;
+			left: 0;
+		}
+
+		.assertion-label.actual {
+			top: -2.6em;
+			left: 37%;
+		}
+
+		.assertion-label.message {
+			bottom: -2.4em;
+			left: 44%;
+		}
+
+		.coverage-image {
+			width: 75%;
+			max-height: 180px;
+			object-fit: contain;
+		}
+
+		.hierarchy-layout {
+			display: grid;
+			grid-template-columns: 1fr 2fr 1.15fr;
+			gap: 0.35em;
+			align-items: stretch;
+			font-size: 0.7em;
+			text-align: left;
+		}
+
+		.hierarchy-side {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 0.5em 0;
+		}
+
+		.hierarchy-side p {
+			margin: 0;
+		}
+
+		.pyramid {
+			position: relative;
+			height: 13.5em;
+		}
+
+		.pyramid::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: #b5e3e5;
+			clip-path: polygon(50% 0, 100% 100%, 0 100%);
+		}
+
+		.pyramid-tier {
+			position: absolute;
+			left: 15%;
+			width: 70%;
+			text-align: center;
+			line-height: 1.1;
+			z-index: 1;
+		}
+
+		.pyramid-tier.top {
+			top: 14%;
+		}
+
+		.pyramid-tier.middle {
+			top: 48%;
+		}
+
+		.pyramid-tier.bottom {
+			top: 82%;
+		}
+
+		.pyramid-rule {
+			position: absolute;
+			left: 27%;
+			width: 46%;
+			border-top: 2px solid #222;
+			z-index: 1;
+		}
+
+		.pyramid-rule.first {
+			top: 42%;
+		}
+
+		.pyramid-rule.second {
+			top: 68%;
+			left: 14%;
+			width: 72%;
+		}
+
+		.tdd-cycle-image {
+			width: 88%;
+			max-height: 480px;
+			object-fit: contain;
+		}
+
+		.questions-layout {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5em;
+		}
+
+		.questions-layout img {
+			width: 43%;
+			max-height: 280px;
+			object-fit: contain;
+		}
+
+		.slides section a {
+			overflow-wrap: anywhere;
+		}
+
+		.slides section pre code {
+			white-space: pre-wrap !important;
+			overflow-wrap: anywhere;
+			word-break: break-word;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section class="title-slide">
+				<h1>Test Driven Development<br>&amp; JUnit</h1>
+				<p>DI Reinhold Buchinger</p>
+				<p>Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
+				<p>Höhere Abteilung für Mechatronik<br>
+					Höhere Abteilung für Informationstechnologie<br>
+					Fachschule für Informationstechnik</p>
+			</section>
+
+			<section>
+				<h3>Ziele</h3>
+				<ul>
+					<li>Das Konzept von Test Driven Development verstehen und anwenden können</li>
+					<li>JUnit Tests für eigene Programme entwickeln</li>
+				</ul>
+			</section>
+
+			<section>
+				<h1>JUnit</h1>
+			</section>
+
+			<section>
+				<h3>Tests bisher</h3>
+				<ul>
+					<li>Ausgaben machen</li>
+				</ul>
+				<pre><code class="language-java">System.out.println("Ergebnis: " + MeineKlasse.meineMethode(""));
+System.out.println("Ergebnis: " + meinObjekt.meineMethode("")); </code></pre>
+				<ul>
+					<li>Zahlreiche Nachteile
+						<ul>
+							<li>Schwer zu nachvollziehen ob Ausgaben korrekt sind.</li>
+							<li>Schwer zu verwalten</li>
+							<li>Tests und Programmcode nicht getrennt</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>JUnit</h3>
+				<ul>
+					<li>Framework zum Testen von Java Programmen</li>
+					<li>JUnit ist nicht Teil vom (Standard-) Java sondern muss extra hinzugefügt werden.</li>
+					<li>Wir verwenden JUnit5 (nicht JUnit4)</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Testklasse</h3>
+				<ul>
+					<li>Eine Gruppe von Tests wird in einer Klasse zusammengefasst.</li>
+					<li>Bei &quot;Unit Tests&quot; wird immer eine &quot;Unit&quot; isoliert getestet
+						<ul>
+							<li>Bei uns ist eine &quot;Unit&quot; eine Klasse</li>
+							<li>Eine Testklasse für jede Klasse</li>
+						</ul>
+					</li>
+					<li>Namenskonvention: Klasse &quot;Person&quot; -&gt; Testklasse &quot;PersonTest&quot; (ein &quot;Test&quot; an den Klassennamen anhängen)</li>
+					<li>Testklasse automatisch von IntelliJ generieren lassen</li>
+					<li>Code von Testcode trennen (zumindest verschiedene packages)</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Testmethode</h3>
+				<pre><code class="language-java">@Test
+public void getFirstName_single(){
+
+}</code></pre>
+			</section>
+
+			<section>
+				<h3>Assertions</h3>
+				<ul>
+					<li>Es stehen verschiedene Assertions zu Verfügung
+						<ul>
+							<li><a href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html">https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html</a></li>
+						</ul>
+					</li>
+					<li>Ist die Bedingung nicht erfüllt, bricht der Test ab und gibt eine entsprechende Fehlermeldung aus.</li>
+					<li>Beispiel:</li>
+				</ul>
+				<div class="assertion">
+					<span class="assertion-label expected">erwarteter Wert</span>
+					<span class="assertion-label actual">aktueller Wert</span>
+					<pre><code class="language-java">assertEquals("test",
+    "TEst".toLowerCase(),
+    "Umwandlung in Kleinbuchstaben nicht korrekt.");</code></pre>
+					<span class="assertion-label message">Nachricht (optional)</span>
+				</div>
+			</section>
+
+			<section>
+				<h3>@BeforeAll, @BeforeEach,...</h3>
+				<ul>
+					<li>Methoden können mit weiteren Annotations ausgezeichnet werden.</li>
+					<li>@BeforeAll: Einmal vor allen Tests der Testklasse ausgeführt</li>
+					<li>@BeforeEach: Vor jedem einzelnen Test ausgeführt</li>
+					<li>@AfterAll: Nach allen Tests der Testklasse ausgeführt</li>
+					<li>@AfterEach: Nach jedem einzelnen Test ausgeführt</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Grenzfälle</h3>
+				<ul>
+					<li>Immer Grenz-/Sonderfälle testen (&quot;Corner Cases&quot;)!
+						<ul>
+							<li>leere Texte.</li>
+							<li><code>null</code> Werte.</li>
+							<li>Liste: leer, ein Element, viele Elemente.</li>
+							<li>Werte <em>die in einem <code>if/while</code> vorkommen</em>.</li>
+							<li>Wenn x ein Sonderfall ist: x-1, x und x+1 ebenfalls testen.</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Code Coverage</h3>
+				<ul>
+					<li>Code Coverage (Testabdeckung) bezeichnet das Verhältnis von Code, der durch Tests ausgeführt wird, zum gesamten Code.</li>
+					<li>Code Coverage Report von IntelliJ erstellen lassen.</li>
+					<li>In den Übungen wollen wir 100% Code Coverage.
+						<ul>
+							<li>In der Praxis aufgrund von Kosten-Nutzen meist eine etwas geringere Abdeckung</li>
+						</ul>
+					</li>
+				</ul>
+				<img class="coverage-image" src="images/code-coverage.png" alt="Code-Coverage-Bericht in IntelliJ mit 100% Abdeckung">
+			</section>
+
+			<section>
+				<h3>Testhierarchie</h3>
+				<div class="hierarchy-layout">
+					<div class="hierarchy-side">
+						<p>wenige Tests<br>aufwändig<br>langsam</p>
+						<p>viele Tests<br>einfach<br>schnell</p>
+					</div>
+					<div class="pyramid" aria-label="Pyramide der Testhierarchie">
+						<div class="pyramid-tier top">End to End<br>Tests /<br>GUI Tests</div>
+						<div class="pyramid-rule first"></div>
+						<div class="pyramid-tier middle">Integration<br>Tests</div>
+						<div class="pyramid-rule second"></div>
+						<div class="pyramid-tier bottom">Unit Tests</div>
+					</div>
+					<div class="hierarchy-side">
+						<p>Testet das Gesamtsystem unter realen Bedingungen</p>
+						<p>Testet die Kombination mehrerer Units</p>
+						<p>Testet isoliert einzelne Units (häufig Klassen)</p>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h1>Test Driven Development<br>(TDD)</h1>
+			</section>
+
+			<section>
+				<h3>Test Driven Development (TDD)</h3>
+				<ul>
+					<li>Bestimmte Vorgehensweise beim Programmieren (Entwicklungsmethode)</li>
+					<li>Tests werden vor dem Code geschrieben.</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>Test Driven Development -</h3>
+				<img class="tdd-cycle-image" src="images/tdd-cycle.png" alt="TDD-Zyklus: Start here, Write a test, Test fails, Write code to make test pass, Code passes test, Refactor">
+			</section>
+
+			<section>
+				<h2>Fragen?<br>Anregungen?<br>Bemerkungen?</h2>
+				<div class="questions-layout">
+					<img src="images/questions.gif" alt="Animierte Abschlussgrafik aus der Originalpräsentation">
+				</div>
+			</section>
+		</div>
+	</div>
+
+	<script src="../../../node_modules/reveal.js/dist/reveal.js"></script>
+	<script src="../../../node_modules/reveal.js/dist/plugin/highlight.js"></script>
+	<script src="../../../node_modules/reveal.js/dist/plugin/notes.js"></script>
+	<script>
+		Reveal.initialize({
+			hash: true,
+			width: 960,
+			height: 720,
+			slideNumber: true,
+			plugins: [RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
