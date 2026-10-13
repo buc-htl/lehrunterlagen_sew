@@ -1,54 +1,15 @@
 <!doctype html>
 <html lang="de">
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-	<title>Test Driven Development &amp; JUnit</title>
-
-	<link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
-	<link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
-	<link rel="stylesheet" href="../../../node_modules/reveal.js/dist/theme/white.css">
-	<link rel="stylesheet" href="../../../theme/htl.css">
-	<link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
-	<style>
-		.title-slide h1 {
-			font-size: 1.7em;
-		}
-
-		.title-slide p {
-			text-align: center !important;
-			margin: 0.35em 0;
-		}
-
-		.assertion {
-			position: relative;
-			margin: 2em auto 0;
-			width: fit-content;
-			text-align: center;
-		}
-
-		.assertion-label {
-			position: absolute;
-			font-size: 0.65em;
-			white-space: nowrap;
-		}
-
-		.assertion-label.expected {
-			top: -2.6em;
-			left: 0;
-		}
-
-		.assertion-label.actual {
-			top: -2.6em;
-			left: 37%;
-		}
-
-		.assertion-label.message {
-			bottom: -2.4em;
-			left: 44%;
-		}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Test Driven Development &amp; JUnit</title>
+        <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+        <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+        <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/theme/white.css">
+        <link rel="stylesheet" href="../../../theme/htl.css">
+        <link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+        <style>
 
 		.coverage-image {
 			width: 75%;
@@ -156,197 +117,456 @@
 			overflow-wrap: anywhere;
 			word-break: break-word;
 		}
-	</style>
-</head>
-
-<body>
-	<div class="reveal">
-		<div class="slides">
-			<section class="title-slide">
-				<h1>Test Driven Development<br>&amp; JUnit</h1>
-				<p>DI Reinhold Buchinger</p>
-				<p>Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
-				<p>Höhere Abteilung für Mechatronik<br>
-					Höhere Abteilung für Informationstechnologie<br>
-					Fachschule für Informationstechnik</p>
-			</section>
-
-			<section>
-				<h3>Ziele</h3>
-				<ul>
-					<li>Das Konzept von Test Driven Development verstehen und anwenden können</li>
-					<li>JUnit Tests für eigene Programme entwickeln</li>
-				</ul>
-			</section>
-
-			<section>
-				<h1>JUnit</h1>
-			</section>
-
-			<section>
-				<h3>Tests bisher</h3>
-				<ul>
-					<li>Ausgaben machen</li>
-				</ul>
-				<pre><code class="language-java">System.out.println("Ergebnis: " + MeineKlasse.meineMethode(""));
-System.out.println("Ergebnis: " + meinObjekt.meineMethode("")); </code></pre>
-				<ul>
-					<li>Zahlreiche Nachteile
-						<ul>
-							<li>Schwer zu nachvollziehen ob Ausgaben korrekt sind.</li>
-							<li>Schwer zu verwalten</li>
-							<li>Tests und Programmcode nicht getrennt</li>
-						</ul>
-					</li>
-				</ul>
-			</section>
-
-			<section>
-				<h3>JUnit</h3>
-				<ul>
-					<li>Framework zum Testen von Java Programmen</li>
-					<li>JUnit ist nicht Teil vom (Standard-) Java sondern muss extra hinzugefügt werden.</li>
-					<li>Wir verwenden JUnit5 (nicht JUnit4)</li>
-				</ul>
-			</section>
-
-			<section>
-				<h3>Testklasse</h3>
-				<ul>
-					<li>Eine Gruppe von Tests wird in einer Klasse zusammengefasst.</li>
-					<li>Bei &quot;Unit Tests&quot; wird immer eine &quot;Unit&quot; isoliert getestet
-						<ul>
-							<li>Bei uns ist eine &quot;Unit&quot; eine Klasse</li>
-							<li>Eine Testklasse für jede Klasse</li>
-						</ul>
-					</li>
-					<li>Namenskonvention: Klasse &quot;Person&quot; -&gt; Testklasse &quot;PersonTest&quot; (ein &quot;Test&quot; an den Klassennamen anhängen)</li>
-					<li>Testklasse automatisch von IntelliJ generieren lassen</li>
-					<li>Code von Testcode trennen (zumindest verschiedene packages)</li>
-				</ul>
-			</section>
-
-			<section>
-				<h3>Testmethode</h3>
-				<pre><code class="language-java">@Test
+        </style>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section class="title-slide">
+                    <h1>Test Driven Development
+                        <br>&amp; JUnit
+                    </h1>
+                </section>
+                <section>
+                    <h3>Ziele</h3>
+                    <ul>
+                        <li>Das Konzept von Test Driven Development verstehen und anwenden können</li>
+                        <li>JUnit Tests für eigene Programme entwickeln</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>JUnit</h1>
+                </section>
+                <section>
+                    <h3>Tests bisher</h3>
+                    <ul>
+                        <li>
+                            Ausgaben in der Konsole
+                            <pre>
+                                <code class="language-java">
+System.out.println("Ergebnis: " + MeineKlasse.meineMethode(""));
+System.out.println("Ergebnis: " + meinObjekt.meineMethode(""));
+                                </code>
+                            </pre>
+                        </li>
+                        <li>
+                            Zahlreiche Nachteile
+                            <ul>
+                                <li>Aufwändig nachzuvollziehen, ob Ausgaben korrekt sind.</li>
+                                <li>Tests und Programmcode nicht getrennt.</li>
+                                <li>Schwer zu verwalten. Tests sollten nicht im Produktivcode enthalten sein.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Was ist JUnit?</h3>
+                    <ul>
+                        <li>Framework zum Testen von Java Programmen</li>
+                        <li>JUnit ist nicht Teil vom (Standard-) Java sondern muss extra hinzugefügt werden.</li>
+                        <li>Wir verwenden JUnit6 oder JUnit5 (nicht JUnit4)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Was ist JUnit?</h2>
+                    <ul>
+                        <li>
+                            <strong>JUnit</strong> ist ein Werkzeug zum automatischen Testen von Java-Code.
+                        </li>
+                        <li>Ein Test prüft ein erwartetes Verhalten.</li>
+                        <li>JUnit meldet, ob die Prüfung bestanden wurde.</li>
+                        <li>Test(s) einmal schreiben -> beliebig oft ausführen</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Testklasse</h3>
+                    <ul>
+                        <li>Eine Gruppe von Tests wird in einer Klasse zusammengefasst.</li>
+                        <li>Bei sogenannten
+                            <strong>&quot;Unit Tests&quot;</strong>
+                            wird immer eine &quot;Unit&quot; isoliert getestet.
+                            <ul>
+                                <li>Bei uns ist eine &quot;Unit&quot; eine Klasse</li>
+                                <li>Eine Testklasse für jede Klasse</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Namenskonvention für Testklassen: Klassenname + &quot;Test&quot;
+                            <ul>
+                                <li>Beispiel: Klasse &quot;Person&quot; -&gt; Testklasse &quot;PersonTest&quot;</li>
+                            </ul>
+                        </li>
+                        <li>Tipp: Testklasse automatisch von IntelliJ generieren lassen</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Testmethode</h3>
+                    <ul>
+                        <li>Ein Test ist eine Methode, die ein erwartetes Verhalten prüft.</li>
+                        <li>Testmethoden müssen mit
+                            <code>@Test</code> annotiert werden
+                        </li>
+                        <pre>
+                            <code class="language-java">
+                                @Test
 public void getFirstName_single(){
 
-}</code></pre>
-			</section>
+}
+                            </code>
+                        </pre>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Assertions</h3>
+                    <ul>
+                        <li>Eine Assertion ("Behauptung") ist eine Aussage, die überprüft wird.</li>
+                        <li>Vergleich das gewünschte Ergebnis mit dem tatsächlichen Ergebnis.</li>
+                        <li>Ist die Bedingung nicht erfüllt, bricht der Test ab und gibt eine entsprechende Fehlermeldung aus.</li>
+                        <li>
+                            Es stehen verschiedene Assertions zu Verfügung
+                            <ul>
+                                <li>assertEquals(expected, actual, message)</li>
+                                <li>assertTrue(condition, message)</li>
+                                <li>
+                                    <a href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html">https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Assertions - Beispiel</h3>
+                    <pre>
+                        <code class="language-java">
+                            assertEquals("test",  //erwarter Wert
+    "TEst".toLowerCase(),	//aktueller Wert - vom zu testenden Code
+    "Umwandlung in Kleinbuchstaben nicht korrekt."); //Nachricht (optional)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Beispiel: Testklasse mit 2 Tests</h2>
+                    <pre>
+                        <code class="language-java" data-trim>
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-			<section>
-				<h3>Assertions</h3>
-				<ul>
-					<li>Es stehen verschiedene Assertions zu Verfügung
-						<ul>
-							<li><a href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html">https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html</a></li>
-						</ul>
-					</li>
-					<li>Ist die Bedingung nicht erfüllt, bricht der Test ab und gibt eine entsprechende Fehlermeldung aus.</li>
-					<li>Beispiel:</li>
-				</ul>
-				<div class="assertion">
-					<span class="assertion-label expected">erwarteter Wert</span>
-					<span class="assertion-label actual">aktueller Wert</span>
-					<pre><code class="language-java">assertEquals("test",
-    "TEst".toLowerCase(),
-    "Umwandlung in Kleinbuchstaben nicht korrekt.");</code></pre>
-					<span class="assertion-label message">Nachricht (optional)</span>
-				</div>
-			</section>
+class CalculatorTest {
+    @Test
+    void add_twoPositiveNumbers_returnsSum() {
+        Calculator calculator = new Calculator();
 
-			<section>
-				<h3>@BeforeAll, @BeforeEach,...</h3>
-				<ul>
-					<li>Methoden können mit weiteren Annotations ausgezeichnet werden.</li>
-					<li>@BeforeAll: Einmal vor allen Tests der Testklasse ausgeführt</li>
-					<li>@BeforeEach: Vor jedem einzelnen Test ausgeführt</li>
-					<li>@AfterAll: Nach allen Tests der Testklasse ausgeführt</li>
-					<li>@AfterEach: Nach jedem einzelnen Test ausgeführt</li>
-				</ul>
-			</section>
+        int result = calculator.add(3, 5);
 
-			<section>
-				<h3>Grenzfälle</h3>
-				<ul>
-					<li>Immer Grenz-/Sonderfälle testen (&quot;Corner Cases&quot;)!
-						<ul>
-							<li>leere Texte.</li>
-							<li><code>null</code> Werte.</li>
-							<li>Liste: leer, ein Element, viele Elemente.</li>
-							<li>Werte <em>die in einem <code>if/while</code> vorkommen</em>.</li>
-							<li>Wenn x ein Sonderfall ist: x-1, x und x+1 ebenfalls testen.</li>
-						</ul>
-					</li>
-				</ul>
-			</section>
+        assertEquals(8, result);
+    }
 
-			<section>
-				<h3>Code Coverage</h3>
-				<ul>
-					<li>Code Coverage (Testabdeckung) bezeichnet das Verhältnis von Code, der durch Tests ausgeführt wird, zum gesamten Code.</li>
-					<li>Code Coverage Report von IntelliJ erstellen lassen.</li>
-					<li>In den Übungen wollen wir 100% Code Coverage.
-						<ul>
-							<li>In der Praxis aufgrund von Kosten-Nutzen meist eine etwas geringere Abdeckung</li>
-						</ul>
-					</li>
-				</ul>
-				<img class="coverage-image" src="images/code-coverage.png" alt="Code-Coverage-Bericht in IntelliJ mit 100% Abdeckung">
-			</section>
+    @Test
+    void add_twoNegativeNumbers_returnsSum() {
+        Calculator calculator = new Calculator();
 
-			<section>
-				<h3>Testhierarchie</h3>
-				<div class="hierarchy-layout">
-					<div class="hierarchy-side">
-						<p>wenige Tests<br>aufwändig<br>langsam</p>
-						<p>viele Tests<br>einfach<br>schnell</p>
-					</div>
-					<div class="pyramid" aria-label="Pyramide der Testhierarchie">
-						<div class="pyramid-tier top">End to End<br>Tests /<br>GUI Tests</div>
-						<div class="pyramid-rule first"></div>
-						<div class="pyramid-tier middle">Integration<br>Tests</div>
-						<div class="pyramid-rule second"></div>
-						<div class="pyramid-tier bottom">Unit Tests</div>
-					</div>
-					<div class="hierarchy-side">
-						<p>Testet das Gesamtsystem unter realen Bedingungen</p>
-						<p>Testet die Kombination mehrerer Units</p>
-						<p>Testet isoliert einzelne Units (häufig Klassen)</p>
-					</div>
-				</div>
-			</section>
+        int result = calculator.add(-3, -5);
 
-			<section>
-				<h1>Test Driven Development<br>(TDD)</h1>
-			</section>
+        assertEquals(-8, result);
+    }
+}
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>AAA: Der Bauplan für Tests</h2>
+                    <ol>
+                        <li>
+                            <strong>Arrange</strong>: Vorbereiten - Objekte und Eingaben erstellen.
+                        </li>
+                        <li>
+                            <strong>Act</strong>: Ausführen - Die zu testende Methode aufrufen.
+                        </li>
+                        <li>
+                            <strong>Assert</strong>: Überprüfen - Ist das Ergebnis wie erwartet?
+                        </li>
+                    </ol>
+                    <p class="center">
+                        <span class="pill">Arrange</span> →
+                        <span class="pill">Act</span> →
+                        <span class="pill">Assert</span>
+                    </p>
+                    <p> Kannst du die Schritte in den Tests auf der vorherigen Folie erkennen?</p>
+                    <aside class="notes">Lass die Klasse kurz die drei Teile im vorherigen Beispiel benennen.</aside>
+                </section>
+                <section>
+                    <h2>Tests verständlich benennen</h2>
+                    <p>Ein guter Name sagt:
+                        <strong>Was passiert, unter welcher Bedingung und mit welchem Ergebnis?</strong>
+                    </p>
+                    <ul>
+                        <li>Schlecht Namen:
+                            <code>test1()</code>,
+                            <code>testAdd()</code>,
+                            <code>testMethod()</code>
+                        </li>
+                        <li>Bessere Namen:
+                            <code>add_twoPositiveNumbers_returnsSum()</code>,
+                            <code>withdraw_insufficientBalance_throwsException()</code>,
+                            <code>findUser_unknownId_returnsEmptyOptional()</code>
+                        </li>
+                        <li>Konvention: method_condition_expectedResult.</li>
+                        <li>Sollte einen einheitlichen Standard im Projekt geben.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Wo liegen die Tests?</h2>
+                    <ul>
+                        <li>Testcode von Produktivcode trennen</li>
+                        <li>Tests in einer separaten Verzeichnisstruktur aufbewahren.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Welche Fälle sollte ich testen?</h2>
+                    <div class="columns">
+                        <div class="col">
+                            <ul>
+                                <li>
+                                    <strong>Normalfälle</strong>
+                                    <ul class="small">
+                                        <li>Gültige Eingaben</li>
+                                        <li>Beispiel Konto: 100 € − 30 € = 70 €</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Grenzfälle</strong>
+                                    <ul class="small">
+                                        <li>z.B. genau der ganze Betrag</li>
+                                        <li>100 € − 100 € = 0 €</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <ul>
+                                <li>
+                                    <strong>Fehlerfälle</strong>
+                                    <ul class="small">
+                                        <li>z.B. zu wenig Guthaben</li>
+                                        <li>50 € − 80 € → Fehler</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Ungültige Eingaben</strong>
+                                    <ul class="small">
+                                        <li>z.B. Negativer Abbuchungsbetrag</li>
+                                        <li>−10 € → je nach Regel ablehnen</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p>
+                        <strong>Merke:</strong> Teste nicht nur, wenn alles glattläuft.
+                    </p>
+                </section>
+                <section>
+                    <h2>Wenn etwas schiefgehen soll: Exceptions</h2>
+                    <p>Mit
+                        <code>assertThrows</code> testen wir, ob eine erwartete Exception geworfen wird.
+                    </p>
+                    <pre>
+                        <code class="language-java" data-trim>
+@Test
+void divide_byZero_throwsArithmeticException() {
+    Calculator calculator = new Calculator();
 
-			<section>
-				<h3>Test Driven Development (TDD)</h3>
-				<ul>
-					<li>Bestimmte Vorgehensweise beim Programmieren (Entwicklungsmethode)</li>
-					<li>Tests werden vor dem Code geschrieben.</li>
-				</ul>
-			</section>
+    assertThrows(
+        ArithmeticException.class,		//erwartete Exception
+        () -> calculator.divide(10, 0)	//Funktion, die den Code aufruft, der die Exception werfen soll
+    );
+}
+                                </code>
+                            </pre>
+                            <ul class="small-list">
+                                <li>Der Test besteht, wenn die erwartete Exception geworfen wird.</li>
+                                <li>Die Klasse braucht dafür eine passende
+                                    <code>divide</code>-Methode.
+                                </li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h2>Viele Eingaben? Parametrisierte Tests!</h2>
+                            <p>Wenn die gleiche Prüfung mit verschiedenen Werten wiederholt wird, hilft
+                                <code>@CsvSource</code>.
+                            </p>
+                            <pre>
+                                <code class="language-java" data-trim>
+                                    @ParameterizedTest
+@CsvSource({
+    "2, 3, 5",
+    "0, 5, 5",
+    "-2, 2, 0",
+    "-3, -4, -7"
+})
+void add_differentInputs_returnsExpectedSum(
+        int a, int b, int expected) {
+    assertEquals(expected, calculator.add(a, b));
+}
+                                </code>
+                            </pre>
+                            <p class="muted">Zusätzlich benötigt: Imports für ParameterizedTest und CsvSource aus JUnit Jupiter.</p>
+                            <aside class="notes">Erkläre eine Zeile als Eingabe a, Eingabe b und erwartetes Ergebnis. Jede Zeile ist ein eigener Testlauf.</aside>
+                        </section>
 
-			<section>
-				<h3>Test Driven Development -</h3>
-				<img class="tdd-cycle-image" src="images/tdd-cycle.png" alt="TDD-Zyklus: Start here, Write a test, Test fails, Write code to make test pass, Code passes test, Refactor">
-			</section>
+                        <section>
+                            <h2>Vorbereitung wiederverwenden</h2>
+                            <p>
+                                <code>@BeforeEach</code> läuft vor jedem Test und kann gemeinsame Vorbereitung übernehmen.
+                            </p>
+                            <pre>
+                                <code class="language-java" data-trim>
+class CalculatorTest {
+    private Calculator calculator;
 
-			<section>
-				<h2>Fragen?<br>Anregungen?<br>Bemerkungen?</h2>
-				<div class="questions-layout">
-					<img src="images/questions.gif" alt="Animierte Abschlussgrafik aus der Originalpräsentation">
-				</div>
-			</section>
-		</div>
-	</div>
+    @BeforeEach
+    void setUp() {
+        calculator = new Calculator();
+    }
 
-	<script src="../../../node_modules/reveal.js/dist/reveal.js"></script>
-	<script src="../../../node_modules/reveal.js/dist/plugin/highlight.js"></script>
-	<script src="../../../node_modules/reveal.js/dist/plugin/notes.js"></script>
-	<script>
+    @Test
+    void add_returnsSum() {
+        assertEquals(8, calculator.add(3, 5));
+    }
+}
+                                </code>
+                            </pre>
+                            <p class="small-list">Tipp: Nur wirklich gemeinsame Vorbereitung hier ablegen. Besondere Eingaben bleiben am besten im jeweiligen Test.</p>
+                        </section>
+						                  <section>
+                            <h3>@BeforeAll, @BeforeEach,...</h3>
+                            <ul>
+                                <li>Methoden in der Testklasse können mit weiteren Annotations ausgezeichnet werden.</li>
+                                <li>
+                                    <code>@BeforeAll</code>: Einmal vor allen Tests der Testklasse ausgeführt
+                                </li>
+                                <li>
+                                    <code>@BeforeEach</code>: Vor jedem einzelnen Test ausgeführt
+                                </li>
+                                <li>
+                                    <code>@AfterAll</code>: Nach allen Tests der Testklasse ausgeführt
+                                </li>
+                                <li>
+                                    <code>@AfterEach</code>: Nach jedem einzelnen Test ausgeführt
+                                </li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h2>Gute Tests sind …</h2>
+                            <ul>
+                                <li>
+                                    <strong>Unabhängig:</strong> Jeder Test kann allein laufen.
+                                </li>
+                                <li>
+                                    <strong>Verständlich:</strong> Name und Aufbau erklären die Prüfung.
+                                </li>
+                                <li>
+                                    <strong>Gezielt:</strong> Ein Test prüft ein konkretes Verhalten.
+                                </li>
+                                <li>
+                                    <strong>Wiederholbar:</strong> Das Ergebnis hängt nicht von Zufall oder Reihenfolge ab.
+                                </li>
+								<li>
+									<strong>Automatisierbar:</strong> Tests können automatisch ausgeführt werden.
+								</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3>Code Coverage</h3>
+                            <ul>
+                                <li>Code Coverage (Testabdeckung) bezeichnet das Verhältnis von Code, der durch Tests ausgeführt wird, zum gesamten Code.</li>
+                                <li>Code Coverage Report von IntelliJ erstellen lassen.</li>
+                                <li>
+                                    In den Übungen wollen wir 100% Code Coverage.
+                                    <ul>
+                                        <li>In der Praxis aufgrund von Kosten-Nutzen meist eine etwas geringere Abdeckung</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <img class="coverage-image" src="images/code-coverage.png" alt="Code-Coverage-Bericht in IntelliJ mit 100% Abdeckung">
+                        </section>
+                        <section>
+                            <h3>Testhierarchie</h3>
+                            <div class="hierarchy-layout">
+                                <div class="hierarchy-side">
+                                    <p>wenige Tests
+                                        <br>aufwändig
+                                        <br>langsam
+                                    </p>
+                                    <p>viele Tests
+                                        <br>einfach
+                                        <br>schnell
+                                    </p>
+                                </div>
+                                <div class="pyramid" aria-label="Pyramide der Testhierarchie">
+                                    <div class="pyramid-tier top">End to End
+                                        <br>Tests /
+                                        <br>GUI Tests
+                                    </div>
+                                    <div class="pyramid-rule first"></div>
+                                    <div class="pyramid-tier middle">Integration
+                                        <br>Tests
+                                    </div>
+                                    <div class="pyramid-rule second"></div>
+                                    <div class="pyramid-tier bottom">Unit Tests</div>
+                                </div>
+                                <div class="hierarchy-side">
+                                    <p>Testet das Gesamtsystem unter realen Bedingungen</p>
+                                    <p>Testet die Kombination mehrerer Units</p>
+                                    <p>Testet isoliert einzelne Units (häufig Klassen)</p>
+                                </div>
+                            </div>
+							<p>Viele Unit-Test: Einfach zu erstellen, decken viele mögliche Fehler breits ab.</p>
+							<p>Wenige End-to-End-Tests: Aufwändig zu erstellen, decken wenige Szenarien ab.</p>
+                        </section>
+                        <section>
+                            <h1>Test Driven Development
+                                <br>(TDD)
+                            </h1>
+                        </section>
+                        <section>
+                            <h3>Test Driven Development (TDD)</h3>
+                            <ul>
+                                <li>Bestimmte Vorgehensweise beim Programmieren (Entwicklungsmethode)</li>
+                                <li>Tests werden <strong>vor</strong> dem Code geschrieben.</li>
+                            </ul>
+                        </section>
+                        <section>
+                            <h3>Test Driven Development -</h3>
+                            <img class="tdd-cycle-image" src="images/tdd-cycle.png" alt="TDD-Zyklus: Start here, Write a test, Test fails, Write code to make test pass, Code passes test, Refactor">
+                        </section>
+                        <section>
+                            <h2>TDD im agentischen Development</h2>
+                            <ul>
+                                <li><strong>Der Mensch klärt das gewünschte Verhalten</strong> und formuliert Beispiele und Grenzfälle.</li>
+                                <li>Ein Coding-Agent kann Tests und Implementierung erstellen</li>
+                                <li><strong>Dann:</strong> Tests bestehen lassen, Änderungen überprüfen und refaktorisieren.</li>
+                            </ul>
+                            <p>Je schneller Code entsteht, desto wichtiger ist schnelles, verlässliches Feedback.</p>
+							<p>TDD unterstützt die Kontrolle von generiertem Code, ersetzt sie aber nicht.</p>
+                        </section>
+						
+                        <section>
+                            <h2>Fragen?
+                                <br>Anregungen?
+                                <br>Bemerkungen?
+                            </h2>
+                            <div class="questions-layout">
+                                <img src="images/questions.gif" alt="Animierte Abschlussgrafik aus der Originalpräsentation">
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <script src="../../../node_modules/reveal.js/dist/reveal.js"></script>
+                <script src="../../../node_modules/reveal.js/dist/plugin/highlight.js"></script>
+                <script src="../../../node_modules/reveal.js/dist/plugin/notes.js"></script>
+                <script>
 		Reveal.initialize({
 			hash: true,
 			width: 960,
@@ -354,7 +574,6 @@ public void getFirstName_single(){
 			slideNumber: true,
 			plugins: [RevealHighlight, RevealNotes]
 		});
-	</script>
-</body>
-
-</html>
+                </script>
+            </body>
+        </html>

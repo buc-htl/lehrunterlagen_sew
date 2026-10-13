@@ -11,3 +11,7 @@ Tests auf Exceptions: sample Code updaten auf Annotationen
 
 
 Assertions.assertIterableEquals
+
+mögliche Inhalte:
+- fehlerfreier vs "guter Code" Codequalität
+- Wie erkenne ich überhaupt Fehler? Was ist richtig und falsch?
