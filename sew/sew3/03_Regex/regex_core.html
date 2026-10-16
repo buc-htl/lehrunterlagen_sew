@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <title>Reguläre Ausdrücke - Grundlagen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="../../../theme/htl.css">
+  <link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer"  onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reset.css';">/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reveal.css';" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../node_modules/highlight.js/styles/stackoverflow-light.css';"> -->
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+      <section>
+        <h1>Reguläre Ausdrücke - Grundlagen</h1>
+        <p class="center">Muster erkennen, entwerfen und in Java verwenden</p>
+        <p class="center">DI Reinhold Buchinger</p>
+        <p class="center small">Creative Commons-Lizenz CC BY-NC-SA 4.0 AT.</p>
+      </section>
+
+      <section>
+        <h2>Was du nachher kannst</h2>
+        <ul>
+          <li>einfache Regex-Muster lesen und selbst entwerfen</li>
+          <li>Zeichen, Zeichenklassen, Wiederholungen und Positionen beschreiben</li>
+          <li>zwischen vollständigem Match und Suche unterscheiden</li>
+          <li>Regex-Muster in Java testen und zum Ersetzen verwenden</li>
+        </ul>
+      </section>
+
+            <section>
+        <h2>Was sind reguläre Ausdrücke?</h2>
+        <p>Ein <strong>regulärer Ausdruck</strong> (English: <em>regular expression</em>) ist ein Textmuster, das beschreibt, welche Zeichenfolgen in einem Text gesucht oder akzeptiert werden.</p>
+        <p>Der englische Ausdruck wird meist zu <strong>Regex</strong> abgekürzt (Plural: <strong>Regexes</strong>). Wir verwenden im Folgenden den Begriff <strong>Regex</strong>.</p>
+      </section>
+
+  <section>
+        <h2>Wofür sind Regex nützlich?</h2>
+        <ul>
+          <li><strong>Suchen:</strong> Wo kommt eine Zeichenfolge im Text vor?</li>
+          <li><strong>Prüfen:</strong> Hat ein String das richtige Format? (z.B. Datum, E-Mail-Adresse)</li>
+          <li><strong>Extrahieren:</strong> Textstellen aus einem größeren Text herausnehmen</li>
+          <li><strong>Ersetzen:</strong> Textstellen im Text suchen und ersetzen</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Regex haben Grenzen</h2>
+        <ul>
+          <li>Regex eignen sich gut für klar beschreibbare Textmuster.</li>
+          <li>Beliebig verschachtelte Strukturen, z. B. Klammern beliebiger Tiefe, lassen sich damit nicht zuverlässig parsen.</li>
+          <li>Für komplexere Aufgaben kombiniert man Regex mit Logik im Code. </li>
+          <li>Beispiel: Man überprüft mit Regex das grundlegende Format eines Datum, aber nicht, ob es ein gültiges Datum ist.</li>
+        </ul>
+      </section>    
+
+
+      <section>
+        <h2>Muster, Eingabe, Treffer</h2>
+        <pre><code class="language-plaintext">Muster: cat
+Eingabe: The cat sleeps.
+Treffer:     cat</code></pre>
+        <ul>
+          <li>Das <strong>Muster (i.e. die Regex)</strong> beschreibt den gesuchten Text.</li>
+          <li>Die <strong>Eingabe</strong> ist der Text, in dem gesucht oder geprüft wird.</li>
+          <li>Ein <strong>Treffer</strong> ist ein Teil der Eingabe, der zum Muster passt.</li>
+        </ul>
+      </section>
+
+      <section id="regex-special_chars">
+        <h2>Literale und Sonderzeichen</h2>
+        <p>Die meisten Buchstaben und Ziffern stehen für sich selbst:</p>
+        <pre><code class="language-plaintext">Regex: cat     passt auf "cat"
+Regex: 2026    passt auf "2026"</code></pre>
+        <p>Einige Zeichen haben eine besondere Bedeutung, zum Beispiel:</p>
+        <pre><code class="language-plaintext">.  ^  $  *  +  ?  [ ]  { }  ( )  |  \</code></pre>
+      </section>
+
+
+      <section>
+        <h2>Zeichenklassen</h2>
+        <p>Eckige Klammern erlauben <strong>ein</strong> Zeichen aus einer Auswahl:</p>
+        <pre><code class="language-plaintext">Beispiele: 
+[aeiou]    ein Kleinbuchstabe aus dieser Auswahl
+[A-Z]      ein Großbuchstabe von A bis Z (Bereich)
+[^0-9]     ein Zeichen, das keine Ziffer ist (^ leitet Negation ein)</code></pre>
+
+        <pre><code class="language-plaintext">
+[aeiou] matcht die Strings "a", "e", "i", "o", "u"
+[a-z] matcht "a","b",....."z"  
+[^0-9] match "A", "a", "!", ...</code></pre>
+
+        <p> <code>[aeiou]</code> z.B. matcht genau einen Vokal, nicht das z.B. ganze Wort „apfel“.</p>
+      </section>
+
+      <section>
+        <h2>Abkürzungen für Zeichen</h2>
+        <pre><code class="language-plaintext">
+\d    eine Ziffer
+\w    ein Wortzeichen
+\s    ein Whitespace-Zeichen
+\D    keine Ziffer
+\W    kein Wortzeichen
+\S    kein Whitespace-Zeichen</code></pre>
+ <pre><code class="language-plaintext">
+Beispiele:
+\d\w    matcht eine Ziffer gefolgt von einem Wortzeichen (z.B. "3a")
+\d\d   matcht zwei Ziffern (z.B. "42")
+ </code></pre>
+        <p class="small">Die genaue Bedeutung (z.B. was ist ein Wortzeichen) kann von Regex-Engine und Optionen abhängen.</p>
+      </section>
+
+      <section>
+        <h2>Der Punkt als Platzhalter</h2>
+        <p>Der Punkt steht für ein <em>beliebiges</em> Zeichen außer einem Zeilenumbruch.</p>
+        <pre><code class="language-plaintext">
+c.t     matcht z.B. cat, cut und c7t
+.b..    matcht z.B. abcd, 1b23, .b..</code></pre>
+      </section>
+
+   <section>
+        <h2>Ein Sonderzeichen suchen</h2>
+        <ul>
+        <li>Ein Backslash (\) hebt die Sonderbedeutung eines Zeichens auf.</li>
+        <li>Beispiel:
+            <ul>
+                <li>Ein Punkt (.) hat eine besondere Bedeutung(siehe <a href="#regex-special_chars">diese Folie</a>).</li> 
+        <li>Um einen Punkt selbst zu suchen, muss man ihn mit einem Backslash escapen.
+                <pre><code class="language-plaintext">
+\.     matcht einen Punkt (".")
+.      matcht ein beliebiges Zeichen
+a\.2   matcht a.2, aber nicht z.B. aX2
+        </code></pre>
+        </li>
+            </ul>
+
+        </li>
+           </ul>
+      </section>
+
+      <section>
+        <h2>Java: Warum zwei Backslashes? (1/2)</h2>
+        <p>Ein Regex-Muster wird in Java als <code>String</code> geschrieben. Dadurch wird der Text <strong>zweimal</strong> interpretiert:</p>
+        <ol>
+          <li><strong>Java-Compiler:</strong> verarbeitet Escape-Sequenzen (z.B. <code>\n</code>, <code>\t</code>, <code style="white-space: nowrap;">\\</code>) im String-Literal: Zwei Backslashes <code style="white-space: nowrap;">\\</code> im Java-Quelltext ergeben einen Backslash im String. Diesen einzelnen Backslash erhält anschließend die Regex-Engine.</li>
+          <li><strong>Regex-Engine:</strong> erhält den fertigen String und liest ihn als Muster.</li>
+        </ol>
+        <pre><code class="language-java">String regex = "\\.";  // Java-Quelltext
+// String enthält: \.   -> Regex: ein Punkt</code></pre>
+        <p>Das Literal <code>"\\"</code> im String ergibt <em>einen</em> Backslash im Regex.</p>
+      </section>
+
+      <section>
+        <h2>Java: Warum zwei Backslashes? (2/2)</h2>
+        <pre><code class="language-java">String a = "\.";   // Compilerfehler: ungültige Escape-Sequenz
+String b = "\\.";  // String: \.  -> Regex: wörtlicher Punkt
+String c = "\\d";  // String: \d  -> Regex: eine Ziffer</code></pre>
+        <ul>
+          <li>Der Compiler kennt <code>\.</code> nicht als Escape-Sequenz und meldet einen Fehler.</li>
+          <li>Bei Muster <code>\d</code> gilt dasselbe: Im Quelltext schreibst du <code>"\\d"</code>.</li>
+          <li>Einen echten Backslash im Text suchen: Regex <code>\\</code> &rarr; im Java-Quelltext <code>"\\\\"</code>.</li>
+          <li>Merkregel: Soll ein Backslash als Regex-Syntax bei der Regex-Engine ankommen, musst du ihn im Java-String verdoppeln.</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h2>Wie oft darf etwas vorkommen?</h2>
+        <p>Die Quantifizierer *, +, ?, {n}, {n,m}  geben an, wie oft etwas vorkommen darf. </p>
+        <pre><code class="language-plaintext">
+a*       null oder mehr a (nichts oder beliebig viele)
+a+       ein oder mehr a (beliebig viele, min. 1)
+a?       null oder ein a (optional)
+a{3}     genau drei a
+a{2,4}   zwei bis vier a</code></pre>
+        <p>Quantifizierer beziehen sich auf das vorangehende Zeichen oder Element.</p>
+      </section>
+
+      <section>
+        <h2>Greedy und lazy</h2>
+        <ul>
+          <li><strong>Greedy</strong> (gierig, Standard): Der Quantifizierer nimmt so viel Text wie möglich, solange das gesamte Muster noch passt.</li>
+          <li><strong>Lazy</strong> (genügsam): Ein <code>?</code> hinter dem Quantifizierer, z. B. <code>*?</code>, <code>+?</code>, <code>??</code> oder <code>{n,m}?</code>, nimmt so wenig Text wie möglich.</li>
+        </ul>
+        <pre><code class="language-plaintext">greedy:  .*     .+     .?     .{2,5}
+lazy:    .*?    .+?    .??    .{2,5}?</code></pre>
+        <p>Beide Varianten finden einen Treffer, der zum Muster passt, aber evtl. unterschiedlich lang ist.</p>
+      </section>
+
+      <section>
+        <h2>Greedy und lazy: Beispiel</h2>
+        <pre><code class="language-plaintext">Eingabe: &lt;b&gt;eins&lt;/b&gt; und &lt;b&gt;zwei&lt;/b&gt;</code></pre>
+        <table>
+          <thead>
+            <tr><th>Muster</th><th>Art</th><th>Treffer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>&lt;b&gt;.*&lt;/b&gt;</code></td><td>greedy</td><td>1 Treffer:<br><code>&lt;b&gt;eins&lt;/b&gt; und &lt;b&gt;zwei&lt;/b&gt;</code></td></tr>
+            <tr><td><code>&lt;b&gt;.*?&lt;/b&gt;</code></td><td>lazy</td><td>2 Treffer:<br><code>&lt;b&gt;eins&lt;/b&gt;</code><br><code>&lt;b&gt;zwei&lt;/b&gt;</code></td></tr>
+          </tbody>
+        </table>
+        <p>Greedy läuft mit <code>.*</code> bis zum Textende und geht nur so weit zurück, bis <code>&lt;/b&gt;</code> passt (das <em>letzte</em>). Lazy stoppt beim <em>ersten</em> <code>&lt;/b&gt;</code>.</p>
+        <p class="small">Lazy ist nicht automatisch „richtig“. (HTML verarbeitet man in der Praxis mit einem Parser.)</p>
+      </section>
+
+      <section>
+        <h2>Wo im Text soll der Treffer liegen?</h2>
+        <pre><code class="language-plaintext">^      Anfang der Eingabe
+$      Ende der Eingabe
+\b     Grenze zwischen Wort- und Nicht-Wortzeichen</code></pre>
+        <p>Beispieltext: <code>"AB123x und AB123"</code> — gesucht wird mit <code>find()</code> nach zwei Großbuchstaben und drei Ziffern:</p>
+        <pre><code class="language-plaintext">Muster                 Treffer
+[A-Z]{2}\d{3}          AB123 (am Anfang), AB123 (am Ende)
+^[A-Z]{2}\d{3}         AB123 (nur am Anfang)
+[A-Z]{2}\d{3}$         AB123 (nur am Ende)
+\b[A-Z]{2}\d{3}\b      AB123 (nur als ganzes Wort)
+^[A-Z]{2}\d{3}$        kein Treffer (die ganze Eingabe passt nicht)</code></pre>
+        <p>Ohne Anker darf der Treffer an beliebiger Stelle liegen. <code>^</code> und <code>$</code> beschränken seine Position; mit beiden muss die ganze Eingabe dem Muster entsprechen.</p>
+      </section>
+
+        <section>
+        <h2>Alternativen mit <code>|</code></h2>
+        <p>Der senkrechte Strich bedeutet „oder“:</p>
+        <pre><code class="language-plaintext">cat|dog</code></pre>
+        <p>Das Muster passt auf <code>cat</code> oder <code>dog</code>.</p>
+        <p>Achte darauf, ob die Alternative den ganzen Text oder nur einen Teil davon beschreiben soll.</p>
+        <pre><code class="language-plaintext">(rot|blau)es Auto
+rotes Auto   Treffer
+blaues Auto  Treffer
+rotes Haus   kein Treffer</code></pre>
+        <p>Die Klammern begrenzen die Alternative auf <code>rot</code> oder <code>blau</code>; danach muss in beiden Fällen <code>es Auto</code> folgen.</p>
+      </section>
+
+      <section>
+        <h2>Muster lesen - ein Beispiel</h2>
+        <pre><code class="language-plaintext">^[A-Z]{2}\d{3}.?</code></pre>
+        <ol>
+          <li><code>^</code>: am Anfang</li>
+          <li><code>[A-Z]{2}</code>: genau zwei Großbuchstaben</li>
+          <li><code>\d{3}</code>: gefolgt von genau drei Ziffern</li>
+          <li><code>.?</code>: optional ein beliebiges Zeichen</li>
+        </ol>
+      <p>Beispiel bei Prüfung des gesamten Textes (keine Teilstrings):</p>
+        <pre><code class="language-plaintext">AB123    Match
+AB123x   Match
+AB123xy  kein Match (mehr als ein optionales Zeichen)
+Ab123    kein Match (b statt B)
+AB12     kein Match (zu wenige Ziffern)
+aAB123x  kein Match ("falsches" Zeichen am Anfang)</code></pre>
+      </section>
+
+      <section>
+        <h2>Muster entwerfen</h2>
+        <p><strong>Anforderung:</strong> Eine Kennung besteht aus zwei Großbuchstaben und drei Ziffern.</p>
+        <ol>
+          <li>Welche Zeichen sind erlaubt?</li>
+          <li>Wie viele davon und in welcher Reihenfolge?</li>
+          <li>Soll nur ein Teilstring oder die ganze Eingabe passen?</li>
+          <li>Lege Beispiele fest und überprüfe dein Muster damit.</li>
+        </ol>
+        <p>Baue das Muster Schritt für Schritt und teste jede Entscheidung. Ein Regex-Tester oder Debugger kann Treffer und Fehlschläge sichtbar machen.</p>
+      </section>
+
+
+      <section>
+        <h2>Ein Muster, verschiedene Fragen</h2>
+        <pre><code class="language-plaintext">Muster: [A-Z]{2}[0-9]{3}
+AB123     zwei Großbuchstaben, dann drei Ziffern
+xAB123y   enthält dieses Muster als Teilstring</code></pre>
+        <ul>
+          <li><strong>Validieren:</strong> Passt die ganze Eingabe?</li>
+          <li><strong>Suchen:</strong> Kommt das Muster irgendwo vor?</li>
+          <li><strong>Präfix prüfen:</strong> Beginnt der Text mit einem Treffer?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Java: Pattern und Matcher erstellen</h2>
+        <ol>
+          <li><code>Pattern.compile()</code> erstellt ein verwendbares Regex-Muster.</li>
+          <li><code>pattern.matcher(text)</code> verbindet das Muster mit einem Eingabetext.</li>
+        </ol>
+        <pre><code class="language-java">import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+Pattern pattern = Pattern.compile("\\d+");
+String text = "12 und 3";
+Matcher matcher = pattern.matcher(text);</code></pre>
+        <p>Hier sucht das Muster <code>\d+</code> nach einer oder mehreren Ziffern.</p>
+      </section>
+
+      <section>
+        <h2>Java: Match oder Suche?</h2>
+        <p>Mit demselben Muster und Text beantworten diese Methoden unterschiedliche Fragen:</p>
+        <table>
+          <thead>
+            <tr><th>Aufruf</th><th>Was wird geprüft?</th><th>Ergebnis Beispiel</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>matcher.matches()</code></td><td>Passt der ganze Text?</td><td><code>false</code></td></tr>
+            <tr><td><code>matcher.find()</code></td><td>Gibt es Treffer im Text?</td><td><code>true</code></td></tr>
+            <tr><td><code>matcher.lookingAt()</code></td><td>Passt es ab Textanfang?</td><td><code>true</code></td></tr>          
+          </tbody>
+        </table>
+        <p >Jede Methode liefert einen <code>boolean</code> zurück.</p>
+      </section>
+
+      <section>
+        <h2>Java: Treffer mit find() auslesen</h2>
+        <p><code>matcher.find()</code> sucht ab der aktuellen Position den nächsten Treffer. Wiederholte Aufrufe finden weitere Treffer:</p>
+        <pre><code class="language-java">Pattern pattern = Pattern.compile("\\d+");
+Matcher matcher = pattern.matcher("Raum 12, Stock 3");
+
+while (matcher.find()) {
+    System.out.println(matcher.group()
+        + " bei " + matcher.start() + "–" + matcher.end());
+}</code></pre>
+        <ul>
+          <li><code>matcher.group()</code>: den gefundenen Text</li>
+          <li><code>matcher.start()</code>: Index des ersten Trefferzeichens</li>
+          <li><code>matcher.end()</code>: Index direkt nach dem Treffer (Ende exklusiv)</li>
+        </ul>
+        <p>Die Ausgabe enthält die Treffer <code>12 bei 5–7</code> und <code>3 bei 15–16</code>.</p>
+      </section>
+
+      <section>
+        <h2>Java: Regex-Methoden von String</h2>
+        <p>Die Klasse String bietet mehrere Methoden an, die Regex verwenden:</p>
+        <pre><code class="language-java">String text = "Raum 12, Stock 3";
+
+text.matches(".*\\d+.*");       // true: ganzer Text passt auf dieses Muster
+text.split("\\s+");             // ["Raum", "12,", "Stock", "3"]
+text.replaceAll("\\s+", "_");   // "Raum_12,_Stock_3"
+text.replaceFirst("\\d+", "#"); // "Raum #, Stock 3"</code></pre>
+        <p><code>matches()</code> prüft immer den ganzen String. Für eine Suche nach einem Teilstück verwendet man <code>Matcher.find()</code>.</p>
+      </section>
+
+      <section>
+        <h2>Treffer ersetzen</h2>
+        <p>Allgemein: Ein Ersetzungstext ersetzt die Textstellen, die zum Muster passen.</p>
+        <pre><code class="language-java">String clean = text.replaceAll("\\s+", " ");</code></pre>
+        <p>Wenn ein dynamischer Ersetzungstext nicht als Regex interpretiert werden soll, dann verwende <code>Matcher.quoteReplacement()</code>:</p>
+        <pre><code class="language-java">String safe = matcher.replaceAll(
+    Matcher.quoteReplacement(replacementText)
+);</code></pre>
+      </section>
+
+
+      <section>
+        <h2>Ungültige Regex erkennen</h2>
+        <p>Ein syntaktisch ungültiges Muster kann beim Kompilieren eine <code>PatternSyntaxException</code> auslösen.</p>
+        <pre><code class="language-java">try {
+    Pattern.compile("[");
+} catch (PatternSyntaxException e) {
+    System.out.println(e.getDescription());
+}</code></pre>
+        <p class="small">Bei fest eingebauten Mustern sollte der Fehler beim Entwickeln gefunden werden. Behandle Ausnahmen gezielt.</p>
+      </section>
+
+
+
+      <section>
+        <h2>Teste immer mehr als einen Fall</h2>
+        <p>Für <code>[A-Z]{2}\d{3}</code> in Java mit <code>String.matches()</code>:</p>
+        <table>
+          <thead>
+            <tr><th>Eingabe</th><th>Erwartung</th><th>Warum?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>AB123</code></td><td>Match</td><td>zwei Großbuchstaben, drei Ziffern</td></tr>
+            <tr><td><code>A123</code></td><td>kein Match</td><td>nur ein Buchstabe</td></tr>
+            <tr><td><code>AB1234</code></td><td>kein Match</td><td>eine Ziffer zu viel</td></tr>
+            <tr><td><code>ab123</code></td><td>kein Match</td><td>Kleinbuchstaben</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Dein Basic-Check</h2>
+        <ul>
+          <li>Kannst du ein Regex-Muster in eigenen Worten erklären?</li>
+          <li>Kannst du Zeichenklassen und Quantifizierer kombinieren?</li>
+          <li>Weißt du, wann ein Muster den ganzen String prüft und wann es sucht?</li>
+          <li>Kannst du Escaping in einem Java-String korrekt schreiben?</li>
+          <li>Testest du passende, unpassende und Grenzfälle?</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+
+
+
+  <script type="module">
+
+    function loadCSS(url, fallback) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+
+      if (fallback) {
+        link.onerror = () => {
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'stylesheet';
+          fallbackLink.href = fallback;
+          document.head.appendChild(fallbackLink);
+        };
+      }
+      document.head.appendChild(link);
+    }
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css',
+      '../../../node_modules/reveal.js/dist/reveal.css'
+    );
+
+    loadCSS("../../../theme/htl.css");
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css',
+      '../../../node_modules/highlight.js/styles/stackoverflow-light.css'
+    );
+
+    function loadScript(url, fallback) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = resolve;
+
+        if (fallback) {
+          s.onerror = () => {
+            const s2 = document.createElement('script');
+            s2.src = fallback;
+            s2.onload = resolve;
+            s2.onerror = reject;
+            document.head.appendChild(s2);
+          };
+        } else {
+          s.onerror = reject;
+        }
+
+        document.head.appendChild(s);
+      });
+    }
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js',
+      '../../../node_modules/reveal.js/dist/reveal.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/notes.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/markdown.js'
+    );
+
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/highlight.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/search.js'
+    );
+
+    await loadScript("../../reveal-config.js");
+
+  </script>
+
+
+</body>
+
+</html>
