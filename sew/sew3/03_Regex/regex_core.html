@@ -336,6 +336,46 @@ while (matcher.find()) {
       </section>
 
       <section>
+        <h2>Java: Mehrere Zeilen mit MULTILINE</h2>
+        <p>Das Flag <code>Pattern.MULTILINE</code> verändert die Anker <code>^</code> und <code>$</code>:</p>
+        <pre><code class="language-java">String text = "java\nregex";
+
+Pattern normal = Pattern.compile("^java$");
+Pattern perLine = Pattern.compile("^java$", Pattern.MULTILINE);
+
+normal.matcher(text).find();    // false: "java" ist nicht die ganze Eingabe
+perLine.matcher(text).find();   // true: "java" ist eine eigene Zeile</code></pre>
+        <ul>
+          <li>Ohne <code>MULTILINE</code> beziehen sich <code>^</code> und <code>$</code> auf Anfang und Ende der gesamten Eingabe.</li>
+          <li>Mit <code>MULTILINE</code> beziehen sich <code>^</code> und <code>$</code> auf Anfang und Ende jeder Zeile.</li>
+        </ul>
+        <p class="small">Sonderfall: Ohne <code>MULTILINE</code> passt <code>$</code> in Java auch direkt <em>vor</em> einem Zeilenumbruch, der das letzte Zeichen der Eingabe ist.</p>
+<notes>        <pre class="small"><code class="language-java">Pattern p = Pattern.compile("^java$");
+
+p.matcher("java").find();     // true
+p.matcher("java\n").find();   // true: $ passt vor dem abschließenden \n
+p.matcher("java\nx").find();  // false: \n ist nicht das letzte Zeichen</code></pre>
+        <p class="small">Soll wirklich nur das Eingabeende passen, verwendet man <code>\z</code> statt <code>$</code>.</p></notes>
+      </section>
+
+      <section>
+        <h2>Java: Zeilenumbrüche mit DOTALL</h2>
+        <p>Das Flag <code>Pattern.DOTALL</code> verändert den Punkt <code>.</code>:</p>
+        <pre><code class="language-java">String text = "java\nregex";
+
+Pattern normal = Pattern.compile("java.regex");
+Pattern dotAll = Pattern.compile("java.regex", Pattern.DOTALL);
+
+normal.matcher(text).find();   // false: . passt nicht auf \n
+dotAll.matcher(text).find();   // true: . passt auch auf \n</code></pre>
+        <ul>
+          <li>Ohne <code>DOTALL</code> passt <code>.</code> auf kein Zeilenumbruchzeichen.</li>
+          <li>Mit <code>DOTALL</code> passt <code>.</code> auf jedes Zeichen, auch auf Zeilenumbrüche.</li>
+        </ul>
+        <p><code>MULTILINE</code> und <code>DOTALL</code> ändern unterschiedliche Dinge und lassen sich kombinieren: <code>Pattern.MULTILINE | Pattern.DOTALL</code>.</p>
+      </section>
+
+      <section>
         <h2>Java: Regex-Methoden von String</h2>
         <p>Die Klasse String bietet mehrere Methoden an, die Regex verwenden:</p>
         <pre><code class="language-java">String text = "Raum 12, Stock 3";
@@ -350,11 +390,15 @@ text.replaceFirst("\\d+", "#"); // "Raum #, Stock 3"</code></pre>
       <section>
         <h2>Treffer ersetzen</h2>
         <p>Allgemein: Ein Ersetzungstext ersetzt die Textstellen, die zum Muster passen.</p>
-        <pre><code class="language-java">String clean = text.replaceAll("\\s+", " ");</code></pre>
-        <p>Wenn ein dynamischer Ersetzungstext nicht als Regex interpretiert werden soll, dann verwende <code>Matcher.quoteReplacement()</code>:</p>
-        <pre><code class="language-java">String safe = matcher.replaceAll(
-    Matcher.quoteReplacement(replacementText)
-);</code></pre>
+        <pre><code class="language-java">"a   b \t c".replaceAll("\\s+", " ");        // "a b c"  (Leerraum normalisieren)
+"Tel: 0664 123456".replaceAll("\\d", "#");   // "Tel: #### ######"  (Ziffern maskieren)
+"Raum 12, Stock 3".replaceAll("\\d+", "X");  // "Raum X, Stock X"
+"Raum 12, Stock 3".replaceFirst("\\d+", "X");// "Raum X, Stock 3"  (nur der erste Treffer)
+"a.b.c".replaceAll("\\.", "");               // "abc"  (Punkte entfernen)</code></pre>
+        <p>Im Ersetzungstext haben <code>$</code> und <code>\</code> eine Sonderbedeutung (z.B. <code>$1</code> für Gruppen). Soll ein dynamischer Ersetzungstext wörtlich eingesetzt werden, dann verwende <code>Matcher.quoteReplacement()</code>:</p>
+        <pre><code class="language-java">String price = "Preis: 5 EUR";
+price.replaceAll("\\d+", "$5");   // IndexOutOfBoundsException: $5 meint Gruppe 5
+price.replaceAll("\\d+", Matcher.quoteReplacement("$5"));   // "Preis: $5 EUR"</code></pre>
       </section>
 
 
