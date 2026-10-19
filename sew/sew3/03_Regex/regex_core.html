@@ -335,6 +335,26 @@ while (matcher.find()) {
         <p>Die Ausgabe enthält die Treffer <code>12 bei 5–7</code> und <code>3 bei 15–16</code>.</p>
       </section>
 
+  <section>
+        <h2>Java: <code>\w</code>, <code>\s</code> und <code>UNICODE_CHARACTER_CLASS</code></h2>
+        <p>Im Standardmodus von Java <code>Pattern</code> sind die Kurzklassen auf ASCII beschränkt:</p>
+        <pre><code class="language-plaintext">\w    [a-zA-Z0-9_]            kein ä, ö, ü, ß, é, ...
+\s    [ \t\n\x0B\f\r]         kein geschütztes Leerzeichen (\u00A0)</code></pre>
+        <p>Das Flag <code>Pattern.UNICODE_CHARACTER_CLASS</code> erweitert sie auf Unicode:</p>
+        <pre><code class="language-java">"Müller".matches("\\w+");                     // false: ü ist kein \w
+Pattern.compile("\\w+", Pattern.UNICODE_CHARACTER_CLASS)
+       .matcher("Müller").matches();          // true
+
+"Hallo\u00A0Welt".split("\\s+");              // ["Hallo Welt"] (nicht getrennt)
+Pattern.compile("\\s+", Pattern.UNICODE_CHARACTER_CLASS)
+       .split("Hallo\u00A0Welt");             // ["Hallo", "Welt"]</code></pre>
+        <ul>
+          <li>Mit dem Flag gelten auch <code>\d</code> und <code>\b</code> als Unicode-fähig.</li>
+          <li>Für reine Buchstaben ist <code>\p{L}</code> oft klarer; es passt auch ohne Flag auf <code>ä</code>.</li>
+        </ul>
+      </section>
+
+
       <section>
         <h2>Java: Mehrere Zeilen mit MULTILINE</h2>
         <p>Das Flag <code>Pattern.MULTILINE</code> verändert die Anker <code>^</code> und <code>$</code>:</p>

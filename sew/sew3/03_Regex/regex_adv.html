@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <title>Reguläre Ausdrücke - Advanced</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="../../../theme/htl.css">
+  <link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer"  onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reset.css';">/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reveal.css';" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../node_modules/highlight.js/styles/stackoverflow-light.css';"> -->
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Reguläre Ausdrücke – Advanced</h1>
+        <p class="center">Gruppen, Lookaround, Unicode, Performance und Tokenizer</p>
+        <p class="center">Aufbauend auf den Regex-Grundlagen und Java <code>Pattern</code>/<code>Matcher</code></p>
+      </section>
+
+      <section>
+        <h2>Was du nachher kannst</h2>
+        <ul>
+          <li>Gruppen erfassen, benennen und in Mustern sowie Ersetzungen wiederverwenden</li>
+          <li>Mit Lookaround Kontext prüfen, ohne ihn in den Treffer aufzunehmen</li>
+          <li>Backtracking, Unicode, Regex-Optionen und Engine-Unterschiede beurteilen</li>
+          <li>Fortgeschrittene Java-Regex-APIs und einen einfachen Tokenizer einsetzen</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Gruppen strukturieren Muster</h2>
+        <p>Runde Klammern fassen Teile eines Musters zusammen. Ein Quantifizierer wirkt dann auf die ganze Gruppe:</p>
+        <pre><code class="language-plaintext">(ab)+       "ab" mindestens einmal
+(cat|dog)   entweder "cat" oder "dog"
+(?:ab)+     "ab" mindestens einmal, ohne Gruppe zu speichern</code></pre>
+        <ul>
+          <li><code>(...)</code> ist eine <strong>Capturing Group</strong>: Der passende Teil wird gespeichert.</li>
+          <li><code>(?:...)</code> ist eine <strong>Non-Capturing Group</strong>: Sie gruppiert, speichert aber nicht.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Capturing Groups auslesen</h2>
+        <p>Die ganze Übereinstimmung hat die Gruppennummer <code>0</code>; Capturing Groups werden von links nach rechts nummeriert.</p>
+        <pre><code class="language-java">Pattern p = Pattern.compile("(\\d{4})-(\\d{2})-(\\d{2})");
+Matcher m = p.matcher("Termin: 2026-10-16");
+
+if (m.find()) {
+    System.out.println(m.group());    // 2026-10-16
+    System.out.println(m.group(1));   // 2026
+    System.out.println(m.group(2));   // 10
+    System.out.println(m.group(3));   // 16
+    System.out.println(m.groupCount()); // 3
+}</code></pre>
+        <p><code>groupCount()</code> zählt nur Capturing Groups, nicht Gruppe 0 und nicht <code>(?:...)</code>.</p>
+      </section>
+
+      <section>
+        <h2>Gruppen in Ersetzungen verwenden</h2>
+        <p>Die Gruppen eines Treffers lassen sich in Java-Ersetzungstexten wieder einsetzen:</p>
+        <pre><code class="language-java">String date = "2026-10-16";
+String reordered = date.replaceAll(
+    "(\\d{4})-(\\d{2})-(\\d{2})",
+    "$3.$2.$1"
+);
+// Ergebnis: 16.10.2026</code></pre>
+        <p><code>$1</code>, <code>$2</code> usw. verweisen auf nummerierte Gruppen. In Java kann eine benannte Gruppe mit <code>${name}</code> referenziert werden.</p>
+      </section>
+
+      <section>
+        <h2>Benannte Gruppen</h2>
+        <p>Eine benannte Gruppe speichert einen Teil des Treffers unter einem verständlichen Namen:</p>
+        <pre><code class="language-java">Pattern repeated = Pattern.compile(
+    "Wort: (?&lt;word&gt;[A-Za-z]+)!"
+);
+Matcher m = repeated.matcher("Wort: Hallo!");
+
+if (m.find()) {
+    System.out.println(m.group());      // Wort: Hallo!
+    System.out.println(m.group("word")); // Hallo
+}</code></pre>
+        <ul>
+          <li><code>(?&lt;word&gt;...)</code> markiert den Teil, der als Gruppe <code>word</code> gespeichert wird.</li>
+          <li><code>m.group()</code> liefert den ganzen Treffer; <code>m.group("word")</code> nur den erfassten Teil.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Benannte Rückverweise</h2>
+        <p><code>\k&lt;word&gt;</code> bedeutet: Hier muss noch einmal genau der Text stehen, den die benannte Gruppe <code>word</code> zuvor erfasst hat.</p>
+        <pre><code class="language-java">Pattern repeated = Pattern.compile(
+    "(?&lt;word&gt;[A-Za-z]+)\\s+\\k&lt;word&gt;"
+);
+Matcher m = repeated.matcher("Hallo Hallo");
+
+if (m.find()) {
+    System.out.println(m.group());      // Hallo Hallo
+    System.out.println(m.group("word")); // Hallo
+}</code></pre>
+        <ul>
+          <li>Die Gruppe <code>word</code> erfasst zuerst <code>Hallo</code>.</li>
+          <li><code>\s+</code> verlangt mindestens ein Leerraumzeichen dazwischen.</li>
+          <li><code>\k&lt;word&gt;</code> verlangt denselben Text noch einmal.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Lookaround: Kontext prüfen, nicht verbrauchen</h2>
+        <p>Lookaround prüft Zeichen vor oder nach einer Position, ohne diese Zeichen in den Treffer aufzunehmen.</p>
+        <table>
+          <thead><tr><th>Form</th><th>Bedeutung</th></tr></thead>
+          <tbody>
+            <tr><td><code>(?=...)</code></td><td>positiver Lookahead: danach muss ... folgen</td></tr>
+            <tr><td><code>(?!...)</code></td><td>negativer Lookahead: danach darf ... nicht folgen</td></tr>
+            <tr><td><code>(?&lt;=...)</code></td><td>positiver Lookbehind: davor muss ... stehen</td></tr>
+            <tr><td><code>(?&lt;!...)</code></td><td>negativer Lookbehind: davor darf ... nicht stehen</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Lookahead: Treffer nach Kontext</h2>
+        <pre><code class="language-plaintext">Eingabe: host: server
+
+\b\w+(?=:)     findet "host"
+\b\w+(?!:)     findet Wörter, auf die kein Doppelpunkt folgt</code></pre>
+        <p>Der Doppelpunkt wird geprüft, gehört aber nicht zum Treffer. Ein Lookahead kann auch Anforderungen prüfen, die an anderer Stelle des Textes erfüllt sein müssen:</p>
+        <pre><code class="language-plaintext">^(?=.*\d)[A-Za-z\d]{8,}$</code></pre>
+        <p>Das Muster verlangt mindestens 8 ASCII-Buchstaben/Ziffern und irgendwo mindestens eine Ziffer. Für echte Passwortregeln zusätzlich passende Unicode- und Sicherheitsanforderungen beachten.</p>
+      </section>
+
+      <section>
+        <h2>Lookbehind: Treffer nach Kontext</h2>
+        <pre><code class="language-plaintext">Eingabe: Preis: $25 und 30
+
+(?&lt;=\$)\d+    findet "25" direkt nach $
+(?&lt;!\$)\b\d+    findet Zahlen, vor denen kein $ steht</code></pre>
+        <p>Lookbehind nimmt den geprüften Kontext nicht in den Treffer auf. Java unterstützt nicht jede beliebige Lookbehind-Form; feste Längen sind am portabelsten. Prüfe komplexe Formen mit der verwendeten Java-Version.</p>
+      </section>
+
+      <section>
+        <h2>Backtracking: Wie sucht die Engine?</h2>
+        <p>Eine Backtracking-Engine probiert Wiederholungen und Alternativen aus. Reicht ein späterer Teil des Musters nicht, geht sie zurück und versucht eine andere Aufteilung.</p>
+        <pre><code class="language-plaintext">Muster:   (a+)+$
+Eingabe:  aaaaa!</code></pre>
+        <ul>
+          <li>Die vielen <code>a</code> können auf zahlreiche Weisen auf die inneren <code>a+</code>-Gruppen verteilt werden.</li>
+          <li>Das abschließende <code>!</code> verhindert den Treffer; die Engine kann viele Aufteilungen erfolglos prüfen.</li>
+          <li>Mit längeren, speziell geformten Eingaben kann die Laufzeit stark anwachsen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Backtracking begrenzen</h2>
+        <p>Wenn nur eine Folge von <code>a</code> erlaubt ist, genügt das einfachere Muster:</p>
+        <pre><code class="language-plaintext">(a+)+$   unnötig verschachtelte Wiederholung
+a+$      gleiche gewünschte Zeichenfolge, weniger Mehrdeutigkeit</code></pre>
+        <p>Possessive Quantifizierer und atomare Gruppen geben bereits konsumierten Text nicht zum erneuten Ausprobieren frei:</p>
+        <pre><code class="language-plaintext">        \d+\d       kann Ziffern zurückgeben, um die letzte \d zu erfüllen
+        \d++\d      gibt keine Ziffer zurück und scheitert bei "123"
+        (?&gt;\d+)\d   atomare Gruppe: ebenfalls kein Zurückgeben</code></pre>
+        <p>Possessiv/atomar nur einsetzen, wenn das Zurückgeben fachlich nicht gebraucht wird; sonst ändert sich das Ergebnis.</p>
+      </section>
+
+      <section>
+        <h2>Regex-Performance sicher messen</h2>
+        <ul>
+          <li>Bei Benutzereingaben: Länge begrenzen und Eingaben als nicht vertrauenswürdig behandeln.</li>
+          <li>Mehrdeutige, verschachtelte Wiederholungen wie <code>(a+)+</code> vermeiden oder vereinfachen.</li>
+          <li>Erfolg und Fehlschlag mit kurzen, langen und speziell ungünstigen Testdaten prüfen.</li>
+          <li>Vergleiche mit JVM-Warm-up und vielen Wiederholungen durchführen; für Java ist JMH geeigneter als eine einzelne Stoppuhrmessung.</li>
+        </ul>
+        <p class="small">Eine einzelne Zeitmessung ist kein belastbarer Benchmark. Gefährliche Muster nicht mit unbeschränkten Eingaben in Produktion testen.</p>
+      </section>
+
+      <section>
+        <h2>Unicode: Code Units, Code Points, Grapheme</h2>
+        <ul>
+          <li><strong>UTF-16-Code-Unit:</strong> Java-<code>char</code> und String-Indizes zählen 16-Bit-Einheiten.</li>
+          <li><strong>Code Point:</strong> Unicode-Zeichenwert; ein Zeichen außerhalb der BMP belegt in Java zwei Code Units.</li>
+          <li><strong>Graphem:</strong> vom Menschen wahrgenommenes Zeichen; kann aus mehreren Code Points bestehen, etwa Buchstabe plus kombinierendes Zeichen oder Emoji-Sequenz.</li>
+        </ul>
+        <p><code>Matcher.start()</code> und <code>end()</code> liefern Java-String-Indizes (UTF-16-Code-Units), nicht Graphempositionen.</p>
+      </section>
+
+      <section>
+        <h2>Unicode-Eigenschaften in Java</h2>
+        <pre><code class="language-java">Pattern letters = Pattern.compile("\\p{L}+");
+Pattern greek = Pattern.compile("\\p{IsGreek}+");</code></pre>
+        <ul>
+          <li><code>\p{L}</code>: Unicode-Kategorie „Letter“ (Buchstabe), unabhängig von einem festen Alphabet.</li>
+          <li><code>\p{IsGreek}</code>: Zeichen aus dem griechischen Skript.</li>
+          <li><code>\d</code>, <code>\w</code> und <code>\s</code> sind nicht in jeder Regex-Engine gleich definiert.</li>
+          <li>In Java erweitert <code>Pattern.UNICODE_CHARACTER_CLASS</code> die vordefinierten Klassen wie <code>\w</code> und <code>\d</code> in Richtung Unicode.</li>
+        </ul>
+        <p>Wenn Unicode-Buchstaben gefordert sind, ist <code>\p{L}</code> meist klarer als die Annahme, <code>\w</code> bedeute überall dasselbe.</p>
+      </section>
+
+      <section>
+        <h2>Regex-Flavors unterscheiden sich</h2>
+        <p>Ein Regex-Muster ist nicht automatisch zwischen Programmen übertragbar:</p>
+        <table>
+          <thead><tr><th>Bereich</th><th>Was variieren kann</th></tr></thead>
+          <tbody>
+            <tr><td>Kurzklassen</td><td>Bedeutung von <code>\w</code>, <code>\d</code>, <code>\b</code> und Unicode-Optionen</td></tr>
+            <tr><td>Lookbehind</td><td>Erlaubte Längen und Konstrukte unterscheiden sich nach Engine/Version</td></tr>
+            <tr><td>Benannte Gruppen</td><td>Schreibweise für Definition, Rückverweis und Ersetzung kann abweichen</td></tr>
+            <tr><td>Java und Python</td><td>Gruppe: <code>(?&lt;name&gt;...)</code> vs. <code>(?P&lt;name&gt;...)</code>; Rückverweis: <code>\k&lt;name&gt;</code> vs. <code>(?P=name)</code></td></tr>
+            <tr><td>Ersetzung</td><td>Java: <code>${name}</code>; Python: <code>\g&lt;name&gt;</code></td></tr>
+            <tr><td>Optionen</td><td>Standardwerte für Groß-/Kleinschreibung und Zeilenumbrüche sind nicht überall gleich</td></tr>
+          </tbody>
+        </table>
+        <p>Immer Engine und Version des Zielsystems testen, zum Beispiel Java <code>Pattern</code> statt nur „Regex“ anzugeben.</p>
+      </section>
+
+      <section>
+        <h2>Optionen: Groß-/Kleinschreibung und Zeilen</h2>
+        <pre><code class="language-java">Pattern p = Pattern.compile(
+    "^java$",
+    Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.MULTILINE
+);</code></pre>
+        <ul>
+          <li><code>CASE_INSENSITIVE</code>: ignoriert Groß-/Kleinschreibung; für Unicode-Fälle zusätzlich <code>UNICODE_CASE</code>.</li>
+          <li><code>MULTILINE</code>: <code>^</code> und <code>$</code> beziehen sich auf Zeilenanfang und -ende.</li>
+          <li><code>DOTALL</code>: <code>.</code> passt auch auf Zeilenumbruchzeichen.</li>
+        </ul>
+        <p>Inline-Optionen: <code>(?i)</code>, <code>(?m)</code>, <code>(?s)</code>. Optionen gelten ab ihrer Stelle im Muster; mit <code>(?i:...)</code> lässt sich ein Teilbereich einschließen.</p>
+        <pre><code class="language-java">Pattern acrossLines = Pattern.compile("start.*end", Pattern.DOTALL);
+Pattern lineOnly = Pattern.compile("^java$", Pattern.MULTILINE);</code></pre>
+      </section>
+
+      <section>
+        <h2>Höhere Java-APIs für Treffer</h2>
+        <pre><code class="language-java">import java.util.List;
+import java.util.regex.MatchResult;
+import java.util.regex.Pattern;
+
+Pattern numbers = Pattern.compile("\\d+");
+
+List&lt;String&gt; found = numbers.matcher("Raum 12, Stock 3")
+    .results()
+    .map(MatchResult::group)
+    .toList();</code></pre>
+        <ul>
+          <li><code>Matcher.results()</code>: Stream der Treffer, die <code>find()</code> liefern würde.</li>
+        </ul>
+        <pre><code class="language-java">List&lt;String&gt; parts = Pattern.compile("\\s+")
+    .splitAsStream("rot blau gruen")
+    .toList();
+
+boolean hasNumber = Pattern.compile("\\d+")
+    .asPredicate()
+    .test("Raum 12"); // true: asPredicate verwendet find</code></pre>
+        <p><code>splitAsStream()</code> liefert einen Stream, der erst beim Verarbeiten konsumiert wird.</p>
+        <p class="small">Beispiele mit <code>Stream.toList()</code> benötigen Java 16 oder neuer.</p>
+      </section>
+
+      <section>
+        <h2>Funktionale Ersetzung</h2>
+        <p>In Java kann die Ersetzung für jeden Treffer anhand des Match-Ergebnisses berechnet werden:</p>
+        <pre><code class="language-java">Pattern numbers = Pattern.compile("\\d+");
+String marked = numbers.matcher("Raum 12, Stock 3")
+    .replaceAll(match -&gt; "[" + match.group() + "]");
+// Ergebnis: Raum [12], Stock [3]</code></pre>
+        <p>Das ist nützlich, wenn die Ersetzung vom gefundenen Text oder seinen Gruppen abhängt, statt für alle Treffer gleich zu sein.</p>
+      </section>
+
+      <section>
+        <h2>Tokenizer: Text in Token zerlegen</h2>
+        <p>Ein Tokenizer erkennt mehrere Tokenarten, zum Beispiel Leerraum, Zahlen, Bezeichner und Operatoren.</p>
+        <pre><code class="language-java">Pattern token = Pattern.compile(
+    "(?&lt;ws&gt;\\s+)"
+  + "|(?&lt;number&gt;\\d+(?:\\.\\d+)?)"
+  + "|(?&lt;identifier&gt;\\p{L}[\\p{L}\\p{N}_]*)"
+  + "|(?&lt;operator&gt;[+=*/()-])"
+);
+String input = "total = 12 + count";</code></pre>
+        <p>Die benannten Gruppen klassifizieren Treffer. Der nächste Schritt ist, mit <code>Matcher</code> lückenlos von links nach rechts zu lesen.</p>
+      </section>
+
+      <section>
+        <h2>Tokenizer: Lücken erkennen</h2>
+        <p>Fortsetzung des Beispiels mit <code>token</code> und <code>input</code> von der vorigen Folie:</p>
+        <pre><code class="language-java">Matcher m = token.matcher(input);
+int position = 0;
+while (m.find()) {
+    if (m.start() != position) {
+        throw new IllegalArgumentException("Unbekanntes Zeichen bei " + position);
+    }
+    if (m.start("ws") &lt; 0) {
+        String type = m.start("number") &gt;= 0 ? "number"
+            : m.start("identifier") &gt;= 0 ? "identifier" : "operator";
+        System.out.println(type + ": " + m.group());
+    }
+    position = m.end();
+}
+if (position != input.length()) {
+    throw new IllegalArgumentException("Unbekanntes Zeichen bei " + position);
+}</code></pre>
+        <p>Der Positionsvergleich verhindert, dass <code>find()</code> ungültige Zeichen still überspringt. Für eine echte Programmiersprache wären zusätzlich Kommentare, Zeichenketten und Grammatikregeln nötig.</p>
+      </section>
+
+      <section>
+        <h2>Advanced-Check</h2>
+        <ul>
+          <li>Kannst du Capturing- und Non-Capturing-Gruppen unterscheiden?</li>
+          <li>Kannst du Lookaround anwenden, ohne Kontext in den Treffer aufzunehmen?</li>
+          <li>Kannst du problematisches Backtracking erkennen und sicher messen?</li>
+          <li>Berücksichtigst du Unicode, Regex-Flavor und Flags?</li>
+          <li>Kannst du Treffer streamen oder Text lückenlos tokenisieren?</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+
+
+
+  <script type="module">
+
+    function loadCSS(url, fallback) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+
+      if (fallback) {
+        link.onerror = () => {
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'stylesheet';
+          fallbackLink.href = fallback;
+          document.head.appendChild(fallbackLink);
+        };
+      }
+      document.head.appendChild(link);
+    }
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css',
+      '../../../node_modules/reveal.js/dist/reveal.css'
+    );
+
+    loadCSS("../../../theme/htl.css");
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css',
+      '../../../node_modules/highlight.js/styles/stackoverflow-light.css'
+    );
+
+    function loadScript(url, fallback) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = resolve;
+
+        if (fallback) {
+          s.onerror = () => {
+            const s2 = document.createElement('script');
+            s2.src = fallback;
+            s2.onload = resolve;
+            s2.onerror = reject;
+            document.head.appendChild(s2);
+          };
+        } else {
+          s.onerror = reject;
+        }
+
+        document.head.appendChild(s);
+      });
+    }
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js',
+      '../../../node_modules/reveal.js/dist/reveal.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/notes.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/markdown.js'
+    );
+
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/highlight.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/search.js'
+    );
+
+    await loadScript("../../reveal-config.js");
+
+  </script>
+
+
+</body>
+
+</html>
