@@ -32,7 +32,7 @@ The 25–29 minute practice periods should include a core task that checks the b
 - Escape metacharacters when they should be matched literally.
 - Use character classes, ranges, negated character classes, and common predefined classes such as digits, whitespace, and word characters.
 - Use the wildcard `.` and describe its behavior, including that line terminators are normally excluded.
-- **Java:** Escape regex metacharacters through Java string literals correctly; use `Pattern.quote()` when treating arbitrary text as a literal pattern.
+- Understand the effect of `Pattern.UNICODE_CHARACTER_CLASS`.
 
 ### 3. Describe repetition
 - Use `*`, `+`, `?`, and `{n}`, `{n,}`, `{n,m}` to specify how many times an element may occur.
@@ -41,7 +41,6 @@ The 25–29 minute practice periods should include a core task that checks the b
 ### 4. Restrict where a match can occur
 - Use anchors such as `^` and `$`, and word boundaries such as `\b`, to express position requirements.
 - Distinguish a match of the entire input from a match of a substring.
-- **Java:** Select the appropriate operation: `matches()` for the entire input, `find()` for a match anywhere, and `lookingAt()` for a match at the beginning.
 
 ### 5. Combine alternatives
 - Use alternation (`|`) to express a choice between patterns.
@@ -55,13 +54,14 @@ The 25–29 minute practice periods should include a core task that checks the b
 
 ### 7. Apply regular expressions in Java
 - Compile a pattern with `Pattern.compile()` and create a `Matcher` for input text.
-- Use `Matcher.find()` repeatedly to process multiple matches, and use `start()` and `end()` to locate them.
+- Use `Matcher.matches()`, `Matcher.lookingAt()` to check for matches.
+- Use `Matcher.find()` repeatedly to process multiple matches, use Matcher.group() to retrieve the matched text, and use `start()` and `end()` to locate them.
 - Use the convenient `String` methods `matches()`, `split()`, `replaceAll()`, and `replaceFirst()` where suitable.
 - Recognize and handle invalid patterns, for example by catching `PatternSyntaxException`.
 
-### 8. Replace matched text
-- Replace matched text with literal replacement text.
-- **Java:** Use `Matcher.replaceAll()` or `String.replaceAll()`; use `Matcher.quoteReplacement()` when replacement text should be treated literally.
+### 8. Use common regex options
+- Explain how case-insensitive, multiline, and dot-matches-line-terminators options affect matching.
+- **Java:** Apply options such as `Pattern.CASE_INSENSITIVE`, `Pattern.MULTILINE`, and `Pattern.DOTALL`
 
 ## Advanced (optional)
 
@@ -92,7 +92,7 @@ The 25–29 minute practice periods should include a core task that checks the b
 - Distinguish bytes, Unicode code points, and user-perceived characters.
 - Use Unicode properties to match character categories and explain that shorthand classes may vary between regex flavors or options.
 - Compare features or behavior across regex implementations, including Java.
-- **Java:** Use Unicode property expressions such as `\p{L}` and `\p{IsGreek}`, and understand the effect of `Pattern.UNICODE_CHARACTER_CLASS`.
+- **Java:** Use Unicode property expressions such as `\p{L}` and `\p{IsGreek}`
 
 ### 6. Use advanced Java regex APIs
 - Choose higher-level APIs when processing sequences of matches or splitting text lazily.
@@ -102,6 +102,4 @@ The 25–29 minute practice periods should include a core task that checks the b
 - Combine multiple patterns to identify token types in structured text.
 - **Java:** Implement a simple tokenizer with `Pattern` and `Matcher`, and report or handle input that does not match any token.
 
-### 8. Use common regex options
-- Explain how case-insensitive, multiline, and dot-matches-line-terminators options affect matching.
-- **Java:** Apply options such as `Pattern.CASE_INSENSITIVE`, `Pattern.MULTILINE`, and `Pattern.DOTALL`, or their inline equivalents.
+
