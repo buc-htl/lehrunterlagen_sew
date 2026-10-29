@@ -31,10 +31,11 @@
       <section>
         <h2>Was du nachher kannst</h2>
         <ul>
-          <li>Gruppen erfassen, benennen und in Mustern sowie Ersetzungen wiederverwenden</li>
+          <li>Capturing Groups und benannte Gruppen auslesen, als Rückverweise nutzen und in Ersetzungen einsetzen</li>
           <li>Mit Lookaround Kontext prüfen, ohne ihn in den Treffer aufzunehmen</li>
-          <li>Backtracking, Unicode, Regex-Optionen und Engine-Unterschiede beurteilen</li>
-          <li>Fortgeschrittene Java-Regex-APIs und einen einfachen Tokenizer einsetzen</li>
+          <li>Unnötig mehrdeutige Wiederholungen erkennen und Regex für Sicherheit und Performance vereinfachen</li>
+          <li>Unicode-Code-Units, Code Points und Grapheme unterscheiden sowie Unicode-Kategorien in Java-Regex verwenden</li>
+            <li>Mit Regex einen Tokenizer implementieren</li>
         </ul>
       </section>
 
@@ -116,6 +117,14 @@ if (m.find()) {
       </section>
 
       <section>
+        <h2>Treffer beim Ersetzen wiederverwenden</h2>
+        <p>Auch <code>String.replaceAll()</code> verwendet Gruppenreferenzen im Ersetzungstext. <code>$0</code> steht für den gesamten Treffer:</p>
+        <pre><code class="language-java">String marked = "Raum 12, Stock 3"
+    .replaceAll("\\d+", "[$0]");
+// Ergebnis: Raum [12], Stock [3]</code></pre>
+      </section>
+
+      <section>
         <h2>Lookaround: Kontext prüfen, nicht verbrauchen</h2>
         <p>Lookaround prüft Zeichen vor oder nach einer Position, ohne diese Zeichen in den Treffer aufzunehmen.</p>
         <table>
@@ -133,172 +142,209 @@ if (m.find()) {
         <h2>Lookahead: Treffer nach Kontext</h2>
         <pre><code class="language-plaintext">Eingabe: host: server
 
-\b\w+(?=:)     findet "host"
-\b\w+(?!:)     findet Wörter, auf die kein Doppelpunkt folgt</code></pre>
-        <p>Der Doppelpunkt wird geprüft, gehört aber nicht zum Treffer. Ein Lookahead kann auch Anforderungen prüfen, die an anderer Stelle des Textes erfüllt sein müssen:</p>
+\b\w+\b(?=:)   Treffer: "host" (danach folgt :)
+\b\w+\b(?!:)   Treffer: "server" (danach folgt kein :)</code></pre>
+        <p>Ein Lookahead kann auch Anforderungen prüfen, die an anderer Stelle des Textes erfüllt sein müssen:</p>
         <pre><code class="language-plaintext">^(?=.*\d)[A-Za-z\d]{8,}$</code></pre>
-        <p>Das Muster verlangt mindestens 8 ASCII-Buchstaben/Ziffern und irgendwo mindestens eine Ziffer. Für echte Passwortregeln zusätzlich passende Unicode- und Sicherheitsanforderungen beachten.</p>
+        <p>Das Muster verlangt mindestens 8 ASCII-Buchstaben/Ziffern, darunter mindestens eine Ziffer. Der Lookahead prüft die Ziffer, verbraucht aber keine Zeichen und fügt dem Treffer daher keine zusätzliche Länge hinzu.</p>
       </section>
 
       <section>
         <h2>Lookbehind: Treffer nach Kontext</h2>
         <pre><code class="language-plaintext">Eingabe: Preis: $25 und 30
 
-(?&lt;=\$)\d+    findet "25" direkt nach $
-(?&lt;!\$)\b\d+    findet Zahlen, vor denen kein $ steht</code></pre>
-        <p>Lookbehind nimmt den geprüften Kontext nicht in den Treffer auf. Java unterstützt nicht jede beliebige Lookbehind-Form; feste Längen sind am portabelsten. Prüfe komplexe Formen mit der verwendeten Java-Version.</p>
+(?&lt;=\$)\d+      Treffer: "25" (davor steht $)
+(?&lt;!\$)\b\d+  Treffer: "30" (davor steht kein $)</code></pre>
+        <p>Die konkrete Unterstützung von Lookbehind hängt von der Java Version ab. Fixe Längen (z.B. nur genau ein Zeichen wie im Beispiel) sind am portabelsten. Prüfe, ob komplexe Formen mit der verwendeten Java-Version funktionieren.</p>
       </section>
 
       <section>
-        <h2>Backtracking: Wie sucht die Engine?</h2>
-        <p>Eine Backtracking-Engine probiert Wiederholungen und Alternativen aus. Reicht ein späterer Teil des Musters nicht, geht sie zurück und versucht eine andere Aufteilung.</p>
-        <pre><code class="language-plaintext">Muster:   (a+)+$
-Eingabe:  aaaaa!</code></pre>
-        <ul>
-          <li>Die vielen <code>a</code> können auf zahlreiche Weisen auf die inneren <code>a+</code>-Gruppen verteilt werden.</li>
-          <li>Das abschließende <code>!</code> verhindert den Treffer; die Engine kann viele Aufteilungen erfolglos prüfen.</li>
-          <li>Mit längeren, speziell geformten Eingaben kann die Laufzeit stark anwachsen.</li>
-        </ul>
+        <h2>Backtracking: Schritt für Schritt</h2>
+        <p>Backtracking bedeutet: Wenn ein späterer Teil des Musters nicht passt, gibt die Regex-Engine bereits gelesene Zeichen zurück und probiert eine andere Aufteilung.</p>
+        <pre><code class="language-plaintext">Muster:  a+ab
+Eingabe: aaab</code></pre>
+        <ol>
+          <li><code>a+</code> nimmt zunächst möglichst viele <code>a</code>: <code>aaa</code>.</li>
+          <li>Das nächste Musterzeichen ist <code>a</code>, aber in der Eingabe kommt <code>b</code>: kein Treffer an dieser Stelle.</li>
+          <li><code>a+</code> gibt ein <code>a</code> zurück. Das nächste <code>a</code> im Muster passt nun auf dieses Zeichen.</li>
+          <li>Das letzte <code>b</code> passt ebenfalls: Treffer ist <code>aaab</code>.</li>
+        </ol>
       </section>
 
       <section>
         <h2>Backtracking begrenzen</h2>
-        <p>Wenn nur eine Folge von <code>a</code> erlaubt ist, genügt das einfachere Muster:</p>
-        <pre><code class="language-plaintext">(a+)+$   unnötig verschachtelte Wiederholung
-a+$      gleiche gewünschte Zeichenfolge, weniger Mehrdeutigkeit</code></pre>
-        <p>Possessive Quantifizierer und atomare Gruppen geben bereits konsumierten Text nicht zum erneuten Ausprobieren frei:</p>
-        <pre><code class="language-plaintext">        \d+\d       kann Ziffern zurückgeben, um die letzte \d zu erfüllen
-        \d++\d      gibt keine Ziffer zurück und scheitert bei "123"
-        (?&gt;\d+)\d   atomare Gruppe: ebenfalls kein Zurückgeben</code></pre>
-        <p>Possessiv/atomar nur einsetzen, wenn das Zurückgeben fachlich nicht gebraucht wird; sonst ändert sich das Ergebnis.</p>
+        <p>Mehrdeutige Wiederholungen können viele Aufteilungen ausprobieren. Oft genügt es, das Muster so zu vereinfachen oder einzugrenzen, dass weniger Aufteilungen möglich sind:</p>
+        <pre><code class="language-plaintext">
+(a+)+$       unnötig verschachtelt, wenn nur a erlaubt ist
+a+$          gleiche erlaubte Zeichenfolge, weniger Mehrdeutigkeit
+</code></pre>
+        <p>Vermeide, bzw. vereinfache, mehrdeutige, verschachtelte Wiederholungen, um die Performance zu verbessern.</p>
       </section>
 
       <section>
-        <h2>Regex-Performance sicher messen</h2>
+        <h2>Sichere und performante Regex</h2>
         <ul>
-          <li>Bei Benutzereingaben: Länge begrenzen und Eingaben als nicht vertrauenswürdig behandeln.</li>
+          <li>Eingabelängen begrenzen, besonders bei nicht vertrauenswürdigen Benutzereingaben.</li>
           <li>Mehrdeutige, verschachtelte Wiederholungen wie <code>(a+)+</code> vermeiden oder vereinfachen.</li>
-          <li>Erfolg und Fehlschlag mit kurzen, langen und speziell ungünstigen Testdaten prüfen.</li>
-          <li>Vergleiche mit JVM-Warm-up und vielen Wiederholungen durchführen; für Java ist JMH geeigneter als eine einzelne Stoppuhrmessung.</li>
+          <li>Muster möglichst eng formulieren: erlaubte Zeichen und Trennzeichen ausdrücklich festlegen.</li>
+          <li>Benutzereingaben, die als wörtlicher Text gesucht werden, mit <code>Pattern.quote()</code> maskieren, statt sie in das Regex-Muster einzubauen.</li>
+          <li>Ein wiederholt verwendetes Muster einmal mit <code>Pattern.compile()</code> erstellen und wiederverwenden, statt es bei jeder Suche neu zu kompilieren.</li>
         </ul>
-        <p class="small">Eine einzelne Zeitmessung ist kein belastbarer Benchmark. Gefährliche Muster nicht mit unbeschränkten Eingaben in Produktion testen.</p>
+        <p class="small">Java-RegEx-Muster für Benutzereingaben nicht unbeschränkt ausführen: Java <code>Pattern</code> bietet keine eingebaute Laufzeitbegrenzung.</p>
       </section>
 
       <section>
         <h2>Unicode: Code Units, Code Points, Grapheme</h2>
         <ul>
-          <li><strong>UTF-16-Code-Unit:</strong> Java-<code>char</code> und String-Indizes zählen 16-Bit-Einheiten.</li>
-          <li><strong>Code Point:</strong> Unicode-Zeichenwert; ein Zeichen außerhalb der BMP belegt in Java zwei Code Units.</li>
-          <li><strong>Graphem:</strong> vom Menschen wahrgenommenes Zeichen; kann aus mehreren Code Points bestehen, etwa Buchstabe plus kombinierendes Zeichen oder Emoji-Sequenz.</li>
+          <li><strong>Code Unit:</strong> einzelne 16-Bit-Einheit der UTF-16-Kodierung.</li>
+          <li><strong>Code Point:</strong> ein nummerierter Unicode-Zeichenwert.</li>
+          <li><strong>Graphem:</strong> eine für Menschen als einzelnes Zeichen wahrgenommene Einheit; sie kann aus mehreren Code Points bestehen.</li>
         </ul>
-        <p><code>Matcher.start()</code> und <code>end()</code> liefern Java-String-Indizes (UTF-16-Code-Units), nicht Graphempositionen.</p>
+        <table class="small">
+          <thead><tr><th>Beispiel</th><th>Code Units</th><th>Code Points</th><th>Graphem</th></tr></thead>
+          <tbody>
+            <tr><td><code>A</code></td><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td><code>😀</code></td><td>2</td><td>1</td><td>1</td></tr>
+            <tr><td><code>e</code> + <code>U+0301</code> (erscheint als é)</td><td>2</td><td>2</td><td>1</td></tr>
+            <tr><td><code>é</code> (<code>U+00E9</code>)</td><td>1</td><td>1</td><td>1</td></tr>
+          </tbody>
+        </table>
       </section>
 
       <section>
-        <h2>Unicode-Eigenschaften in Java</h2>
-        <pre><code class="language-java">Pattern letters = Pattern.compile("\\p{L}+");
-Pattern greek = Pattern.compile("\\p{IsGreek}+");</code></pre>
-        <ul>
-          <li><code>\p{L}</code>: Unicode-Kategorie „Letter“ (Buchstabe), unabhängig von einem festen Alphabet.</li>
-          <li><code>\p{IsGreek}</code>: Zeichen aus dem griechischen Skript.</li>
-          <li><code>\d</code>, <code>\w</code> und <code>\s</code> sind nicht in jeder Regex-Engine gleich definiert.</li>
-          <li>In Java erweitert <code>Pattern.UNICODE_CHARACTER_CLASS</code> die vordefinierten Klassen wie <code>\w</code> und <code>\d</code> in Richtung Unicode.</li>
+        <h2>Unicode in Java und Regex</h2>
+        <pre><code class="language-java">
+String text = "é😀e\u0301"; //é😀é
+Matcher matcher = Pattern.compile(".").matcher(text);
+while (matcher.find()) {
+    System.out.printf("start=%d, end=%d, Treffer=\"%s\"%n",
+        matcher.start(), matcher.end(), matcher.group());
+}
+// Ausgabe:
+// start=0, end=1, Treffer="é"
+// start=1, end=3, Treffer="😀"
+// start=3, end=4, Treffer="e"
+// start=4, end=5, Treffer="́"</code></pre>
+        <ul class="small">
+          <li>Der Punkt <code>.</code> trifft auf jeden einzelnen Code Point zu, nicht auf Grapheme.</li>
+          <li>Das zusammengesetzte <code>é</code> (<code>U+00E9</code>) ist ein Code Point. Das Emoji ist ebenfalls ein Code Point, belegt in UTF-16 aber zwei Code Units; darum reichen seine Indizes von 1 bis 3.</li>
+          <li><code>e</code> und der kombinierende Akzent bilden die zerlegte Schreibweise von <code>é</code>: zwei Code Points, die von <code>.</code> getrennt gefunden werden.</li>
+          <li>Beide Schreibweisen sehen gleich aus. Java normalisiert Strings nicht automatisch; Unicode-Normalisierung wie NFC kann die zerlegte Schreibweise in die zusammengesetzte überführen (siehe <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/text/Normalizer.html"><code>java.text.Normalizer</code>-API</a>).</li>
         </ul>
-        <p>Wenn Unicode-Buchstaben gefordert sind, ist <code>\p{L}</code> meist klarer als die Annahme, <code>\w</code> bedeute überall dasselbe.</p>
+      </section>
+
+      <section>
+        <h2>Grapheme mit <code>\X</code> finden</h2>
+        <pre><code class="language-java">
+String text = "é😀e\u0301"; //é😀é
+Matcher matcher = Pattern.compile("\\X").matcher(text);
+while (matcher.find()) {
+    System.out.printf("start=%d, end=%d, Treffer=\"%s\"%n",
+        matcher.start(), matcher.end(), matcher.group());
+}
+// Ausgabe:
+// start=0, end=1, Treffer="é"
+// start=1, end=3, Treffer="😀"
+// start=3, end=5, Treffer="é"</code></pre>
+        <ul class="small">
+          <li>In Java 9+ findet <code>\X</code> Grapheme: Das zusammengesetzte <code>é</code> wird als ein Treffer gefunden, ebenso das Emoji.</li>
+          <li><code>e</code> und der kombinierende Akzent werden gemeinsam als ein Graphem gefunden, obwohl sie aus zwei Code Points bestehen.</li>
+          <li><code>start()</code> und <code>end()</code> geben weiterhin UTF-16-Indizes an: Das Emoji belegt zwei Code Units, <code>e</code> samt Akzent ebenfalls.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Unicode-Kategorien</h2>
+        <p>Java-Regex kann Zeichen anhand ihrer Unicode-General-Category auswählen:</p>
+        <table class="small">
+          <thead><tr><th>Regex</th><th>Bedeutung</th><th>Beispiele</th></tr></thead>
+          <tbody>
+            <tr><td><code>\p{L}</code></td><td>alle Buchstaben</td><td><code>A</code>, <code>ä</code>, <code>ǅ</code></td></tr>
+            <tr><td><code>\p{Ll}</code></td><td>Kleinbuchstaben</td><td><code>a</code>, <code>ä</code></td></tr>
+            <tr><td><code>\p{Lu}</code></td><td>Großbuchstaben</td><td><code>A</code>, <code>Ä</code></td></tr>
+            <tr><td><code>\p{Lt}</code></td><td>Unicode-Titelbuchstaben</td><td><code>ǅ</code></td></tr>
+            <tr><td><code>\p{Z}</code></td><td>Trennzeichen, z. B. Leerzeichen</td><td>Leerzeichen, geschütztes Leerzeichen</td></tr>
+            <tr><td><code>\p{N}</code></td><td>Zahlen: Dezimalziffern, Buchstabenzahlen und sonstige Zahlen</td><td><code>7</code>, <code>Ⅷ</code>, <code>½</code></td></tr>
+          </tbody>
+        </table>
+        <p class="small">Übersicht aller Unicode-General-Categories: <a href="https://www.unicode.org/reports/tr44/#General_Category_Values">Unicode Character Database – General_Category Values</a>.</p>
+      </section>
+
+      <section>
+        <h2>Unicode-Kategorien in Java verwenden</h2>
+        <pre><code class="language-java">"ä".matches("\\p{L}"); // true: Buchstabe
+"7".matches("\\p{N}"); // true: Zahl</code></pre>
+        <p>Die Beispiele prüfen, ob der jeweilige Text aus einem Zeichen der angegebenen Unicode-Kategorie besteht.</p>
+      </section>
+
+      <section>
+        <h2><code>\p{L}</code> vs <code>\w</code></h2>
+        <pre><code class="language-java">Pattern letters = Pattern.compile("\\p{L}+");
+Pattern wordChars = Pattern.compile("\\w+", Pattern.UNICODE_CHARACTER_CLASS);</code></pre>
+        <ul class="small">
+          <li><code>\p{L}</code> sagt präzise: Es sind Unicode-Buchstaben gemeint. Das Muster funktioniert ohne zusätzliches Flag.</li>
+          <li><code>\w</code> mit <code>UNICODE_CHARACTER_CLASS</code> ist breiter: Es umfasst auch Ziffern, kombinierende Zeichen und Verbindungszeichen wie den Unterstrich.</li>
+          <li>Wenn eine Anforderung wirklich „Buchstaben“ lautet, ist <code>\p{L}</code> dadurch klarer und lässt nicht versehentlich Ziffern oder <code>_</code> zu.</li>
+          <li>Kombinierende Zeichen sind Zusatzzeichen, etwa ein Akzent, der zu einem Buchstaben gehört. In <code>e\u0301</code> (e + Akzent) ist der Akzent ein eigenes Zeichen, das zusammen mit <code>e</code> als <code>é</code> erscheint.</li>
+          <li>Bei dieser zerlegten Schreibweise passt <code>\p{L}</code> nur auf das <code>e</code>, nicht auf den Akzent; <code>\w</code> mit <code>UNICODE_CHARACTER_CLASS</code> berücksichtigt auch kombinierende Zeichen.</li>
+        </ul>
       </section>
 
       <section>
         <h2>Regex-Flavors unterscheiden sich</h2>
-        <p>Ein Regex-Muster ist nicht automatisch zwischen Programmen übertragbar:</p>
-        <table>
+        <p>Regex-Engines in verschiedenen Programmiersprachen/Versionen können sich unterscheiden. Ein Muster ist nicht automatisch übertragbar!</p>
+        <table class="small">
           <thead><tr><th>Bereich</th><th>Was variieren kann</th></tr></thead>
           <tbody>
             <tr><td>Kurzklassen</td><td>Bedeutung von <code>\w</code>, <code>\d</code>, <code>\b</code> und Unicode-Optionen</td></tr>
             <tr><td>Lookbehind</td><td>Erlaubte Längen und Konstrukte unterscheiden sich nach Engine/Version</td></tr>
             <tr><td>Benannte Gruppen</td><td>Schreibweise für Definition, Rückverweis und Ersetzung kann abweichen</td></tr>
-            <tr><td>Java und Python</td><td>Gruppe: <code>(?&lt;name&gt;...)</code> vs. <code>(?P&lt;name&gt;...)</code>; Rückverweis: <code>\k&lt;name&gt;</code> vs. <code>(?P=name)</code></td></tr>
-            <tr><td>Ersetzung</td><td>Java: <code>${name}</code>; Python: <code>\g&lt;name&gt;</code></td></tr>
+            <tr><td>Ersetzung</td><td>Syntax für Gruppenreferenzen im Ersetzungstext ist engineabhängig</td></tr>
             <tr><td>Optionen</td><td>Standardwerte für Groß-/Kleinschreibung und Zeilenumbrüche sind nicht überall gleich</td></tr>
           </tbody>
         </table>
-        <p>Immer Engine und Version des Zielsystems testen, zum Beispiel Java <code>Pattern</code> statt nur „Regex“ anzugeben.</p>
+        <p>Immer mit der Regex-Engine und Version des Zielsystems testen.</p>
       </section>
 
+
       <section>
-        <h2>Optionen: Groß-/Kleinschreibung und Zeilen</h2>
-        <pre><code class="language-java">Pattern p = Pattern.compile(
-    "^java$",
-    Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.MULTILINE
-);</code></pre>
+        <h2>Was ist ein Tokenizer?</h2>
+        <p>Ein Tokenizer zerlegt einen Text von links nach rechts in bedeutungstragende Einheiten, sogenannte Tokens.</p>
+        <pre><code class="language-plaintext">total = 12 + count
+Bezeichner  Operator  Zahl  Operator  Bezeichner
+   total       =       12      +       count</code></pre>
         <ul>
-          <li><code>CASE_INSENSITIVE</code>: ignoriert Groß-/Kleinschreibung; für Unicode-Fälle zusätzlich <code>UNICODE_CASE</code>.</li>
-          <li><code>MULTILINE</code>: <code>^</code> und <code>$</code> beziehen sich auf Zeilenanfang und -ende.</li>
-          <li><code>DOTALL</code>: <code>.</code> passt auch auf Zeilenumbruchzeichen.</li>
+          <li>Jedes Token hat einen Typ, zum Beispiel Bezeichner, Zahl oder Operator.</li>
+          <li>Leerraum kann als Token erfasst oder beim Lesen übersprungen werden.</li>
+          <li>Ein Tokenizer erkennt die Einheiten; welche Kombinationen davon gültig sind, prüft anschließend ein Parser.</li>
         </ul>
-        <p>Inline-Optionen: <code>(?i)</code>, <code>(?m)</code>, <code>(?s)</code>. Optionen gelten ab ihrer Stelle im Muster; mit <code>(?i:...)</code> lässt sich ein Teilbereich einschließen.</p>
-        <pre><code class="language-java">Pattern acrossLines = Pattern.compile("start.*end", Pattern.DOTALL);
-Pattern lineOnly = Pattern.compile("^java$", Pattern.MULTILINE);</code></pre>
       </section>
 
       <section>
-        <h2>Höhere Java-APIs für Treffer</h2>
-        <pre><code class="language-java">import java.util.List;
-import java.util.regex.MatchResult;
-import java.util.regex.Pattern;
-
-Pattern numbers = Pattern.compile("\\d+");
-
-List&lt;String&gt; found = numbers.matcher("Raum 12, Stock 3")
-    .results()
-    .map(MatchResult::group)
-    .toList();</code></pre>
-        <ul>
-          <li><code>Matcher.results()</code>: Stream der Treffer, die <code>find()</code> liefern würde.</li>
-        </ul>
-        <pre><code class="language-java">List&lt;String&gt; parts = Pattern.compile("\\s+")
-    .splitAsStream("rot blau gruen")
-    .toList();
-
-boolean hasNumber = Pattern.compile("\\d+")
-    .asPredicate()
-    .test("Raum 12"); // true: asPredicate verwendet find</code></pre>
-        <p><code>splitAsStream()</code> liefert einen Stream, der erst beim Verarbeiten konsumiert wird.</p>
-        <p class="small">Beispiele mit <code>Stream.toList()</code> benötigen Java 16 oder neuer.</p>
-      </section>
-
-      <section>
-        <h2>Funktionale Ersetzung</h2>
-        <p>In Java kann die Ersetzung für jeden Treffer anhand des Match-Ergebnisses berechnet werden:</p>
-        <pre><code class="language-java">Pattern numbers = Pattern.compile("\\d+");
-String marked = numbers.matcher("Raum 12, Stock 3")
-    .replaceAll(match -&gt; "[" + match.group() + "]");
-// Ergebnis: Raum [12], Stock [3]</code></pre>
-        <p>Das ist nützlich, wenn die Ersetzung vom gefundenen Text oder seinen Gruppen abhängt, statt für alle Treffer gleich zu sein.</p>
-      </section>
-
-      <section>
-        <h2>Tokenizer: Text in Token zerlegen</h2>
+        <h2>Tokenizer mit Regex definieren</h2>
         <p>Ein Tokenizer erkennt mehrere Tokenarten, zum Beispiel Leerraum, Zahlen, Bezeichner und Operatoren.</p>
         <pre><code class="language-java">Pattern token = Pattern.compile(
-    "(?&lt;ws&gt;\\s+)"
-  + "|(?&lt;number&gt;\\d+(?:\\.\\d+)?)"
-  + "|(?&lt;identifier&gt;\\p{L}[\\p{L}\\p{N}_]*)"
-  + "|(?&lt;operator&gt;[+=*/()-])"
+    "(?&lt;ws&gt;\\s+)"                         // Leerraum
+  + "|(?&lt;number&gt;\\d+(?:\\.\\d+)?)"         // Zahl
+  + "|(?&lt;identifier&gt;\\p{L}[\\p{L}\\p{N}_]*)" // Bezeichner
+  + "|(?&lt;operator&gt;[+=*/()-])"             // Operator
 );
 String input = "total = 12 + count";</code></pre>
-        <p>Die benannten Gruppen klassifizieren Treffer. Der nächste Schritt ist, mit <code>Matcher</code> lückenlos von links nach rechts zu lesen.</p>
+        <p>Der Tokenizer soll den Text vollständig vom Anfang bis zum Ende in Tokens zerlegen – ohne Zeichen zu übergehen.</p>
       </section>
 
       <section>
-        <h2>Tokenizer: Lücken erkennen</h2>
-        <p>Fortsetzung des Beispiels mit <code>token</code> und <code>input</code> von der vorigen Folie:</p>
-        <pre><code class="language-java">Matcher m = token.matcher(input);
+        <h2>Tokenizer: Unbekannte Zeichen erkennen</h2>
+        <p class="small">Unbekannte Zeichen im Eingabestring sollen erkannt und als Fehler behandelt werden. Der Positionsvergleich verhindert, dass <code>find()</code> ungültige Zeichen still überspringt.</p>
+        <pre><code class="language-java small">
+//Fortsetzung Code der vorigen Folie:
+Matcher m = token.matcher(input);
 int position = 0;
 while (m.find()) {
     if (m.start() != position) {
         throw new IllegalArgumentException("Unbekanntes Zeichen bei " + position);
     }
-    if (m.start("ws") &lt; 0) {
+    if (m.start("ws") &lt; 0) { // Es liegt kein Leerraum-Treffer vor
         String type = m.start("number") &gt;= 0 ? "number"
             : m.start("identifier") &gt;= 0 ? "identifier" : "operator";
         System.out.println(type + ": " + m.group());
@@ -308,17 +354,28 @@ while (m.find()) {
 if (position != input.length()) {
     throw new IllegalArgumentException("Unbekanntes Zeichen bei " + position);
 }</code></pre>
-        <p>Der Positionsvergleich verhindert, dass <code>find()</code> ungültige Zeichen still überspringt. Für eine echte Programmiersprache wären zusätzlich Kommentare, Zeichenketten und Grammatikregeln nötig.</p>
+      </section>
+
+      <section>
+        <h2>Was macht der Parser?</h2>
+        <p>Nach dem Tokenizer könnte ein Parser prüfen, ob die Token in einer erlaubten Reihenfolge stehen und eine gültige Struktur bilden.</p>
+        <pre><code class="language-plaintext">total = 12 + count
+Bezeichner = Zahl + Bezeichner    gültiger Ausdruck
+
++ = total                         ungültige Reihenfolge
+total = 12 +                      unvollständiger Ausdruck</code></pre>
+        <p>Die bisherige Tokenizer-Folie erkennt Token und unbekannte Zeichen, prüft aber noch keine solche Grammatik.</p>
       </section>
 
       <section>
         <h2>Advanced-Check</h2>
-        <ul>
-          <li>Kannst du Capturing- und Non-Capturing-Gruppen unterscheiden?</li>
-          <li>Kannst du Lookaround anwenden, ohne Kontext in den Treffer aufzunehmen?</li>
-          <li>Kannst du problematisches Backtracking erkennen und sicher messen?</li>
-          <li>Berücksichtigst du Unicode, Regex-Flavor und Flags?</li>
-          <li>Kannst du Treffer streamen oder Text lückenlos tokenisieren?</li>
+        <ul class="small">
+          <li>Kannst du Capturing Groups auslesen und nummerierte oder benannte Gruppen in Mustern und Ersetzungen verwenden?</li>
+          <li>Kannst du Lookahead und Lookbehind einsetzen, um Kontext zu prüfen, ohne ihn mitzuerfassen?</li>
+          <li>Kannst du mehrdeutige, verschachtelte Wiederholungen erkennen und durch einfachere Muster ersetzen?</li>
+          <li>Kannst du erklären, was <code>.</code> und <code>\X</code> bei Unicode finden und warum ihre Trefferindizes UTF-16-Indizes sind?</li>
+          <li>Kannst du passende Unicode-Kategorien wie <code>\p{L}</code> wählen und <code>\p{L}</code> von <code>\w</code> mit Unicode-Flag unterscheiden?</li>
+          <li>Kannst du die Aufgabe eines Tokenizers von der eines Parsers unterscheiden und einen einfachen Tokenizer implementieren?</li>
         </ul>
       </section>
 
