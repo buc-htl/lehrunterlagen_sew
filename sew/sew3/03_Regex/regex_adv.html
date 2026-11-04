@@ -182,15 +182,26 @@ a+$          gleiche erlaubte Zeichenfolge, weniger Mehrdeutigkeit
       </section>
 
       <section>
-        <h2>Sichere und performante Regex</h2>
-        <ul>
-          <li>Eingabelängen begrenzen, besonders bei nicht vertrauenswürdigen Benutzereingaben.</li>
+        <h2>Sichere und performante Regex (1/2)</h2>
+        <ul class="small">
+          <li>Eingabelängen begrenzen, besonders bei nicht vertrauenswürdigen Benutzereingaben.
+            <ul>
+              <li>Java-RegEx-Muster für Benutzereingaben nicht unbeschränkt ausführen: Java <code>Pattern</code> bietet keine eingebaute Laufzeitbegrenzung.</li>
+            </ul>
+          </li>
           <li>Mehrdeutige, verschachtelte Wiederholungen wie <code>(a+)+</code> vermeiden oder vereinfachen.</li>
           <li>Muster möglichst eng formulieren: erlaubte Zeichen und Trennzeichen ausdrücklich festlegen.</li>
           <li>Benutzereingaben, die als wörtlicher Text gesucht werden, mit <code>Pattern.quote()</code> maskieren, statt sie in das Regex-Muster einzubauen.</li>
           <li>Ein wiederholt verwendetes Muster einmal mit <code>Pattern.compile()</code> erstellen und wiederverwenden, statt es bei jeder Suche neu zu kompilieren.</li>
         </ul>
-        <p class="small">Java-RegEx-Muster für Benutzereingaben nicht unbeschränkt ausführen: Java <code>Pattern</code> bietet keine eingebaute Laufzeitbegrenzung.</p>
+      </section>
+
+            <section>
+        <h2>Sichere und performante Regex (2/2)</h2>
+        <ul>
+           <li><a href="https://blog.cloudflare.com/de-de/details-of-the-cloudflare-outage-on-july-2-2019/">Praxisbeispiel</a>, in dem Backtracking zu massiven Problemen geführt hat.</li>
+        <li><a href="https://en.wikipedia.org/wiki/ReDoS">Regular expression denial of service (ReDoS) Angriff</a></li>
+        </ul>
       </section>
 
       <section>
