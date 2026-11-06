@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <title>Rekursion - Anwendungsfälle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../../node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="../../../theme/htl.css">
+  <link rel="stylesheet" href="../../../node_modules/highlight.js/styles/stackoverflow-light.css">
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" referrerpolicy="no-referrer"  onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reset.css';">/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css" integrity="sha512-ZIo9ivf88U0L1S+0D/npMNTTkjez5B9cK5xIecN4IA2OmtbTNBbPAZo/0cBC195sq7FU7cEOVPwtit37f/+1rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="this.onerror=null; this.href='../../../node_modules/reveal.js/dist/reveal.css';" />
+
+	<link rel="stylesheet" href="../../../theme/htl.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css" onerror="this.onerror=null;this.href='../../../node_modules/highlight.js/styles/stackoverflow-light.css';"> -->
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section>
+        <h1>Rekursion – Anwendungsfälle</h1>
+        <p class="center">Baum-Traversierung, Teile und herrsche, Backtracking</p>
+        <p class="center">Aufbauend auf den Grundlagen der Rekursion</p>
+      </section>
+
+      <section>
+        <h2>Wo wird Rekursion eingesetzt?</h2>
+        <ul>
+          <li><strong>Dateisysteme:</strong> Ordner enthalten Dateien und weitere Ordner</li>
+          <li><strong>Baumstrukturen:</strong> HTML/XML-DOM, JSON, Syntaxbäume in Compilern, Menüs</li>
+          <li><strong>Sortieren und Suchen:</strong> Merge Sort, Quick Sort, binäre Suche</li>
+          <li><strong>Spiele und Rätsel:</strong> Labyrinth, Sudoku, Schach, N-Damen-Problem</li>
+          <li><strong>Graphen und Netzwerke:</strong> Tiefensuche, Wegfindung, Abhängigkeiten</li>
+          <li><strong>Mathematik und Grafik:</strong> Fakultät, Fibonacci, Fraktale, Kombinatorik</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Gemeinsames Muster</h2>
+        <p>Rekursion passt, wenn sich ein Problem in <strong>kleinere Probleme derselben Art</strong> zerlegen lässt.</p>
+        <p>Die vielen Einsatzgebiete lassen sich auf drei Grundmuster zurückführen:</p>
+        <ol>
+          <li>Rekursive Strukturen verarbeiten</li>
+          <li>Teile und herrsche</li>
+          <li>Backtracking</li>
+        </ol>
+        <p><strong>In dieser Präsentation zeigen wir je ein Beispiel pro Muster</strong> – exemplarisch, nicht vollständig.</p>
+      </section>
+
+      <section>
+        <h2>Was du nachher kannst</h2>
+        <ul>
+          <li>erkennen, wann eine Datenstruktur oder Aufgabe rekursiv aufgebaut ist</li>
+          <li>einen Baum rekursiv durchlaufen und Ergebnisse aus Teilbäumen kombinieren</li>
+          <li>das Prinzip „Teile und herrsche“ an der binären Suche erklären</li>
+          <li>Backtracking am Beispiel eines Labyrinths nachvollziehen</li>
+          <li>in jedem Beispiel Basisfall und rekursiven Fall benennen</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Unsere drei Beispiele</h2>
+        <table class="small">
+          <thead><tr><th>Anwendungsfall</th><th>Grundidee</th><th>Beispiel hier</th></tr></thead>
+          <tbody>
+            <tr><td>Rekursive Strukturen verarbeiten</td><td>Die Struktur besteht aus kleineren Teilen derselben Art</td><td>Baum-Traversierung</td></tr>
+            <tr><td>Teile und herrsche</td><td>Problem teilen, Teilprobleme lösen, Ergebnisse kombinieren</td><td>Binäre Suche</td></tr>
+            <tr><td>Backtracking</td><td>Möglichkeit ausprobieren, bei Sackgasse einen Schritt zurück</td><td>Labyrinth lösen</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Alle Beispiele sind in Pseudocode dargestellt.</p>
+      </section>
+
+      <section>
+        <h2>1. Baum-Traversierung: Ein Baum ist rekursiv</h2>
+        <pre><code class="language-plaintext">        8
+      /   \
+     3     10
+    / \      \
+   1   6      14</code></pre>
+        <ul>
+          <li>Ein <strong>Baum</strong> besteht aus einem Knoten mit einem linken und einem rechten <strong>Teilbaum</strong>.</li>
+          <li>Jeder Teilbaum ist selbst wieder ein Baum – oder <strong>leer</strong>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Wo kommen Bäume vor?</h2>
+        <table class="small">
+          <thead><tr><th>Bereich</th><th>Baum</th><th>Rekursive Aufgabe</th></tr></thead>
+          <tbody>
+            <tr><td>Dateisystem</td><td>Ordner mit Dateien und Unterordnern</td><td>Alle Dateien auflisten, Ordnergröße berechnen</td></tr>
+            <tr><td>Webseite</td><td>HTML-DOM: Elemente enthalten Elemente</td><td>Element suchen, Text extrahieren</td></tr>
+            <tr><td>Datenformate</td><td>JSON, XML: Objekte enthalten Objekte</td><td>Verschachtelte Daten lesen oder ausgeben</td></tr>
+            <tr><td>Compiler / Rechner</td><td>Syntaxbaum: <code>(2 + 3) * 4</code></td><td>Ausdruck auswerten</td></tr>
+            <tr><td>Datenbanken, Suche</td><td>Suchbaum (B-Baum, binärer Suchbaum)</td><td>Eintrag finden, einfügen</td></tr>
+            <tr><td>Organisation</td><td>Firmenhierarchie, Menüs, Stammbaum</td><td>Alle Mitarbeiter einer Abteilung zählen</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Immer gleich: Ein Knoten enthält <strong>Teilstrukturen derselben Art</strong>.</p>
+      </section>
+
+      <section>
+        <h2>Baum durchlaufen: Pseudocode</h2>
+        <pre><code class="language-plaintext">printTree(node):
+    wenn node leer ist:             // Basisfall
+        zurückkehren
+
+    gib node.wert aus               // Knoten bearbeiten
+    printTree(node.links)           // rekursiver Fall: linker Teilbaum
+    printTree(node.rechts)          // rekursiver Fall: rechter Teilbaum</code></pre>
+        <ul class="small">
+          <li><strong>Basisfall:</strong> Ein leerer Baum hat nichts auszugeben.</li>
+          <li><strong>Rekursiver Fall:</strong> Knoten bearbeiten, dann beide Teilbäume – kleinere Bäume derselben Art – durchlaufen.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Baum durchlaufen: Ablauf</h2>
+        <pre><code class="language-plaintext">        8
+      /   \
+     3     10
+    / \      \
+   1   6      14</code></pre>
+        <pre><code class="language-plaintext">printTree(8)   → gib 8 aus
+  printTree(3)   → gib 3 aus
+    printTree(1)   → gib 1 aus (beide Teilbäume leer)
+    printTree(6)   → gib 6 aus (beide Teilbäume leer)
+  printTree(10)  → gib 10 aus
+    printTree(leer)
+    printTree(14)  → gib 14 aus (beide Teilbäume leer)
+
+Ausgabe: 8, 3, 1, 6, 10, 14</code></pre>
+        <p class="small">Steht die Ausgabe <strong>zwischen</strong> den beiden rekursiven Aufrufen, erscheinen die Werte dieses Suchbaums wie folgt: 1, 3, 6, 8, 10, 14.</p>
+      </section>
+
+      <section>
+        <h2>Ergebnisse aus Teilbäumen kombinieren</h2>
+        <pre><code class="language-plaintext">        8
+      /   \
+     3     10
+    / \      \
+   1   6      14</code></pre>
+        <pre><code class="language-plaintext">height(node):
+    wenn node leer ist:
+        gib 0 zurück                                          // Basisfall
+
+    gib 1 + max(height(node.links), height(node.rechts))      // kombinieren</code></pre>
+        <pre><code class="language-plaintext">height(3)  = 1 + max(height(1), height(6))  = 1 + max(1, 1) = 2
+height(10) = 1 + max(height(leer), height(14)) = 1 + max(0, 1) = 2
+height(8)  = 1 + max(2, 2) = 3</code></pre>
+      </section>
+
+      <section>
+        <h2>2. Teile und herrsche: Idee</h2>
+        <ol>
+          <li><strong>Teilen:</strong> Das Problem in kleinere Teilprobleme zerlegen.</li>
+          <li><strong>Herrschen:</strong> Die Teilprobleme rekursiv lösen.</li>
+          <li><strong>Kombinieren:</strong> Die Teilergebnisse zum Gesamtergebnis zusammensetzen.</li>
+        </ol>
+        <p>Das einfachste Beispiel ist die <strong>binäre Suche</strong> in einer sortierten Liste: Man vergleicht mit der Mitte und sucht nur in der passenden Hälfte weiter. Es gibt dabei nur <strong>einen</strong> rekursiven Aufruf.</p>
+      </section>
+
+      <section>
+        <h2>Binäre Suche: Pseudocode</h2>
+        <pre><code class="language-plaintext">search(liste, gesucht, von, bis):        // liste ist sortiert
+    wenn von &gt; bis:
+        gib "nicht gefunden" zurück         // Basisfall 1: leerer Bereich
+
+    mitte = (von + bis) / 2                // ganzzahlig
+    wenn liste[mitte] == gesucht:
+        gib mitte zurück                   // Basisfall 2: gefunden
+
+    wenn gesucht &lt; liste[mitte]:
+        gib search(liste, gesucht, von, mitte - 1)   // linke Hälfte
+    sonst:
+        gib search(liste, gesucht, mitte + 1, bis)   // rechte Hälfte</code></pre>
+      </section>
+
+      <section>
+        <h2>Binäre Suche: Ablauf</h2>
+        <pre><code class="language-plaintext">liste = [2, 5, 8, 12, 16, 23, 38]     Index 0 bis 6
+ziel  = 23</code></pre>
+        <pre><code class="language-plaintext">search(von=0, bis=6): mitte=3, liste[3]=12  →  23 &gt; 12: rechte Hälfte
+  search(von=4, bis=6): mitte=5, liste[5]=23  →  gefunden: Index 5</code></pre>
+        <p>Bei 7 Einträgen genügen 2 Schritte. Jeder Aufruf halbt den Suchbereich – darum sind auch sehr große Listen in wenigen Schritten durchsucht.</p>
+      </section>
+
+      <section>
+        <h2>3. Backtracking: Idee</h2>
+        <ul>
+          <li>Man <strong>probiert</strong> eine Möglichkeit aus und verfolgt sie weiter.</li>
+          <li>Führt sie in eine <strong>Sackgasse</strong>, geht man einen Schritt <strong>zurück</strong> und probiert die nächste Möglichkeit.</li>
+          <li>Die Rückkehr aus einem rekursiven Aufruf ist dieses „Zurückgehen“.</li>
+        </ul>
+        <p>Typische Beispiele: Labyrinth, Sudoku, N-Damen-Problem, Permutationen.</p>
+      </section>
+
+      <section>
+        <h2>Labyrinth: Aufgabe</h2>
+        <pre><code class="language-plaintext">S . # .
+# . # .
+# . . .
+# # # E</code></pre>
+        <ul class="small">
+          <li><code>S</code> Start, <code>E</code> Ausgang, <code>.</code> freier Weg, <code>#</code> Wand</li>
+          <li>Gesucht: Gibt es einen Weg von <code>S</code> nach <code>E</code>? Erlaubt sind die Richtungen hoch, rechts, runter, links.</li>
+          <li>Das Feld rechts oben (<code>.</code> über dem Weg) ist eine <strong>Sackgasse</strong>.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Labyrinth: Pseudocode</h2>
+        <pre><code class="language-plaintext">solve(zeile, spalte):
+    wenn Position außerhalb, Wand oder bereits besucht:
+        gib false zurück                        // Basisfall 1: Sackgasse
+
+    markiere Position als besucht
+    wenn Position ist Ausgang:
+        gib true zurück                         // Basisfall 2: Ziel gefunden
+
+    für jede Richtung (hoch, rechts, runter, links):
+        wenn solve(nächste Zeile, nächste Spalte): //versuchte Richtung erfolgreich
+            merke Position als Teil des Lösungswegs
+            gib true zurück
+
+    gib false zurück                            // alle Richtungen probiert: zurück!</code></pre>
+      </section>
+
+      <section>
+        <h2>Labyrinth: Ablauf mit Rückschritt</h2>
+        <pre><code class="language-plaintext">S . # .
+# . # .
+# . . .
+# # # E</code></pre>
+        <pre><code class="language-plaintext">solve(0,0) → rechts
+  solve(0,1) → runter
+    solve(1,1) → runter
+      solve(2,1) → rechts
+        solve(2,2) → rechts
+          solve(2,3) → hoch
+            solve(1,3) → hoch
+              solve(0,3) → keine Richtung frei: false   ← Sackgasse
+            solve(1,3) → keine weitere Richtung: false  ← zurück
+          solve(2,3) → runter
+            solve(3,3) → Ausgang: true</code></pre>
+      </section>
+
+      <section>
+        <h2>Labyrinth: Ergebnis</h2>
+        <pre><code class="language-plaintext">S * # .
+# * # .
+# * * *
+# # # E</code></pre>
+        <p>Der Pfad (<code>*</code>) entsteht beim Rückweg: Jeder Aufruf, der <code>true</code> erhält, markiert seine Position und gibt <code>true</code> weiter. Die Sackgasse oben rechts gehört nicht dazu.</p>
+      </section>
+
+      <section>
+        <h2>Die drei Beispiele im Vergleich</h2>
+        <table class="small">
+          <thead><tr><th></th><th>Basisfall</th><th>Rekursiver Fall</th></tr></thead>
+          <tbody>
+            <tr><td>Baum</td><td>Leerer Baum</td><td>Knoten bearbeiten, beide Teilbäume durchlaufen</td></tr>
+            <tr><td>Binäre Suche</td><td>Leerer Bereich oder Ziel in der Mitte</td><td>In der passenden Hälfte weitersuchen</td></tr>
+            <tr><td>Labyrinth</td><td>Sackgasse oder Ausgang erreicht</td><td>Jede Richtung rekursiv probieren</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Gemeinsam: Jeder rekursive Aufruf arbeitet an einem <strong>kleineren</strong> Teil und nähert sich einem Basisfall.</p>
+      </section>
+
+      <section>
+        <h2>Check</h2>
+        <ol>
+          <li>Warum eignet sich Rekursion gut für Bäume?</li>
+          <li>Wie viele rekursive Aufrufe macht ein Schritt der binären Suche, und was wird dabei kleiner?</li>
+          <li>Was bedeutet „Backtracking“, und woran erkennt man es im Labyrinth-Ablauf?</li>
+          <li>Was ist beim Labyrinth der Zweck der Markierung „besucht“?</li>
+        </ol>
+        <p class="fragment small"><strong>Lösung:</strong> (1) Teilbäume sind selbst Bäume. (2) Einer; der Suchbereich halbiert sich. (3) Zurückgehen bei Sackgasse: ein Aufruf liefert <code>false</code> und der Aufrufer probiert die nächste Richtung. (4) Sie verhindert, dass man im Kreis läuft und nie terminiert.</p>
+      </section>
+
+     
+
+
+    </div>
+  </div>
+
+
+
+
+  <script type="module">
+
+    function loadCSS(url, fallback) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = url;
+
+      if (fallback) {
+        link.onerror = () => {
+          const fallbackLink = document.createElement('link');
+          fallbackLink.rel = 'stylesheet';
+          fallbackLink.href = fallback;
+          document.head.appendChild(fallbackLink);
+        };
+      }
+      document.head.appendChild(link);
+    }
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css',
+      '../../../node_modules/reveal.js/dist/reset.css'
+    );
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css',
+      '../../../node_modules/reveal.js/dist/reveal.css'
+    );
+
+    loadCSS("../../../theme/htl.css");
+
+    loadCSS(
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-light.css',
+      '../../../node_modules/highlight.js/styles/stackoverflow-light.css'
+    );
+
+    function loadScript(url, fallback) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = url;
+        s.onload = resolve;
+
+        if (fallback) {
+          s.onerror = () => {
+            const s2 = document.createElement('script');
+            s2.src = fallback;
+            s2.onload = resolve;
+            s2.onerror = reject;
+            document.head.appendChild(s2);
+          };
+        } else {
+          s.onerror = reject;
+        }
+
+        document.head.appendChild(s);
+      });
+    }
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js',
+      '../../../node_modules/reveal.js/dist/reveal.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/notes/notes.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/notes.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/markdown/markdown.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/markdown.js'
+    );
+
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/highlight.js'
+    );
+
+    await loadScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/search/search.min.js',
+      '../../../node_modules/reveal.js/dist/plugin/search.js'
+    );
+
+    await loadScript("../../reveal-config.js");
+
+  </script>
+
+
+</body>
+
+</html>
